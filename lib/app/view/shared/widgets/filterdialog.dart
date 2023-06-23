@@ -8,6 +8,8 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 
+import 'custombutton.dart';
+
 getFilterdialog() {
   FilterController filterController = Get.put(FilterController());
 
@@ -92,19 +94,19 @@ getFilterdialog() {
           kHeightBox20,
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    backgroundColor: kGreen,
-                    padding: const EdgeInsets.all(15),
-                    elevation: 0),
-                child: Text(
-                  "FILTER",
-                  style: TextStyle(
-                      color: kWhite, fontSize: 18, fontWeight: FontWeight.bold),
-                )),
+            child: CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "FILTER",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function:() {
+                        
+                      },
+                            color: kGreen)
+           
           ),
         ],
       ),

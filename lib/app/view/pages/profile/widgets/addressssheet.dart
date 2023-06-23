@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
-import 'package:ila/app/controller/login_controller.dart';
+import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 import 'package:ila/app/view/shared/widgets/customtextformfield.dart';
-import 'package:ionicons/ionicons.dart';
+
+import '../../../shared/widgets/borderedbox.dart';
 
 class AddressSheet extends StatelessWidget {
   AddressSheet({super.key});
-  final LoginController loginController = Get.put(LoginController());
-  final AuthController authController = Get.put(AuthController());
 
+  final AuthController authController = Get.put(AuthController());
+  final HomeController homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -30,36 +31,42 @@ class AddressSheet extends StatelessWidget {
                   size: 20,
                 ),
                 IconButton(
-                    onPressed: () => Get.back(),
-                    icon: const Icon(Icons.close))
+                    onPressed: () => Get.back(), icon: const Icon(Icons.close))
               ],
             ),
             kHeightBox20,
             ListView.builder(
-              shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: authController.userModel.address!.length,
                 itemBuilder: (context, index) {
                   TextEditingController addressController =
-      TextEditingController(text: authController.userModel.address![index]!);
+                      TextEditingController(
+                          text: authController.userModel.address![index]!);
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Expanded(
-                        child: CustomTextFormField(
-                            readonly: authController.isEditMode.value,
+                        child: Obx(() => CustomTextFormField(
+                            readonly: homeController.isEditMode.value,
                             textColor: kBlueShade,
                             maxline: 2,
                             hint: "",
                             label: "",
                             textcontroller: addressController,
-                            function: () {}),
+                            function: () {})),
                       ),
                       Row(
                         children: [
-                          IconButton(
-                              onPressed: () {}, icon: const Icon(Icons.edit_note)),
+                          Obx(() => IconButton(
+                              onPressed: () {
+                                homeController.changeEditMode();
+                                //handle submiting data to db when done pressed
+                              },
+                              icon: Icon(homeController.isEditMode.value
+                                  ? Icons.edit_note
+                                  : Icons.done))),
                           IconButton(
                               onPressed: () {},
                               icon: const Icon(Icons.delete_outlined)),
@@ -68,26 +75,10 @@ class AddressSheet extends StatelessWidget {
                     ],
                   );
                 }),
-            
             kHeightBox20,
             Center(
-              child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: kGreen),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      padding: const EdgeInsets.all(15),
-                      elevation: 0),
-                  child: Text(
-                    "ADD NEW ADDRESS",
-                    style: TextStyle(
-                        color: kBlueShade,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  )),
+              child: BorderedButton(text: CustomText(text:"ADD NEW ADDRESS",color: kBlueShade,size: 14,weight: FontWeight.bold, ),color: kGreen,function: (){},),
+            
             ),
             kHeightBox20
           ],
@@ -96,3 +87,5 @@ class AddressSheet extends StatelessWidget {
     );
   }
 }
+
+

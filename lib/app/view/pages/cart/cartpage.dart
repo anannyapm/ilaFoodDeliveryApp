@@ -8,6 +8,7 @@ import 'package:ila/app/view/pages/cart/widgets/ordersummary.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
+import '../../shared/widgets/custombutton.dart';
 import '../../shared/widgets/customtext.dart';
 
 class CartPage extends StatelessWidget {
@@ -157,23 +158,19 @@ class CartPage extends StatelessWidget {
                       kHeightBox20,
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: () {
+                        child: CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "PLACE ORDER",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function:  () {
                               return showOrderSummarySheet();
                             },
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                backgroundColor: kGreen,
-                                padding: const EdgeInsets.all(15),
-                                elevation: 0),
-                            child: Text(
-                              "PLACE ORDER",
-                              style: TextStyle(
-                                  color: kWhite,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                            color: kGreen)
+                       
                       )
                     ],
                   ),

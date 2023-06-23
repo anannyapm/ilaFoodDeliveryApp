@@ -9,6 +9,7 @@ import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/auth/widgets/country_selector.dart';
+import 'package:ila/app/view/shared/widgets/custombutton.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 
 import '../../../shared/widgets/customtextformfield.dart';
@@ -54,28 +55,21 @@ class OtpAuthPage extends StatelessWidget {
                     kHeightBox20,
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: Obx(() => ElevatedButton(
-                          onPressed: () async {
+
+                      child: Obx(() =>CustomButton(
+                        padding: 15,
+                        text: CustomText(text: "GET OTP",color: kWhite,size: 18,weight: FontWeight.bold,),
+                         function: () async {
                             loginController.isLogButtonEnabled.value
                                 ? await authController.verifyPhoneNumber()
                                 : log("Not verified");
-                          },
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              backgroundColor:
-                                  loginController.isLogButtonEnabled.value
+                          }, 
+                      color:  loginController.isLogButtonEnabled.value
                                       ? kGreen
-                                      : kGreen.withOpacity(0.4),
-                              padding: const EdgeInsets.all(15),
-                              elevation: 0),
-                          child: Text(
-                            "GET OTP",
-                            style: TextStyle(
-                                color: kWhite,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ))),
+                                      : kGreen.withOpacity(0.4))
+                      
+                     
+                          ),
                     )
                   ],
                 ),

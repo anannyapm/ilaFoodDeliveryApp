@@ -9,6 +9,8 @@ import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 import 'package:ila/app/view/shared/widgets/customtextformfield.dart';
 
+import '../../../shared/widgets/custombutton.dart';
+
 class UserEditSheet extends StatelessWidget {
   UserEditSheet({super.key});
   final LoginController loginController = Get.put(LoginController());
@@ -61,24 +63,19 @@ class UserEditSheet extends StatelessWidget {
                       kHeightBox20,
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: ()  {
-                             
-                            },
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                backgroundColor:
-                                    kGreen,
-                                padding: const EdgeInsets.all(15),
-                                elevation: 0),
-                            child: Text(
-                              "DONE",
-                              style: TextStyle(
-                                  color: kWhite,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                        child: CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "DONE",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function:() {
+                        
+                      },
+                            color: kGreen)
+                       ,
                       ),
                       kHeightBox20
                 ],

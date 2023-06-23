@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
+import 'package:ila/app/controller/navigationcontroller.dart';
 import 'package:ila/app/view/pages/cart/cartpage.dart';
 import 'package:ila/app/view/pages/favourite/favouritepage.dart';
+import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/profile/faqpage.dart';
 import 'package:ila/app/view/pages/profile/settingspage.dart';
 import 'package:ila/app/view/pages/profile/widgets/addressssheet.dart';
@@ -17,6 +19,8 @@ import '../../shared/widgets/customtext.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   final AuthController authController = Get.put(AuthController());
+  final NavigationController navigationController =
+      Get.put(NavigationController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +58,7 @@ class ProfilePage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         CustomText(
+                        CustomText(
                           text: authController.userModel.name!,
                           weight: FontWeight.bold,
                           size: 22,
@@ -67,11 +71,8 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                     TextButton(
-                        onPressed: () =>Get.bottomSheet(
-                        
-                          UserEditSheet(),
-                          backgroundColor: kWhite
-                          ),
+                        onPressed: () => Get.bottomSheet(UserEditSheet(),
+                            backgroundColor: kWhite),
                         child: CustomText(
                           text: "Edit",
                           color: kOrange,
@@ -84,28 +85,34 @@ class ProfilePage extends StatelessWidget {
                 ProfileViewMoreWidget(
                     text: "Addresses",
                     icon: Ionicons.map_outline,
-                    function: ()=>Get.bottomSheet(AddressSheet(),
-                    backgroundColor: kWhite),
+                    function: () => Get.bottomSheet(AddressSheet(),
+                        backgroundColor: kWhite),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Cart",
                     icon: Ionicons.bag_handle_outline,
-                    function: () =>Get.to( CartPage()),
+                    function: () {
+                      navigationController.setSelectedIndex(4);
+                      Get.to(()=>NavigationPage());
+                    },
                     color: kIconLightBlue),
                 ProfileViewMoreWidget(
                     text: "Favorites",
                     icon: Ionicons.heart_outline,
-                    function: () =>Get.to(FavouritePage()),
+                    function: () {
+                      navigationController.setSelectedIndex(1);
+                      Get.to(()=>NavigationPage());
+                    },
                     color: kIconViolet),
                 ProfileViewMoreWidget(
                     text: "FAQs",
                     icon: Ionicons.help_circle_outline,
-                    function: ()=>Get.to(FaqPage()),
+                    function: () => Get.to(FaqPage()),
                     color: kOrange),
                 ProfileViewMoreWidget(
                     text: "Settings",
                     icon: Ionicons.settings_outline,
-                    function: () =>Get.to(SettingsPage()),
+                    function: () => Get.to(SettingsPage()),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Review App",
@@ -121,19 +128,34 @@ class ProfilePage extends StatelessWidget {
                     text: "Logout",
                     icon: Ionicons.log_out_outline,
                     function: () {
-                      Get.dialog(
-                        AlertDialog(
-                          surfaceTintColor: kWhite,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          titleTextStyle: TextStyle(fontSize: 22,color: kBlueShade),
-                          title: const CustomText(text:"Are you sure you want to sign out?",),
-                          actions: [
-                            TextButton(onPressed: ()=>Get.back(), child: CustomText(text: "No",color: kGreen,size: 20,weight: FontWeight.bold,)),
-                            TextButton(onPressed: ()=>authController.logout(), child: CustomText(text: "Yes",color: kWarning,size: 20,weight: FontWeight.bold,)),
-
-                          ],
-                        )
-                      );
+                      Get.dialog(AlertDialog(
+                        surfaceTintColor: kWhite,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        titleTextStyle:
+                            TextStyle(fontSize: 22, color: kBlueShade),
+                        title: const CustomText(
+                          text: "Are you sure you want to sign out?",
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Get.back(),
+                              child: CustomText(
+                                text: "No",
+                                color: kGreen,
+                                size: 20,
+                                weight: FontWeight.bold,
+                              )),
+                          TextButton(
+                              onPressed: () => authController.logout(),
+                              child: CustomText(
+                                text: "Yes",
+                                color: kWarning,
+                                size: 20,
+                                weight: FontWeight.bold,
+                              )),
+                        ],
+                      ));
                     },
                     color: kWarning),
                 kHeightBox50,
@@ -149,5 +171,3 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
-
-

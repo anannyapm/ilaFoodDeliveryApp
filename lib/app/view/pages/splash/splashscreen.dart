@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  //final AuthController authcontroller = Get.put(AuthController()); //DI
+  final AuthController authcontroller = Get.put(AuthController()); //DI
 
   @override
   void initState() {
@@ -24,21 +25,20 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(children: [
           Center(
+           
             child: Image.asset(
               'assets/images/logo.png',
             ),
           ),
           Positioned(
-              bottom: size.height *0.86,
-              left: size.width *0.8,
-              child: Lottie.asset('assets/animations/anim1.json',height: 100),),
-          Positioned(
-              top: size.height * 0.7,
-              right: size.width * 0.4,
-              child: Lottie.asset('assets/animations/anim1.json',height: 300)),
+              bottom: size.height *0.01,
+              
+              child: Lottie.asset('assets/animations/delivery.json',height: 250),),
+            
           
          
         ]),

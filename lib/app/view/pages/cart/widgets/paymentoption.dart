@@ -8,6 +8,7 @@ import 'package:ila/app/view/pages/cart/widgets/successpage.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 
 import '../../../../controller/cartcontroller.dart';
+import '../../../shared/widgets/custombutton.dart';
 
 void showPaymentOptionSheet() {
   CartController cartController = Get.put(CartController());
@@ -45,21 +46,17 @@ void showPaymentOptionSheet() {
             kHeightBox20,
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                  onPressed: () =>Get.offAll(()=>SuccessPage()),
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      backgroundColor: kGreen,
-                      padding: const EdgeInsets.all(15),
-                      elevation: 0),
-                  child: Text(
-                    "CONTINUE",
-                    style: TextStyle(
-                        color: kWhite,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  )),
+              child:CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "CONTINUE",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function: () =>Get.offAll(()=>SuccessPage()),
+                            color: kGreen),
+             
             )
           ],
         ),

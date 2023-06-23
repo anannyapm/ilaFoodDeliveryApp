@@ -23,6 +23,12 @@ class HomeController extends GetxController {
   RxBool isRecommended = false.obs;
 
   RxInt itemCount = 0.obs;
+  RxBool isEditMode = true.obs;
+
+
+  void changeEditMode() {
+    isEditMode.value = !isEditMode.value;
+  }
 
   void toggleRecommended(bool value) {
     isRecommended.value = value;

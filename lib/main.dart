@@ -10,14 +10,14 @@ import 'app/controller/auth_controller.dart';
 import 'app/controller/homecontroller.dart';
 
 void main() async {
- /*  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   //authcontroller will be avilable to our app from everywhere
   await Firebase.initializeApp().then(
     (value) => Get.put(AuthController()),
   );
   Get.put(HomeController());
-  Get.put(AuthController()); */
+  Get.put(AuthController());
 
   runApp(const MyApp());
 }

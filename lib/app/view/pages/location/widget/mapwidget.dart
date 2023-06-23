@@ -5,6 +5,8 @@ import 'package:ila/app/controller/mapcontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 
 import '../../../../utils/constants/color_constants.dart';
+import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/customtext.dart';
 
 class MapPage extends StatelessWidget {
   final MapController mapController = Get.put(MapController());
@@ -51,23 +53,20 @@ class MapPage extends StatelessWidget {
                 kHeightBox20,
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: ElevatedButton(
-                      onPressed: () {
+                  child: CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "UPDATE LOCATION",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function:() {
                         mapController.updateLocation();
                       },
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          backgroundColor: kGreen,
-                          padding: const EdgeInsets.all(15),
-                          elevation: 0),
-                      child: Text(
-                        "UPDATE LOCATION",
-                        style: TextStyle(
-                            color: kWhite,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      )),
+                            color: kGreen)
+                  
+                  
                 ),
                 kHeightBox20
               ],

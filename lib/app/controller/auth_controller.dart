@@ -32,12 +32,9 @@ class AuthController extends GetxController {
   UserModel? _userModel;
   UserModel get userModel => _userModel!;
 
-  RxBool isEditMode = false.obs;
   RxBool isUserAdding = false.obs;
 
-  void changeMode() {
-    isEditMode.value = !isEditMode.value;
-  }
+  
 
   @override
   void onInit() {
@@ -67,7 +64,7 @@ class AuthController extends GetxController {
   }
 
   Future initialScreen() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 5));
     if (firebaseUser.value == null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (prefs.getBool('USER_LOGGED') == true) {

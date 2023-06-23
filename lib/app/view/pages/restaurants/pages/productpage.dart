@@ -8,6 +8,7 @@ import 'package:ila/app/view/shared/widgets/customtext.dart';
 import '../../../../controller/homecontroller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
+import '../../../shared/widgets/custombutton.dart';
 
 class ProductPage extends StatelessWidget {
   final ProductModel product;
@@ -125,22 +126,19 @@ class ProductPage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                          onPressed: (){},
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              backgroundColor:
-                                  kOrange,
-                              padding: const EdgeInsets.all(15),
-                              elevation: 0),
-                          child: Text(
-                            "ADD TO CART",
-                            style: TextStyle(
-                                color: kWhite,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )),
+                  child:  CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "ADD TO CART",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function:() {
+                        
+                      },
+                            color: kGreen)
+                  ,
                 ),
               )
             ],

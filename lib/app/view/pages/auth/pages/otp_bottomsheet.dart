@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
+import 'package:ila/app/view/shared/widgets/custombutton.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../utils/constants/color_constants.dart';
@@ -94,23 +95,11 @@ class OtpBottomSheet extends StatelessWidget {
               ),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: () {
+                child: CustomButton(padding:15,text: CustomText(text: "SUBMIT",color: kWhite,size: 18,weight: FontWeight.bold,), function:  () {
                       authController.verifyOTP();
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        backgroundColor: kGreen,
-                        padding: const EdgeInsets.all(15),
-                        elevation: 0),
-                    child: Text(
-                      "SUBMIT",
-                      style: TextStyle(
-                          color: kWhite,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    )),
+                    }, color: kGreen)
+
+              
               ),
               kHeightBox20
             ],

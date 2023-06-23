@@ -6,6 +6,8 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';
 
+import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/customtext.dart';
 import '../widgets/dotnavigator.dart';
 import '../widgets/onboardingcontent.dart';
 
@@ -77,7 +79,25 @@ class OnBoardingScreenOne extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 15),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.85,
-                child: Obx(() => ElevatedButton(
+                child: Obx(() => CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: onboardingController.pageIndex == 3
+                          ? "GET STARTED"
+                          : "NEXT",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function:() {
+                      if (onboardingController.pageIndex == 3) {
+                        Get.offAll(() => const OtpAuthPage());
+                      } else {
+                        onboardingController.updatePageController();
+                      }
+                    },
+                            color: kGreen)
+                /* ElevatedButton(
                     onPressed: () {
                       if (onboardingController.pageIndex == 3) {
                         Get.offAll(() => const OtpAuthPage());
@@ -100,7 +120,7 @@ class OnBoardingScreenOne extends StatelessWidget {
                           color: kWhite,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
-                    ))),
+                    )) */),
               ),
             )
           ],

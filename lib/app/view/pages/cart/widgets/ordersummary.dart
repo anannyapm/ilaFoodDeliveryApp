@@ -7,6 +7,8 @@ import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/widgets/paymentoption.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 
+import '../../../shared/widgets/custombutton.dart';
+
 void showOrderSummarySheet() {
   AuthController authController = Get.put(AuthController());
   LoginController loginController = Get.put(LoginController());
@@ -65,23 +67,19 @@ void showOrderSummarySheet() {
             kHeightBox20,
             SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: () {
+                        child:CustomButton(
+                            padding: 15,
+                            text: CustomText(
+                              text: "CONTINUE",
+                              color: kWhite,
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            function: () {
                               return showPaymentOptionSheet();
                             },
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                backgroundColor: kGreen,
-                                padding: const EdgeInsets.all(15),
-                                elevation: 0),
-                            child: Text(
-                              "CONTINUE",
-                              style: TextStyle(
-                                  color: kWhite,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                            color: kGreen)
+                       
                       )
           ],
         ),
