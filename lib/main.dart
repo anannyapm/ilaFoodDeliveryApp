@@ -7,7 +7,6 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/splash/splashscreen.dart';
 
 import 'app/controller/auth_controller.dart';
-import 'app/controller/homecontroller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

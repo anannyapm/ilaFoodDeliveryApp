@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/constants/color_constants.dart';
 
-showSnackBar(bool isfav){
-  return Get.snackbar("Done", isfav?"Added to Favorites":"Removed from Favorites",
+showSnackBar(String title,String subtitle,Color color){
+  return Get.snackbar(title, subtitle,
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor:isfav? kGreen:kWarning,
+        backgroundColor:color,
         colorText: kWhite);
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/color_constants.dart';
 import 'customtext.dart';
 
 class BorderedButton extends StatelessWidget {
@@ -10,7 +9,8 @@ class BorderedButton extends StatelessWidget {
   const BorderedButton({
     super.key,
     required this.text,
-    required this.color, required this.function,
+    required this.color,
+    required this.function,
   });
 
   @override

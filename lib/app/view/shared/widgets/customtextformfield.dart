@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:ila/app/utils/constants/color_constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hint;
@@ -22,7 +21,8 @@ class CustomTextFormField extends StatelessWidget {
     this.type = TextInputType.text,
     required this.function,
     this.textColor = Colors.grey,
-    this.readonly = false,  this.maxline=1,
+    this.readonly = false,
+    this.maxline = 1,
   });
 
   @override

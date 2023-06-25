@@ -77,8 +77,18 @@ class AddressSheet extends StatelessWidget {
                 }),
             kHeightBox20,
             Center(
-              child: BorderedButton(text: CustomText(text:"ADD NEW ADDRESS",color: kBlueShade,size: 14,weight: FontWeight.bold, ),color: kGreen,function: (){},),
-            
+              child: BorderedButton(
+                text: CustomText(
+                  text: "ADD NEW ADDRESS",
+                  color: kBlueShade,
+                  size: 14,
+                  weight: FontWeight.bold,
+                ),
+                color: kGreen,
+                function: () {
+                  //should open page for selecting map location
+                },
+              ),
             ),
             kHeightBox20
           ],
@@ -87,5 +97,3 @@ class AddressSheet extends StatelessWidget {
     );
   }
 }
-
-

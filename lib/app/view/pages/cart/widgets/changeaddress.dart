@@ -11,12 +11,12 @@ void showChangeAddressBottomSheet() {
 
   Get.bottomSheet(
     Container(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       height: 200,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(
+          const CustomText(
             text: "Change Address",
             size: 18,
           ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/utils/constants/color_constants.dart';
-import 'package:ila/app/utils/constants/constants.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../controller/auth_controller.dart';
@@ -29,18 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Stack(children: [
           Center(
-           
             child: Image.asset(
               'assets/images/logo.png',
             ),
           ),
           Positioned(
-              bottom: size.height *0.01,
-              
-              child: Lottie.asset('assets/animations/delivery.json',height: 250),),
-            
-          
-         
+            bottom: size.height * 0.01,
+            child: Lottie.asset('assets/animations/delivery.json', height: 250),
+          ),
         ]),
         /* Align(
               alignment: Alignment.bottomCenter,

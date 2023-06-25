@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:ila/app/controller/navigationcontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
-import 'package:ila/app/view/pages/orders/orderpage.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 
 import '../../../shared/widgets/custombutton.dart';
@@ -50,7 +48,7 @@ class SuccessPage extends StatelessWidget {
               child: CustomButton(
                   padding: 15,
                   text: CustomText(
-                    text: "CONTINUE",
+                    text: "DONE",
                     color: kWhite,
                     size: 18,
                     weight: FontWeight.bold,

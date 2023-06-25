@@ -20,9 +20,16 @@ void showOrderSummarySheet() {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomText(
-              text: "Order Summary",
-              size: 18,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const CustomText(
+                  text: "Order Summary",
+                  size: 18,
+                ),
+                IconButton(onPressed:()=> Get.back(), icon: const Icon(Icons.close))
+
+              ],
             ),
             kHeightBox20,
             Column(

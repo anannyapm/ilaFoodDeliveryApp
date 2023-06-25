@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/controller/settingscontroller.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
@@ -13,40 +14,40 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _isNotificationEnabled = true;
+  SettingsController settingsController = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: ListView(
           children: [
             kHeightBox10,
             Row(
-                          children: [
-                            IconButton(
-                              onPressed: () => Get.back(),
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      kGreylight.withOpacity(0.4))),
-                              icon: const Icon(
-                                Icons.keyboard_arrow_left,
-                                size: 30,
-                              ),
-                            ),
-                            kWidthBox15,
-                            const CustomText(
-                              text: "Settings",
-                              size: 20,
-                            )
-                          ],
-                        ),
-                        kHeightBox10,
+              children: [
+                IconButton(
+                  onPressed: () => Get.back(),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                          kGreylight.withOpacity(0.4))),
+                  icon: const Icon(
+                    Icons.keyboard_arrow_left,
+                    size: 30,
+                  ),
+                ),
+                kWidthBox15,
+                const CustomText(
+                  text: "Settings",
+                  size: 20,
+                )
+              ],
+            ),
+            kHeightBox10,
             ListTile(
-              title: const CustomText(text:'Account Deletion'),
-              subtitle: const CustomText(text: 'Request to delete your account'),
+              title: const CustomText(text: 'Account Deletion'),
+              subtitle:
+                  const CustomText(text: 'Request to delete your account'),
               onTap: () {
                 // Handle account deletion request
                 _showConfirmationDialog();
@@ -54,15 +55,16 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             ListTile(
               title: const CustomText(text: 'Notifications'),
-              subtitle: const CustomText(text: 'Enable or disable notifications'),
-              trailing: Switch(
-                value: _isNotificationEnabled,
-                onChanged: (value) {
-                  setState(() {
-                    _isNotificationEnabled = value;
-                  });
-                },
-              ),
+              subtitle:
+                  const CustomText(text: 'Enable or disable notifications'),
+              trailing: Obx(() => Switch(
+                    activeTrackColor: kGreen.withOpacity(0.8),
+                        trackOutlineColor: MaterialStatePropertyAll(kWhite),
+                    value: settingsController.isNotificationEnabled,
+                    onChanged: (value) {
+                      settingsController.setNotificationEnabled(value);
+                    },
+                  )),
             ),
           ],
         ),
@@ -71,38 +73,30 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _showConfirmationDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const CustomText(text:'Account Deletion'),
-          content: const CustomText(text:'Are you sure you want to delete your account?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Perform account deletion
-                Navigator.of(context).pop();
-                _showDeletionConfirmationSnackbar();
-              },
-              child: const CustomText(text:'Delete'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const CustomText(text: 'Cancel'),
-            ),
-          ],
-        );
-      },
+    Get.dialog(
+      AlertDialog(
+        surfaceTintColor: kWhite,
+        elevation: 0,
+        title:  CustomText(text: 'Account Deletion',weight: FontWeight.bold,color: kWarning,),
+        content: const CustomText(
+            text: 'Are you sure you want to delete your account?',weight: FontWeight.bold,),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Perform account deletion
+          
+              
+            },
+            child:  CustomText(text: 'Delete',color: kWarning,weight: FontWeight.bold,),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const CustomText(text: 'Cancel',weight: FontWeight.bold,),
+          ),
+        ],
+      ),
     );
-  }
-
-  void _showDeletionConfirmationSnackbar() {
-    final snackBar = const SnackBar(
-      content: Text('Account deleted successfully'),
-      duration: Duration(seconds: 3),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

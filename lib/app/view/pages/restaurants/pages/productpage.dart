@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/constants.dart';
@@ -9,7 +8,6 @@ import '../../../../controller/homecontroller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/custombutton.dart';
-import '../../../shared/widgets/showsnackbar.dart';
 
 class ProductPage extends StatelessWidget {
   final ProductModel product;
@@ -19,19 +17,18 @@ class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
   @override
   Widget build(BuildContext context) {
-    final String rName = homeController.getrestaurantName(product.restaurantId!);
+    final String rName =
+        homeController.getrestaurantName(product.restaurantId!);
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            
             children: [
-              
               HeaderCard(
-                 itemid: product.docId!,
-                 isProduct: true,
+                  itemid: product.docId!,
+                  isProduct: true,
                   imageUrl: product.image!,
                   rate: null,
                   isFav: product.isRecommended!),
@@ -65,25 +62,26 @@ class ProductPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText(text:"₹${product.price.toString()}" ,size: 30,),
+                      CustomText(
+                        text: "₹${product.price.toString()}",
+                        size: 30,
+                      ),
                       Container(
                         width: 135,
-                      
                         padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: kBlack),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: kBlack),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                             IconButton(
-                             iconSize: 14,
+                            IconButton(
+                              iconSize: 14,
                               style: ButtonStyle(
-                                
                                   backgroundColor:
                                       MaterialStatePropertyAll(kGreylight)),
                               icon: Icon(
-                                    
                                 Icons.remove,
-                                
                                 color: kWhite,
                               ),
                               onPressed: () {
@@ -93,10 +91,11 @@ class ProductPage extends StatelessWidget {
                               },
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 8,right: 8),
+                              padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Obx(
                                 () => CustomText(
-                                  text: homeController.itemCount.value.toString(),
+                                  text:
+                                      homeController.itemCount.value.toString(),
                                   size: 18,
                                   color: kWhite,
                                 ),
@@ -105,19 +104,16 @@ class ProductPage extends StatelessWidget {
                             IconButton(
                               iconSize: 14,
                               style: ButtonStyle(
-                                
                                   backgroundColor:
                                       MaterialStatePropertyAll(kGreylight)),
                               icon: Icon(
                                 Icons.add,
-                                
                                 color: kWhite,
                               ),
                               onPressed: () {
                                 homeController.itemCount.value++;
                               },
                             ),
-                           
                           ],
                         ),
                       )
@@ -129,19 +125,16 @@ class ProductPage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
                   width: double.infinity,
-                  child:  CustomButton(
-                            padding: 15,
-                            text: CustomText(
-                              text: "ADD TO CART",
-                              color: kWhite,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            function:() {
-                        
-                      },
-                            color: kGreen)
-                  ,
+                  child: CustomButton(
+                      padding: 15,
+                      text: CustomText(
+                        text: "ADD TO CART",
+                        color: kWhite,
+                        size: 18,
+                        weight: FontWeight.bold,
+                      ),
+                      function: () {},
+                      color: kGreen),
                 ),
               )
             ],

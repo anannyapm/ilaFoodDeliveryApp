@@ -22,7 +22,7 @@ getFilterdialog() {
         const CustomText(text: "Filter"),
         IconButton(
           onPressed: () => Get.back(),
-          icon: Icon(
+          icon: const Icon(
             Icons.close,
             size: 22,
           ),

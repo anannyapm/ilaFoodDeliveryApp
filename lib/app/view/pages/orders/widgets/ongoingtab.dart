@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/orders/widgets/trackordersheet.dart';
@@ -100,8 +99,15 @@ class OngoingTab extends StatelessWidget {
                             width: 150,
                             height: 45,
                             child: CustomButton(
-                              padding: 0,
-                              text: CustomText(text: "Track Order",color: kWhite,size: 15,weight: FontWeight.bold,), function: ()=>getTrackOrderSheet(), color: kGreen),
+                                padding: 0,
+                                text: CustomText(
+                                  text: "Track Order",
+                                  color: kWhite,
+                                  size: 15,
+                                  weight: FontWeight.bold,
+                                ),
+                                function: () => getTrackOrderSheet(),
+                                color: kGreen),
                           ),
                           SizedBox(
                               width: 150,
@@ -139,4 +145,3 @@ class OngoingTab extends StatelessWidget {
     );
   }
 }
-

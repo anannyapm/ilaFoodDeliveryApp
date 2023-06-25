@@ -23,22 +23,15 @@ class FavouritePage extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kHeightBox10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: CustomText(
-                        text: "Favorites",
-                        size: 24,
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () => getFilterdialog(),
-                        icon: const Icon(Icons.tune))
-                  ],
+                const Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: CustomText(
+                    text: "My Favorites",
+                    size: 24,
+                  ),
                 ),
                 kHeightBox20,
                 GetBuilder<HomeController>(
