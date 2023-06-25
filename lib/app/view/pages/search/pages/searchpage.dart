@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/pages/productpage.dart';
-import 'package:ila/app/view/pages/restaurants/pages/restaurantpage.dart';
 import 'package:ila/app/view/pages/restaurants/pages/viewrestaurant.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 import 'package:ila/app/view/shared/widgets/filterdialog.dart';
@@ -15,7 +14,11 @@ import '../../../../controller/searchcontroller.dart';
 import '../../../../utils/constants/color_constants.dart';
 
 class SearchPage extends StatelessWidget {
-  SearchPage({super.key});
+  final String categoryName;
+  SearchPage({
+    super.key,
+    this.categoryName = "",
+  });
 
   final HomeController homeController = Get.put(HomeController());
 
@@ -23,6 +26,9 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final SearchFilterController searchController =
         Get.put(SearchFilterController());
+    if (categoryName != "") {
+      searchController.controller.text = categoryName;
+    }
     return Scaffold(
         body: SafeArea(
       child: Container(
@@ -34,16 +40,11 @@ class SearchPage extends StatelessWidget {
                 controller: searchController.controller,
                 focusNode: searchController.myfocusNode,
                 onTap: () => searchController.myfocusNode.requestFocus(),
-                /* onTap: () => searchController.isSearchActive.value=true,
-                onChanged: (value) => searchController.searchForKey(value), */
-
                 hintText: "Search dishes,restaurants",
                 trailing: [
                   IconButton(
                       onPressed: () {
-                        searchController.controller.clear();
-                        searchController.isSearchActive.value = false;
-                        searchController.myfocusNode.unfocus();
+                        searchController.clearSearch();
                       },
                       icon: const Icon(Icons.close))
                 ],
@@ -82,15 +83,18 @@ class SearchPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () {
-                    return searchController.searchResults.isEmpty
-                        ? Center(
+                    final RxList<Map<String, dynamic>> activeList =
+                        searchController.filterEnabled.value
+                            ? searchController.filterResult
+                            : searchController.searchResults;
+                    return activeList.isEmpty
+                        ? const Center(
                             child: CustomText(text: "No Results Found"),
                           )
                         : ListView.separated(
-                            itemCount: searchController.searchResults.length,
+                            itemCount: activeList.length,
                             itemBuilder: (context, index) {
-                              final Map searchresult =
-                                  searchController.searchResults[index];
+                              final Map searchresult = activeList[index];
                               log(searchresult.toString());
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -98,13 +102,13 @@ class SearchPage extends StatelessWidget {
                                   onTap: () {
                                     if (searchresult.keys.first ==
                                         'Restaurant') {
-                                      Get.to(()=>ViewRestaurantPage(restaurant: searchresult
-                                                  .values.first));
-                                    }
-                                    else if (searchresult.keys.first ==
+                                      Get.to(() => ViewRestaurantPage(
+                                          restaurant:
+                                              searchresult.values.first));
+                                    } else if (searchresult.keys.first ==
                                         'Dish') {
-                                      Get.to(()=>ProductPage(product:  searchresult
-                                                  .values.first));
+                                      Get.to(() => ProductPage(
+                                          product: searchresult.values.first));
                                     }
                                   },
                                   child: Row(

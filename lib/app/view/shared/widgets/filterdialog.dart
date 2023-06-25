@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/filtercontroller.dart';
+import 'package:ila/app/controller/searchcontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
@@ -11,7 +11,7 @@ import 'package:ila/app/view/shared/widgets/customtext.dart';
 import 'custombutton.dart';
 
 getFilterdialog() {
-  FilterController filterController = Get.put(FilterController());
+  SearchFilterController filterController = Get.put(SearchFilterController());
 
   Get.dialog(AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -20,7 +20,16 @@ getFilterdialog() {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const CustomText(text: "Filter"),
-        IconButton(onPressed: ()=>Get.back(), icon: Icon(Icons.close,size: 22,),style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(kGreylight.withOpacity(0.1))),)
+        IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Icons.close,
+            size: 22,
+          ),
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStatePropertyAll(kGreylight.withOpacity(0.1))),
+        )
       ],
     ),
     content: SingleChildScrollView(
@@ -71,43 +80,57 @@ getFilterdialog() {
                 ],
               )),
           kHeightBox20,
-          const CustomText(text: "RATING"),
+          const CustomText(text: "MINIMUM RATING"),
           Center(
             child: RatingBar(
-                              itemSize: 35,
-                                ratingWidget: RatingWidget(
-                                    full: const Icon(Icons.star,
-                                        color: Colors.orange),
-                                    half: const Icon(
-                                      Icons.star_half,
-                                      color: Colors.orange,
-                                    ),
-                                    empty: const Icon(
-                                      Icons.star_outline,
-                                      color: Colors.orange,
-                                    )),
-                                onRatingUpdate: (value) {
-                                  filterController.setRating(value);
-                                  log(filterController.selectedRating.toString());
-                                }),
+                itemSize: 35,
+                ratingWidget: RatingWidget(
+                    full: const Icon(Icons.star, color: Colors.orange),
+                    half: const Icon(
+                      Icons.star_half,
+                      color: Colors.orange,
+                    ),
+                    empty: const Icon(
+                      Icons.star_outline,
+                      color: Colors.orange,
+                    )),
+                onRatingUpdate: (value) {
+                  filterController.setRating(value);
+                  log(filterController.selectedRating.toString());
+                }),
           ),
           kHeightBox20,
           SizedBox(
-            width: double.infinity,
-            child: CustomButton(
-                            padding: 15,
-                            text: CustomText(
-                              text: "FILTER",
-                              color: kWhite,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            function:() {
-                        
-                      },
-                            color: kGreen)
-           
-          ),
+              width: double.infinity,
+              child: CustomButton(
+                  padding: 15,
+                  text: CustomText(
+                    text: "FILTER",
+                    color: kWhite,
+                    size: 18,
+                    weight: FontWeight.bold,
+                  ),
+                  function: () {
+                    filterController.filterData();
+                    Get.back();
+                  },
+                  color: kGreen)),
+          kHeightBox10,
+          SizedBox(
+              width: double.infinity,
+              child: CustomButton(
+                  padding: 15,
+                  text: CustomText(
+                    text: "Clear",
+                    color: kBlueShade,
+                    size: 18,
+                    weight: FontWeight.w400,
+                  ),
+                  function: () {
+                    filterController.clearFilter();
+                    Get.back();
+                  },
+                  color: kOffBlue)),
         ],
       ),
     ),

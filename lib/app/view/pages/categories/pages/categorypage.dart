@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
+import 'package:ila/app/view/pages/search/pages/searchpage.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
 import 'package:ila/app/view/shared/widgets/itemcard.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 
 class CategoryPage extends StatelessWidget {
-
-
   const CategoryPage({super.key});
 
   @override
@@ -50,7 +49,6 @@ class CategoryPage extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                       
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         final item = controller.categories[index];
@@ -58,7 +56,11 @@ class CategoryPage extends StatelessWidget {
                             imageUrl: item.imageUrl!,
                             title: item.name!,
                             price: item.price!,
-                            onTap: () {});
+                            onTap: () {
+                              Get.to(() => SearchPage(
+                                    categoryName: item.name!,
+                                  ));
+                            });
                       },
                     );
                   },

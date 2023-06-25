@@ -11,6 +11,7 @@ import 'package:ila/app/view/shared/widgets/restaurant_card.dart';
 import '../../../../controller/auth_controller.dart';
 import '../../../../utils/constants/constants.dart';
 import '../../restaurants/pages/viewrestaurant.dart';
+import '../../search/pages/searchpage.dart';
 import '../widgets/carouselcard.dart';
 import '../widgets/headerwidget.dart';
 import '../widgets/searchwidget.dart';
@@ -59,12 +60,20 @@ class HomePage extends StatelessWidget {
                                         imageUrl: item.imageUrl!,
                                         title: item.name!,
                                         price: item.price!,
-                                        onTap: () {});
+                                        onTap: () {
+                                          Get.to(() => SearchPage(
+                                                categoryName: item.name!,
+                                              ));
+                                        });
                                   },
                                 );
                     })),
                 kHeightBox20,
-                Obx(() => homeController.isCarouselLoading.value?const Center(child: CircularProgressIndicator(),): const CarouselCard()),
+                Obx(() => homeController.isCarouselLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : const CarouselCard()),
                 kHeightBox20,
                 kHeightBox10,
                 SectionTitleWidget(
@@ -92,7 +101,6 @@ class HomePage extends StatelessWidget {
                                     restaurant: resItem,
 
                                     onTap: () {
-                                      
                                       Get.to(() => ViewRestaurantPage(
                                           restaurant: resItem));
                                     },
