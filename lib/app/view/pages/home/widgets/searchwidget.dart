@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ila/app/view/pages/search/pages/searchpage.dart';
+import 'package:ila/app/view/shared/widgets/customtext.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 
@@ -9,22 +12,18 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SearchBar(
-      hintText: "Search dishes,restaurants",
-      trailing: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.tune))
-      ],
-      padding: const MaterialStatePropertyAll(
-          EdgeInsets.only(left: 15, right: 15)),
-      leading: Icon(
-        Icons.search_outlined,
-        color: kGreylight,
+    return GestureDetector(
+      onTap: () => Get.to(() => SearchPage()),
+      child: ListTile(
+       
+        title:CustomText(text:  "Search dishes,restaurants",color: kGrey,) ,
+        leading: Icon(
+          Icons.search_outlined,
+          color: kGreylight,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        tileColor: kGreylight.withOpacity(0.2),
       ),
-      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18))),
-      backgroundColor:
-          MaterialStatePropertyAll(kGreylight.withOpacity(0.2)),
-      elevation: const MaterialStatePropertyAll(0),
     );
   }
 }

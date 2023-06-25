@@ -8,6 +8,8 @@ class UserModel {
   String? phoneNumber;
   List<dynamic>? location;
   List<dynamic>? address;
+  List<dynamic>? favoriteList;
+  List<dynamic>? userCart;
 
   UserModel({
     this.userId,
@@ -15,6 +17,8 @@ class UserModel {
     this.email,
     this.activeStatus = true,
     this.address,
+    this.favoriteList,
+    this.userCart,
     required this.phoneNumber,
     required this.location,
   });
@@ -27,15 +31,19 @@ class UserModel {
     address = data["deliveryAddress"];
     phoneNumber = data["phoneNumber"];
     location = data["location"];
+    userCart = data["userCart"];
+    favoriteList = data["favoriteList"];
   }
   Map<String, dynamic> toSnapshot() {
     return {
-      "deliveryAddress":address,
+      "deliveryAddress": address,
       "name": name,
       "email": email,
       "activeStatus": activeStatus,
       "phoneNumber": phoneNumber,
-      "location": location
+      "location": location,
+      "userCart":userCart,
+      "favoriteList":favoriteList
     };
   }
 }

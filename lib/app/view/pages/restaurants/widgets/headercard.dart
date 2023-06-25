@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/customtext.dart';
@@ -10,12 +13,19 @@ class HeaderCard extends StatelessWidget {
   final num? rate;
   final bool isFav;
 
-  const HeaderCard({
+  final bool isProduct;
+  final String itemid;
+
+  HeaderCard({
     super.key,
     required this.imageUrl,
     required this.rate,
     required this.isFav,
+    required this.isProduct,
+    required this.itemid,
   });
+
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,7 @@ class HeaderCard extends StatelessWidget {
           children: [
             Stack(children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: isProduct?MediaQuery.of(context).size.height * 0.45: MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
@@ -42,28 +52,41 @@ class HeaderCard extends StatelessWidget {
                     )),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.4,
+                height:isProduct?MediaQuery.of(context).size.height * 0.45: MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
                     color: kBlack.withOpacity(0.2)),
               ),
+              !isProduct?
               Positioned(
-                right:16,
+                right: 16,
                 bottom: 16,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: IconButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(kWhite)),
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.favorite,
-                        color: isFav == true ? kGreen : kGreyDark,
-                      )),
+                  child: GetBuilder<HomeController>(
+                    init: HomeController(),
+                    builder: (controller) {
+                      return IconButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(kWhite)),
+                          onPressed: () async {
+                            log("pressed favorite button");
+                             await controller.updateFavoriteStatus(itemid);
+                          },
+                          icon: Obx(() => Icon(
+                                Icons.favorite,
+                                color:
+                                    controller.favList.contains(itemid)
+                                        ? kGreen
+                                        : kGreyDark,
+                              )));
+                    },
+                  ),
                 ),
-              ),
+              ):Container(),
               Positioned(
                 top: 16,
                 left: 16,
@@ -72,7 +95,7 @@ class HeaderCard extends StatelessWidget {
                   child: IconButton(
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(kWhite)),
-                      onPressed: () =>Get.back(),
+                      onPressed: () => Get.back(),
                       icon: const Icon(
                         Icons.keyboard_arrow_left,
                       )),
@@ -84,51 +107,63 @@ class HeaderCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Stack(
-                    children:[IconButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(kWhite)),
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shopping_bag_outlined
-                        )),
-                        Positioned(
+                    children: [
+                      IconButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(kWhite)),
+                          onPressed: () {},
+                          icon: const Icon(Icons.shopping_bag_outlined)),
+                      Positioned(
                           bottom: 2,
                           right: 0.5,
-                          child: CircleAvatar(radius:12,backgroundColor: kOrange,child: CustomText(text: "2",size: 12,color: kWhite,),))],
+                          child: CircleAvatar(
+                            radius: 12,
+                            backgroundColor: kOrange,
+                            child: CustomText(
+                              text: "2",
+                              size: 12,
+                              color: kWhite,
+                            ),
+                          ))
+                    ],
                   ),
                 ),
               ),
-              rate==null?Container():Positioned(
-                bottom:16,
-                left: 16,
-                child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      height: 30,
-                      width: 65,
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(12)),
+              rate == null
+                  ? Container()
+                  : Positioned(
+                      bottom: 16,
+                      left: 16,
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: kOrange,
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 30,
+                            width: 65,
+                            decoration: BoxDecoration(
+                                color: kWhite,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(
+                                    Icons.star_rounded,
+                                    color: kOrange,
+                                  ),
+                                  kWidthBox10,
+                                  CustomText(
+                                    text: rate.toString(),
+                                    weight: FontWeight.bold,
+                                    size: 16,
+                                  )
+                                ],
+                              ),
                             ),
-                            kWidthBox10,
-                            CustomText(
-                              text: rate.toString(),
-                              weight: FontWeight.bold,
-                              size: 16,
-                            )
-                          ],
-                        ),
-                      ),
-                    )),
-              )
+                          )),
+                    )
             ]),
           ],
         ),

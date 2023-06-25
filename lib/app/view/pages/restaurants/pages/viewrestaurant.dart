@@ -31,9 +31,12 @@ class ViewRestaurantPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 HeaderCard(
-                    imageUrl: restaurant.image!,
-                    rate: restaurant.rating!,
-                    isFav: restaurant.isFavorite!),
+                  imageUrl: restaurant.image!,
+                  rate: restaurant.rating!,
+                  isFav: restaurant.isFavorite!,
+                  isProduct: false,
+                  itemid: restaurant.docId!,
+                ),
                 kHeightBox20,
                 Row(
                   children: [
@@ -89,7 +92,6 @@ class ViewRestaurantPage extends StatelessWidget {
                       weight: FontWeight.bold,
                       color: kOrange,
                       overflow: TextOverflow.ellipsis,
-
                     )
                   ],
                 ),
@@ -123,32 +125,31 @@ class ViewRestaurantPage extends StatelessWidget {
                 ),
                 kHeightBox10,
                 Obx(() {
-                   homeController.getProductFromRestaurant(restaurant.docId);
-                    RxList<ProductModel> productList =
-                        homeController.restaurantBasedProducts;
+                  homeController.getProductFromRestaurant(restaurant.docId);
+                  RxList<ProductModel> productList =
+                      homeController.restaurantBasedProducts;
 
-                    return productList.isEmpty?const EmptyWidget():
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: productList.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        final item = productList[index];
-                        return ProductCard(
-                            imageUrl: item.image!,
-                            title: item.name!,
-                            price: item.price.toString(),
-                            onTap: () =>Get.to(()=>ProductPage(product: item)));
-                      },
-                    );
-                })
-                   
-                 
-                ,
+                  return productList.isEmpty
+                      ? const EmptyWidget()
+                      : GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: productList.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            final item = productList[index];
+                            return ProductCard(
+                                imageUrl: item.image!,
+                                title: item.name!,
+                                price: item.price.toString(),
+                                onTap: () =>
+                                    Get.to(() => ProductPage(product: item)));
+                          },
+                        );
+                }),
               ],
             ),
           ),

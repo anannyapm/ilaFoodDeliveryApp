@@ -12,8 +12,9 @@ import '../../../shared/widgets/restaurant_card.dart';
 class RestaurantPage extends StatelessWidget {
   
 
-  const RestaurantPage({super.key});
-
+   RestaurantPage({super.key});
+  final HomeController homeController=Get.put(HomeController());
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,30 +45,25 @@ class RestaurantPage extends StatelessWidget {
               ),
               kHeightBox20,
               Expanded(
-                child: GetBuilder<HomeController>(
-                  init: HomeController(),
-                  builder: (controller) {
-                    return controller.isResLoading.value
+                child: Obx(() 
+                {
+                    return homeController.isResLoading.value
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        :controller.restaurants.isEmpty?const EmptyWidget()
+                        :homeController.restaurants.isEmpty?const EmptyWidget()
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: controller.restaurants.length,
+                            itemCount: homeController.restaurants.length,
                             itemBuilder: (context, index) {
-                              final resItem = controller.restaurants[index];
+                              final resItem = homeController.restaurants[index];
                               return RestaurantCard(
-                                  imageUrl: resItem.image!,
+                                restaurant: resItem,
+                                
                                   onTap: () =>Get.to(()=>ViewRestaurantPage(restaurant: resItem)),
-                                  rName: resItem.name!,
-                                  rTag: resItem.tagline!,
-                                  deliveryCharge:
-                                      resItem.deliveryfee.toString(),
-                                  deliveryTime: resItem.deliverytime!,
-                                  rate: resItem.rating!,
-                                  isFav: resItem.isFavorite!);
+                                  
+                                  );
                             },
                             
                           );

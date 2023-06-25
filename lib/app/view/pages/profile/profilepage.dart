@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/navigationcontroller.dart';
-import 'package:ila/app/view/pages/cart/cartpage.dart';
-import 'package:ila/app/view/pages/favourite/favouritepage.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/profile/faqpage.dart';
 import 'package:ila/app/view/pages/profile/settingspage.dart';
@@ -29,28 +27,14 @@ class ProfilePage extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                kHeightBox10,
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Get.back(),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                              kGreylight.withOpacity(0.4))),
-                      icon: const Icon(
-                        Icons.keyboard_arrow_left,
-                        size: 30,
-                      ),
-                    ),
-                    kWidthBox15,
-                    const CustomText(
-                      text: "My Account",
-                      size: 20,
-                    )
-                  ],
+                kHeightBox20,
+                const CustomText(
+                  text: "My Account",
+                  size: 24,
                 ),
-                kHeightBox50,
+                kHeightBox20,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +77,7 @@ class ProfilePage extends StatelessWidget {
                     icon: Ionicons.bag_handle_outline,
                     function: () {
                       navigationController.setSelectedIndex(4);
-                      Get.to(()=>NavigationPage());
+                      Get.to(() => NavigationPage());
                     },
                     color: kIconLightBlue),
                 ProfileViewMoreWidget(
@@ -101,18 +85,18 @@ class ProfilePage extends StatelessWidget {
                     icon: Ionicons.heart_outline,
                     function: () {
                       navigationController.setSelectedIndex(1);
-                      Get.to(()=>NavigationPage());
+                      Get.to(() => NavigationPage());
                     },
                     color: kIconViolet),
                 ProfileViewMoreWidget(
                     text: "FAQs",
                     icon: Ionicons.help_circle_outline,
-                    function: () => Get.to(FaqPage()),
+                    function: () => Get.to(const FaqPage()),
                     color: kOrange),
                 ProfileViewMoreWidget(
                     text: "Settings",
                     icon: Ionicons.settings_outline,
-                    function: () => Get.to(SettingsPage()),
+                    function: () => Get.to(const SettingsPage()),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Review App",
@@ -159,9 +143,11 @@ class ProfilePage extends StatelessWidget {
                     },
                     color: kWarning),
                 kHeightBox50,
-                const CustomText(
-                  text: "App Version 1.0.0",
-                  size: 16,
+                const Center(
+                  child: CustomText(
+                    text: "App Version 1.0.0",
+                    size: 16,
+                  ),
                 )
               ],
             ),

@@ -9,6 +9,7 @@ import '../../../../controller/homecontroller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/showsnackbar.dart';
 
 class ProductPage extends StatelessWidget {
   final ProductModel product;
@@ -18,7 +19,7 @@ class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
   @override
   Widget build(BuildContext context) {
-    final String rName = homeController.restaurantName(product.restaurantId!);
+    final String rName = homeController.getrestaurantName(product.restaurantId!);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -29,6 +30,8 @@ class ProductPage extends StatelessWidget {
             children: [
               
               HeaderCard(
+                 itemid: product.docId!,
+                 isProduct: true,
                   imageUrl: product.image!,
                   rate: null,
                   isFav: product.isRecommended!),

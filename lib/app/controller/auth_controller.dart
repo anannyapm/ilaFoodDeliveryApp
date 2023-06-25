@@ -153,7 +153,9 @@ class AuthController extends GetxController {
         location: [GeoPoint(mapController.lat, mapController.long)],
         address: [mapController.location],
         name: loginController.name,
-        email: loginController.email);
+        email: loginController.email,
+        userCart: List.empty(),
+        favoriteList: List.empty());
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)

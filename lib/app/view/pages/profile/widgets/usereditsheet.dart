@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
@@ -18,71 +16,73 @@ class UserEditSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController(text:authController.userModel.name!);
-    TextEditingController emailController = TextEditingController(text:authController.userModel.email!);
-    TextEditingController phoneController = TextEditingController(text:authController.userModel.phoneNumber!);
+    TextEditingController nameController =
+        TextEditingController(text: authController.userModel.name!);
+    TextEditingController emailController =
+        TextEditingController(text: authController.userModel.email!);
+    TextEditingController phoneController =
+        TextEditingController(text: authController.userModel.phoneNumber!);
     return SingleChildScrollView(
-      child: Container(
-        //decoration: const BoxDecoration(boxShadow: [BoxShadow(offset: Offset(0, 4))]),
-        child: GetBuilder<AuthController>(
-          init: AuthController(),
-          builder: (controller) {
-            return Container(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  kHeightBox10,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const CustomText(text: "My Profile",size: 20,),
-                      IconButton(onPressed: ()=>Get.back(), icon: const Icon(Icons.close))
-                    ],
-                  ),
-                  kHeightBox20,
-                  CustomTextFormField(
-                      textColor: kBlueShade,
-                      hint: "",
-                      label:"Name",
-                      textcontroller: nameController,
-                      function: () {}),
-                  CustomTextFormField(
+      child: GetBuilder<AuthController>(
+        init: AuthController(),
+        builder: (controller) {
+          return Container(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                kHeightBox10,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomText(
+                      text: "My Profile",
+                      size: 20,
+                    ),
+                    IconButton(
+                        onPressed: () => Get.back(),
+                        icon: const Icon(Icons.close))
+                  ],
+                ),
+                kHeightBox20,
+                CustomTextFormField(
+                    textColor: kBlueShade,
+                    hint: "",
+                    label: "Name",
+                    textcontroller: nameController,
+                    function: () {}),
+                CustomTextFormField(
                     readonly: true,
-                      textColor: kBlueShade,
-                      hint: "",
-                      label:"Phone Number",
-                      textcontroller: phoneController,
-                      function: () {}),
-                  CustomTextFormField(
-                      textColor: kBlueShade,
-                      hint: "",
-                      label: "Email",
-                      textcontroller: emailController,
-                      function: () {}),
-                      kHeightBox20,
-                      SizedBox(
-                        width: double.infinity,
-                        child: CustomButton(
-                            padding: 15,
-                            text: CustomText(
-                              text: "DONE",
-                              color: kWhite,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            function:() {
-                        
-                      },
-                            color: kGreen)
-                       ,
+                    textColor: kBlueShade,
+                    hint: "",
+                    label: "Phone Number",
+                    textcontroller: phoneController,
+                    function: () {}),
+                CustomTextFormField(
+                    textColor: kBlueShade,
+                    hint: "",
+                    label: "Email",
+                    textcontroller: emailController,
+                    function: () {}),
+                kHeightBox20,
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomButton(
+                      padding: 15,
+                      text: CustomText(
+                        text: "DONE",
+                        color: kWhite,
+                        size: 18,
+                        weight: FontWeight.bold,
                       ),
-                      kHeightBox20
-                ],
-              ),
-            );
-          },
-        ),
+                      function: () {},
+                      color: kGreen),
+                ),
+                kHeightBox20
+              ],
+            ),
+          );
+        },
       ),
     );
   }

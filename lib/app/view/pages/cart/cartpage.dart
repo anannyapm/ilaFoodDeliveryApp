@@ -22,67 +22,55 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+         
           child: Container(
             padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kHeightBox10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () => Get.back(),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  kGreylight.withOpacity(0.4))),
-                          icon: const Icon(
-                            Icons.keyboard_arrow_left,
-                            size: 30,
-                          ),
-                        ),
-                        kWidthBox15,
-                        const CustomText(
-                          text: "My Cart Items",
-                          size: 20,
-                        )
-                      ],
-                    ),
-                  ],
+                const Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: CustomText(
+                    text: "My Cart Items",
+                    size: 20,
+                  ),
                 ),
                 kHeightBox20,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          text: "DELIVERY ADDRESS",
-                          color: kGrey,
-                          size: 15,
-                        ),
-                        Obx(() => CustomText(
-                              text: authController.userModel.address![
-                                  loginController.primaryAddressIndex.value],
-                              color: kGreyDark,
-                              size: 16,
-                            )),
-                      ],
-                    ),
-                    TextButton(
-                        onPressed: () => showChangeAddressBottomSheet(),
-                        child: CustomText(
-                          text: "CHANGE",
-                          color: kOrange,
-                          size: 14,
-                          weight: FontWeight.bold,
-                        ))
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: "DELIVERY ADDRESS",
+                            color: kGrey,
+                            size: 15,
+                          ),
+                          Obx(() => CustomText(
+                                text: authController.userModel.address![
+                                    loginController.primaryAddressIndex.value],
+                                color: kGreyDark,
+                                size: 16,
+                              )),
+                        ],
+                      ),
+                      TextButton(
+                          onPressed: () => showChangeAddressBottomSheet(),
+                          child: CustomText(
+                            text: "CHANGE",
+                            color: kOrange,
+                            size: 14,
+                            weight: FontWeight.bold,
+                          ))
+                    ],
+                  ),
                 ),
-                kHeightBox50,
+                kHeightBox20,
+                kHeightBox10,
                 const OrderDetailWidget(),
                 kHeightBox20,
                 Padding(

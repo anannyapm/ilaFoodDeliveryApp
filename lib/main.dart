@@ -16,8 +16,7 @@ void main() async {
   await Firebase.initializeApp().then(
     (value) => Get.put(AuthController()),
   );
-  Get.put(HomeController());
-  Get.put(AuthController());
+  //Get.put(HomeController());
 
   runApp(const MyApp());
 }
@@ -32,15 +31,11 @@ class MyApp extends StatelessWidget {
       title: 'Ila App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        
         fontFamily: GoogleFonts.sen().fontFamily,
-        
         scaffoldBackgroundColor: kWhite,
         colorScheme: ColorScheme.fromSeed(seedColor: kGreen),
-        
         useMaterial3: true,
       ),
-     
       home: const SplashScreen(),
     );
   }
