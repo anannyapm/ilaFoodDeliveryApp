@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class ItemCard extends StatelessWidget {
   final String imageUrl;

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/restaurants/pages/productpage.dart';
-import 'package:ila/app/view/pages/restaurants/pages/viewrestaurant.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
-import 'package:ila/app/view/shared/widgets/filterdialog.dart';
+import 'package:ila/app/view/pages/restaurants/pages/product_page.dart';
+import 'package:ila/app/view/pages/restaurants/pages/view_restaurant.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/filter_dialog.dart';
 
 import '../../../../controller/searchcontroller.dart';
 import '../../../../utils/constants/color_constants.dart';

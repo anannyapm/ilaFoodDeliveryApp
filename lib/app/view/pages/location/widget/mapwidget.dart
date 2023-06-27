@@ -5,8 +5,8 @@ import 'package:ila/app/controller/mapcontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 
 import '../../../../utils/constants/color_constants.dart';
-import '../../../shared/widgets/custombutton.dart';
-import '../../../shared/widgets/customtext.dart';
+import '../../../shared/widgets/custom_button.dart';
+import '../../../shared/widgets/custom_text.dart';
 
 class MapPage extends StatelessWidget {
   final MapController mapController = Get.put(MapController());
@@ -19,54 +19,88 @@ class MapPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-                Expanded(
-                  child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                        mapController.lat,
-                        mapController.long,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        mapController.clearfields();
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.keyboard_arrow_left,
+                        size: 35,
                       ),
-                      zoom: 14,
                     ),
-                    onTap: (position) {
-                      mapController.latitudeController.value =
-                          position.latitude;
-                      mapController.longitudeController.value =
-                          position.longitude;
-                      mapController.getLocationDetails();
-                    },
-                  ),
+                    kWidthBox10,
+                    const CustomText(
+                      text: "Choose Delivery Location",
+                      weight: FontWeight.bold,
+                      size: 18,
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Obx(() => GoogleMap(
+                        mapType: MapType.normal,
+                        markers: {
+                          Marker(
+                            markerId: const MarkerId('Current Location'),
+                            position:
+                                LatLng(mapController.lat, mapController.long),
+                          ),
+                        },
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            mapController.lat,
+                            mapController.long,
+                          ),
+                          zoom: 14,
+                        ),
+                        onTap: (position) {
+                          mapController.latitudeController.value =
+                              position.latitude;
+                          mapController.longitudeController.value =
+                              position.longitude;
+                          mapController.getLocationDetails();
+                        },
+                      )),
                 ),
                 kHeightBox20,
-                Obx(() => Column(
-                      children: [
-                        Text(mapController.location),
-                       /*  Text(
-                            mapController.longitudeController.value.toString()) */
-                      ],
+                Obx(() => Center(
+                      child: Column(
+                        children: [
+                          CustomText(
+                            text: mapController.locationAddress,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     )),
                 kHeightBox20,
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: CustomButton(
-                            padding: 15,
-                            text: CustomText(
-                              text: "UPDATE LOCATION",
-                              color: kWhite,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            function:() {
-                        mapController.updateLocation();
-                      },
-                            color: kGreen)
-                  
-                  
+                Center(
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Obx(() => CustomButton(
+                          padding: 15,
+                          text: CustomText(
+                            text: mapController.isEditMode.value
+                                ? "EDIT ADDRESS"
+                                : "ADD COMPLETE LOCATION",
+                            color: kWhite,
+                            size: 18,
+                            weight: FontWeight.bold,
+                          ),
+                          function: () {
+                            _getAddAddressSheet();
+                            //mapController.updateLocation();
+                          },
+                          color: kGreen))),
                 ),
                 kHeightBox20
               ],
@@ -74,6 +108,70 @@ class MapPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _getAddAddressSheet() {
+    Get.bottomSheet(
+      SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            key: mapController.formKey3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                kHeightBox20,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                      text: "Enter Your Address",
+                      size: 20,
+                      weight: FontWeight.bold,
+                      color: kOrange,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          mapController.addressController.text =
+                              mapController.locationAddress;
+                          Get.back();
+                        },
+                        icon: const Icon(Icons.close))
+                  ],
+                ),
+                TextFormField(
+                  minLines: 1,
+                  maxLines: 3,
+                  controller: mapController.addressController,
+                  validator: (value) => mapController.validateAddress(value),
+                  decoration: const InputDecoration(
+                    labelText: "Complete Address",
+                  ),
+                ),
+                kHeightBox20,
+                kHeightBox10,
+                SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: CustomButton(
+                        text: CustomText(
+                          text: "Save Address",
+                          color: kWhite,
+                          weight: FontWeight.bold,
+                          size: 18,
+                        ),
+                        function: () {
+                          mapController.onSaveAddress();
+                        },
+                        color: kGreen,
+                        padding: 0))
+              ],
+            ),
+          ),
+        ),
+      ),
+      backgroundColor: kWhite,
     );
   }
 }

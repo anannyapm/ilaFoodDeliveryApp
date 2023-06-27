@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/restaurants/widgets/headercard.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 import '../../../../controller/homecontroller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
-import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/custom_button.dart';
 
 class ProductPage extends StatelessWidget {
   final ProductModel product;

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/controller/login_controller.dart';
+import 'package:ila/app/view/pages/cart/widgets/changeaddress.dart';
 import 'package:ila/app/view/pages/home/pages/notificationpage.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../../../controller/auth_controller.dart';
 import '../../../../utils/constants/color_constants.dart';
-import '../../../shared/widgets/customtext.dart';
+import '../../../shared/widgets/custom_text.dart';
 
 class HeaderWidget extends StatelessWidget {
   HeaderWidget({
@@ -14,7 +17,7 @@ class HeaderWidget extends StatelessWidget {
   });
 
   final AuthController authController;
-  final LoginController loginController = Get.put(LoginController());
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +33,22 @@ class HeaderWidget extends StatelessWidget {
               weight: FontWeight.bold,
               size: 14,
             ),
-            CustomText(
-              text: authController.userModel
-                  .address![loginController.primaryAddressIndex.value]!,
-              weight: FontWeight.bold,
-              size: 15,
-              color: kBlueShade,
+            Row(
+              children: [
+                Obx(() => CustomText(
+                      text: authController.userModel
+                          .address![homeController.primaryAddressIndex.value]!,
+                      weight: FontWeight.bold,
+                      size: 15,
+                      color: kBlueShade,
+                    )),
+                IconButton(
+                    onPressed: () => showChangeAddressBottomSheet(),
+                    icon: const Icon(
+                      Icons.edit_location_alt,
+                      size: 18,
+                    ))
+              ],
             )
           ],
         ),

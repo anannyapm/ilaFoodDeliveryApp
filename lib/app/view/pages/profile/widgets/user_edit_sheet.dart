@@ -4,10 +4,10 @@ import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
-import 'package:ila/app/view/shared/widgets/customtextformfield.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/custom_textformfield.dart';
 
-import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/custom_button.dart';
 
 class UserEditSheet extends StatelessWidget {
   UserEditSheet({super.key});

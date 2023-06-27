@@ -10,6 +10,7 @@ class UserModel {
   List<dynamic>? address;
   List<dynamic>? favoriteList;
   List<dynamic>? userCart;
+  
 
   UserModel({
     this.userId,

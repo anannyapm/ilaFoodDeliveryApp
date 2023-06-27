@@ -5,7 +5,7 @@ import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/controller/mapcontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../utils/constants/color_constants.dart';
@@ -52,8 +52,9 @@ class LocationPage extends StatelessWidget {
                                 ),
                                 content: Obx(() => CustomText(
                                       text:
-                                          'Current Location is \n ${mapController.location}',
+                                          'Current Location is \n ${mapController.locationAddress}',
                                       align: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
                                     )),
                                 actions: [
                                   ElevatedButton(

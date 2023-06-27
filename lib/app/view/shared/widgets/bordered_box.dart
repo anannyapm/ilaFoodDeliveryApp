@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'customtext.dart';
+import 'custom_text.dart';
 
-class CustomButton extends StatelessWidget {
+class BorderedButton extends StatelessWidget {
   final CustomText text;
   final VoidCallback function;
   final Color color;
-  final double padding;
-  const CustomButton({
+  const BorderedButton({
     super.key,
     required this.text,
+    required this.color,
     required this.function,
-    required this.color, required this.padding,
   });
 
   @override
@@ -19,10 +18,11 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: function,
         style: ElevatedButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            backgroundColor: color,
-            padding: EdgeInsets.all(padding),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: color),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: Colors.transparent,
             elevation: 0),
         child: text);
   }

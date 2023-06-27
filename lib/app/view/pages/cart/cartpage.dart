@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/cartcontroller.dart';
+import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/view/pages/cart/widgets/changeaddress.dart';
 import 'package:ila/app/view/pages/cart/widgets/ordersummary.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
-import '../../shared/widgets/custombutton.dart';
-import '../../shared/widgets/customtext.dart';
+import '../../shared/widgets/custom_button.dart';
+import '../../shared/widgets/custom_text.dart';
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});
 
   final AuthController authController = Get.put(AuthController());
-  final LoginController loginController = Get.put(LoginController());
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class CartPage extends StatelessWidget {
                           ),
                           Obx(() => CustomText(
                                 text: authController.userModel.address![
-                                    loginController.primaryAddressIndex.value],
+                                    homeController.primaryAddressIndex.value],
                                 color: kGreyDark,
                                 size: 16,
                               )),

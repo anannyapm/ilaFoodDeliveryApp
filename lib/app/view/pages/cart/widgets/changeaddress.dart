@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
-import 'package:ila/app/controller/login_controller.dart';
+import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
 
 void showChangeAddressBottomSheet() {
   AuthController authController = Get.put(AuthController());
-  LoginController loginController = Get.put(LoginController());
+  HomeController homeController = Get.put(HomeController());
 
   Get.bottomSheet(
     Container(
@@ -16,24 +17,34 @@ void showChangeAddressBottomSheet() {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomText(
-            text: "Change Address",
-            size: 18,
+          const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: CustomText(
+              text: "Change Address",
+              size: 20,
+              weight: FontWeight.bold,
+            ),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: authController.userModel.address!.length,
               itemBuilder: (context, index) {
-                // Replace with your actual address
                 bool isSelected =
-                    loginController.primaryAddressIndex.value == index;
+                    homeController.primaryAddressIndex.value == index;
 
                 return ListTile(
-                  title: Text(authController.userModel.address![index]),
+                  selected: isSelected,
+                  selectedTileColor: kOffBlue,
+                  title: CustomText(
+                    text: authController.userModel.address![index],
+                    weight: isSelected ? FontWeight.bold : null,
+                  ),
                   trailing: isSelected ? const Icon(Icons.check) : null,
                   onTap: () {
-                    loginController.primaryAddressIndex.value = index;
+                    homeController.changePrimaryAddress(index);
                     Get.back();
+                    showSnackBar("Done", "Changed Address", kGreen);
+
                   },
                 );
               },

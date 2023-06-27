@@ -28,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      minLines: 1,
       readOnly: readonly,
       maxLines: maxline,
       controller: textcontroller,

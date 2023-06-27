@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/restaurants/pages/viewrestaurant.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
-import 'package:ila/app/view/shared/widgets/emptywidet.dart';
+import 'package:ila/app/view/pages/restaurants/pages/view_restaurant.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/restaurant_card.dart';

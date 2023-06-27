@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/constants/constants.dart';
-import '../../../shared/widgets/customtext.dart';
+import '../../../shared/widgets/custom_text.dart';
 
 class ProfileViewMoreWidget extends StatelessWidget {
   final String text;

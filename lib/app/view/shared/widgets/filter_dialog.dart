@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/searchcontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
-import 'custombutton.dart';
+import 'custom_button.dart';
 
 getFilterdialog() {
   SearchFilterController filterController = Get.put(SearchFilterController());

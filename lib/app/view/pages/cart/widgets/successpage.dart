@@ -4,9 +4,9 @@ import 'package:ila/app/controller/navigationcontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
-import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/custom_button.dart';
 
 class SuccessPage extends StatelessWidget {
   const SuccessPage({super.key});

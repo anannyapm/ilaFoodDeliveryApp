@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
+import 'package:ila/app/controller/login_controller.dart';
 
 import '../model/carousel_model.dart';
 import '../model/category_model.dart';
@@ -12,6 +14,7 @@ import '../services/firebase_services.dart';
 
 class HomeController extends GetxController {
   AuthController authController = Get.put(AuthController());
+  LoginController loginController = Get.put(LoginController());
 
   RxList<RestuarantModel> restaurants = RxList<RestuarantModel>([]);
   RxList<RestuarantModel> favRestaurants = RxList<RestuarantModel>([]);
@@ -21,6 +24,8 @@ class HomeController extends GetxController {
   RxList<ProductModel> favProducts = RxList<ProductModel>([]);
   RxList<CategoryModel> categories = RxList<CategoryModel>([]);
   RxList<CarouselModel> carousels = RxList<CarouselModel>([]);
+
+  RxInt primaryAddressIndex = 0.obs;
 
   RxList<dynamic> favList = RxList([]);
 
@@ -32,40 +37,39 @@ class HomeController extends GetxController {
   RxBool isRecommended = false.obs;
 
   RxInt itemCount = 0.obs;
-  RxBool isEditMode = true.obs;
-
-  void changeEditMode() {
-    isEditMode.value = !isEditMode.value;
-  }
+  
 
   void toggleRecommended(bool value) {
     isRecommended.value = value;
   }
 
+  void changePrimaryAddress(int index) {
+    primaryAddressIndex.value = index;
+    getNearbyRestaurant();
+  }
+
   @override
-  void onInit()  {
+  void onInit() {
     super.onInit();
     categoryCollectionRef = firebaseFirestore.collection("categories");
     restaurantCollectionRef = firebaseFirestore.collection("restaurant");
     productCollectionRef = firebaseFirestore.collection("products");
     carouselCollectionRef = firebaseFirestore.collection("carousel");
-     getAllCarousel();
+    getAllCarousel();
 
-     getAllCategory();
+    getAllCategory();
 
     initializeRestaurants();
 
-     getAllProducts();
+    getAllProducts();
   }
 
   void initializeRestaurants() async {
     await getAllRestaurants();
     getNearbyRestaurant();
-     await getFavfromUserDB();
+    await getFavfromUserDB();
     getFavouriteRestaurant();
   }
-
- 
 
   Future<void> getAllCarousel() async {
     isCarouselLoading.value = true;
@@ -86,8 +90,20 @@ class HomeController extends GetxController {
   }
 
   void getNearbyRestaurant() {
-    nearbyRestaurants =
-        restaurants.where((restaurant) => restaurant.isNear!).toList().obs;
+    nearbyRestaurants.clear();
+    List<RestuarantModel> nearlist = restaurants.where((restaurant) {
+      final distance = Geolocator.distanceBetween(
+          restaurant.location!.latitude,
+          restaurant.location!.longitude,
+          authController
+              .userModel.location![primaryAddressIndex.value].latitude,
+          authController
+              .userModel.location![primaryAddressIndex.value].longitude);
+      log((distance / 1000).toString());
+      log((distance < 10).toString());
+      return distance / 1000 < 10;
+    }).toList();
+    nearbyRestaurants.addAll(nearlist);
   }
 
   Future<void> getFavfromUserDB() async {
@@ -96,15 +112,18 @@ class HomeController extends GetxController {
     final DocumentSnapshot userSnap = await userDocRef.get();
 
     final List<dynamic> fav = userSnap.get('favoriteList');
+
     favList = fav.map((element) => element).toList().obs;
     log("favlist:$favList");
   }
 
   void getFavouriteRestaurant() {
-    favRestaurants = restaurants
+    favRestaurants.clear();
+    List<RestuarantModel> favRes = restaurants
         .where((restaurant) => favList.contains(restaurant.docId))
-        .toList()
-        .obs;
+        .toList();
+    favRestaurants.addAll(favRes);
+
     log("Favorite res = $favRestaurants");
   }
 
@@ -150,20 +169,6 @@ class HomeController extends GetxController {
       }
     });
   }
-
-/*   Future<void> updateProductFavoriteStatus(String? id) async {
-    final productRef = productCollectionRef.doc(id);
-    final prodSnap = await productRef.get();
-
-    if (prodSnap.exists) {
-      final favStatus = prodSnap['isRecommended'];
-      log("Status before change$favStatus");
-      favoriteValue.value = !favStatus;
-      await productRef.update({'isRecommended': !favStatus});
-
-      getAllProducts();
-    }
-  } */
 
   String getrestaurantName(String id) {
     for (var item in restaurants) {

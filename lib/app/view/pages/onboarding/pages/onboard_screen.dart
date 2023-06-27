@@ -6,8 +6,8 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';
 
-import '../../../shared/widgets/custombutton.dart';
-import '../../../shared/widgets/customtext.dart';
+import '../../../shared/widgets/custom_button.dart';
+import '../../../shared/widgets/custom_text.dart';
 import '../widgets/dotnavigator.dart';
 import '../widgets/onboardingcontent.dart';
 

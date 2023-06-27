@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/search/pages/searchpage.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
-import 'package:ila/app/view/shared/widgets/itemcard.dart';
+import 'package:ila/app/view/pages/search/pages/search_page.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/item_card.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 

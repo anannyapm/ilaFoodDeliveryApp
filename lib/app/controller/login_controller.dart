@@ -1,21 +1,30 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController {
+class LoginController extends GetxController with GetSingleTickerProviderStateMixin {
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  TextEditingController otpCode = TextEditingController();
+
   final formKey1 = GlobalKey<FormState>();
   final formKey2 = GlobalKey<FormState>();
+
   RxBool isLogButtonEnabled = false.obs;
   RxBool isButtonEnabled = false.obs;
-  TextEditingController otpCode = TextEditingController();
-  //RxString otpCode = "".obs;
+
+  RxString otp = "".obs;
+  RxBool isOtpSent = false.obs;
+  RxInt resendAfter = 30.obs;
+  RxBool resendOTP = false.obs;
+  Timer? timer;
+
   GeoPoint location = const GeoPoint(0, 0);
   String address = "";
 
-  RxInt primaryAddressIndex = 0.obs;
 
   String get name => nameController.text.trim();
   String get email => emailController.text.trim();
@@ -26,6 +35,19 @@ class LoginController extends GetxController {
     textEditingController.addListener(checkField);
     emailController.addListener(checkRegField);
     nameController.addListener(checkRegField);
+  }
+
+   startResendOtpTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (resendAfter.value != 0) {
+        resendAfter.value--;
+      } else {
+        resendAfter.value = 30;
+        resendOTP.value = true;
+        timer.cancel();
+      }
+      update();
+    });
   }
 
   void checkField() {
@@ -76,7 +98,6 @@ class LoginController extends GetxController {
 
   String get selectedCode => _selectedCode.value;
 
-//unused i guess
   List<String> get filteredCountryCodes {
     final searchQuery = searchController.text.trim().toLowerCase();
     if (searchQuery.isEmpty) {

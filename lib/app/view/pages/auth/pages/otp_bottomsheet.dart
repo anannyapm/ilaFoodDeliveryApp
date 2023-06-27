@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/shared/widgets/custombutton.dart';
+import 'package:ila/app/view/shared/widgets/custom_button.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../utils/constants/color_constants.dart';
-import '../../../shared/widgets/customtext.dart';
+import '../../../shared/widgets/custom_text.dart';
 
 class OtpBottomSheet extends StatelessWidget {
   OtpBottomSheet({super.key});
@@ -34,7 +34,10 @@ class OtpBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                          onPressed: () => Get.back(),
+                          onPressed: () {
+                            loginController.otpCode.clear();
+                            Get.back();
+                          },
                           icon: const Icon(Icons.close)),
                     ],
                   ),
@@ -53,12 +56,24 @@ class OtpBottomSheet extends StatelessWidget {
                     align: TextAlign.left,
                   ),
                   kHeightBox10,
-                  const Row(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText(
+                      const CustomText(
                         text: "Code",
                         size: 18,
-                      )
+                      ),
+                      Obx(() => TextButton(
+                          onPressed: () => loginController.resendOTP.value
+                              ? authController.resendOtp()
+                              : null,
+                          child: CustomText(
+                            text: loginController.resendOTP.value
+                                ? "Resend Code"
+                                : "${loginController.resendAfter} seconds",
+                            color: kBlueShade,
+                            weight: FontWeight.bold,
+                          )))
                     ],
                   ),
                   kHeightBox20,
@@ -82,7 +97,7 @@ class OtpBottomSheet extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8))),
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     autofocus: true,
-                    controller:loginController.otpCode ,
+                    controller: loginController.otpCode,
                     length: 6,
                     onChanged: (otp) {
                       loginController.otpCode.text = otp;
@@ -93,14 +108,25 @@ class OtpBottomSheet extends StatelessWidget {
                   kHeightBox10,
                 ],
               ),
-              SizedBox(
-                width: double.infinity,
-                child: CustomButton(padding:15,text: CustomText(text: "SUBMIT",color: kWhite,size: 18,weight: FontWeight.bold,), function:  () {
-                      authController.verifyOTP();
-                    }, color: kGreen)
-
-              
-              ),
+              Obx(
+                () => authController.isLoading.value == true
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SizedBox(
+                  width: double.infinity,
+                  child: CustomButton(
+                      padding: 15,
+                      text: CustomText(
+                        text: "SUBMIT",
+                        color: kWhite,
+                        size: 18,
+                        weight: FontWeight.bold,
+                      ),
+                      function: () {
+                        authController.verifyOTP();
+                      },
+                      color: kGreen)),),
               kHeightBox20
             ],
           ),

@@ -3,16 +3,16 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/navigationcontroller.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
-import 'package:ila/app/view/pages/profile/faqpage.dart';
-import 'package:ila/app/view/pages/profile/settingspage.dart';
-import 'package:ila/app/view/pages/profile/widgets/addressssheet.dart';
-import 'package:ila/app/view/pages/profile/widgets/profileviewmore.dart';
-import 'package:ila/app/view/pages/profile/widgets/usereditsheet.dart';
+import 'package:ila/app/view/pages/profile/faq_page.dart';
+import 'package:ila/app/view/pages/profile/settings_page.dart';
+import 'package:ila/app/view/pages/profile/widgets/address_sheet.dart';
+import 'package:ila/app/view/pages/profile/widgets/profile_view_more_sheet.dart';
+import 'package:ila/app/view/pages/profile/widgets/user_edit_sheet.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
-import '../../shared/widgets/customtext.dart';
+import '../../shared/widgets/custom_text.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});

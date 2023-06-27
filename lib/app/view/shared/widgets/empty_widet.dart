@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({super.key});

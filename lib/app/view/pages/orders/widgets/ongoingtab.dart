@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/orders/widgets/trackordersheet.dart';
-import 'package:ila/app/view/shared/widgets/borderedbox.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/bordered_box.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
-import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/custom_button.dart';
 
 class OngoingTab extends StatelessWidget {
   const OngoingTab({super.key});

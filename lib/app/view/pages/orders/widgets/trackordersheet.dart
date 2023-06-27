@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/constants/constants.dart';
-import '../../../shared/widgets/customtext.dart';
+import '../../../shared/widgets/custom_text.dart';
 
 getTrackOrderSheet() {
   return Get.bottomSheet(

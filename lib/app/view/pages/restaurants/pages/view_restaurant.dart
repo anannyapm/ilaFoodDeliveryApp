@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/model/restaurant_model.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/restaurants/pages/productpage.dart';
-import 'package:ila/app/view/pages/restaurants/widgets/headercard.dart';
-import 'package:ila/app/view/pages/restaurants/widgets/productcard.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
-import 'package:ila/app/view/shared/widgets/emptywidet.dart';
+import 'package:ila/app/view/pages/restaurants/pages/product_page.dart';
+import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
+import 'package:ila/app/view/pages/restaurants/widgets/product_card.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 
 import '../../../../controller/homecontroller.dart';
 import '../../../../model/product_model.dart';

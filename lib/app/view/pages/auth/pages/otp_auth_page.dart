@@ -9,10 +9,10 @@ import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/auth/widgets/country_selector.dart';
-import 'package:ila/app/view/shared/widgets/custombutton.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_button.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
-import '../../../shared/widgets/customtextformfield.dart';
+import '../../../shared/widgets/custom_textformfield.dart';
 
 class OtpAuthPage extends StatelessWidget {
   const OtpAuthPage({super.key});

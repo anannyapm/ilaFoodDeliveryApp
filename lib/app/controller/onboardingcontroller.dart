@@ -10,12 +10,7 @@ class OnboardingController extends GetxController {
   final RxInt _pageIndex = 0.obs;
   int get pageIndex => _pageIndex.value;
 
-/*   @override
-  void onInit() {
-    pageController.value = PageController(initialPage: 0);
-    super.onInit();
-  }
- */
+
   @override
   void dispose() {
     _pageController.value.dispose();

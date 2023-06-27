@@ -3,7 +3,7 @@ import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/orders/widgets/historytab.dart';
 import 'package:ila/app/view/pages/orders/widgets/ongoingtab.dart';
 
-import '../../shared/widgets/customtext.dart';
+import '../../shared/widgets/custom_text.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});

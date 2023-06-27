@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class HeaderCard extends StatelessWidget {
   final String imageUrl;

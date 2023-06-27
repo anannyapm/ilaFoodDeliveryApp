@@ -6,9 +6,9 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/location/locationpage.dart';
 
-import '../../../shared/widgets/custombutton.dart';
-import '../../../shared/widgets/customtext.dart';
-import '../../../shared/widgets/customtextformfield.dart';
+import '../../../shared/widgets/custom_button.dart';
+import '../../../shared/widgets/custom_text.dart';
+import '../../../shared/widgets/custom_textformfield.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});

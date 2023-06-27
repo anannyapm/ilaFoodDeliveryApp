@@ -4,7 +4,7 @@ import 'package:ila/app/controller/settingscontroller.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
-import '../../shared/widgets/customtext.dart';
+import '../../shared/widgets/custom_text.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

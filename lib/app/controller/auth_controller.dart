@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/controller/mapcontroller.dart';
@@ -11,7 +12,8 @@ import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';
 import 'package:ila/app/view/pages/auth/pages/registerpage.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/onboarding/pages/onboard_screen.dart';
-import 'package:ila/app/view/shared/pages/accountdisable.dart';
+import 'package:ila/app/view/shared/pages/account_disable_page.dart';
+import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_service.dart';
@@ -33,8 +35,7 @@ class AuthController extends GetxController {
   UserModel get userModel => _userModel!;
 
   RxBool isUserAdding = false.obs;
-
-  
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -63,8 +64,24 @@ class AuthController extends GetxController {
     //ever(firebaseUser, initialScreen);
   }
 
+  String? deviceKey = "";
+  var serverKey =
+      "AAAAkdAjUMs:APA91bHF0G4nK69zeXiwOCNrC1-YBdHRl-Y-F_DMGgJ4MAljq_Iwt5fhAZT_4zQPvNpwGFyiZQhogxpsS8bPs0m3dHKQZS1jTbbISOPaUqm9ASqwZ-n3IeNlgHXKRye2SFxPb1VUWHye";
+
+  getDeviceKey() async {
+    try {
+      deviceKey = await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      log("could not get the key");
+    }
+    if (deviceKey!.isNotEmpty) {
+      log(deviceKey!);
+    }
+  }
+
   Future initialScreen() async {
     await Future.delayed(const Duration(seconds: 5));
+    getDeviceKey();
     if (firebaseUser.value == null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (prefs.getBool('USER_LOGGED') == true) {
@@ -98,9 +115,16 @@ class AuthController extends GetxController {
 
   Future<void> verifyOTP() async {
     try {
+      if (loginController.otpCode.text.length < 6) {
+        showSnackBar("Error", "Please enter the 6 digit code", kWarning);
+        return;
+      }
+      isLoading.value = true;
       await authService.verifyOtp(loginController.otpCode.text);
-      //change it accordingly to go to reg or home after adding user in db
+
       final checkUserExist = await checkIfUserExist();
+      isLoading.value = false;
+
       if (checkUserExist == false) {
         Get.off(() => RegisterPage());
       } else {
@@ -115,13 +139,28 @@ class AuthController extends GetxController {
           Get.offAll(() => NavigationPage());
         }
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      isLoading.value = false;
       log(e.toString());
-      Get.snackbar("Error", "Something Went Wrong",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: kWarning,
-          colorText: kWhite);
+
+      if (e.code == "invalid-verification-code") {
+        showSnackBar("Error", "Invalid OTP/Verification Code", kWarning);
+      } else {
+        showSnackBar("Error", "Something Went Wrong!", kWarning);
+      }
+    } catch (e) {
+      isLoading.value = false;
+
+      log(e.toString());
+      showSnackBar("Error", "Something Went Wrong!", kWarning);
     }
+  }
+
+  Future<void> resendOtp() async {
+    String phoneNumber = loginController.selectedCode +
+        loginController.textEditingController.text.trim();
+
+    await authService.resendOtp(phoneNumber);
   }
 
   Future<bool> checkIfUserExist() async {
@@ -140,18 +179,13 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> addUserToFirebase(
-      /* {required GeoPoint location,
-      required String address,
-      String? name,
-      String? email} */
-      ) async {
+  Future<void> addUserToFirebase() async {
     isUserAdding.value = true;
     String phoneNumber = firebaseUser.value!.phoneNumber!;
     _userModel = UserModel(
         phoneNumber: phoneNumber,
         location: [GeoPoint(mapController.lat, mapController.long)],
-        address: [mapController.location],
+        address: [mapController.locationAddress],
         name: loginController.name,
         email: loginController.email,
         userCart: List.empty(),
@@ -161,6 +195,7 @@ class AuthController extends GetxController {
         .doc(firebaseUser.value!.uid)
         .set(userModel.toSnapshot());
     isUserAdding.value = false;
+    mapController.clearfields();
     log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
@@ -168,6 +203,6 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     await auth.signOut();
-    Get.offAll(const OtpAuthPage());
+    Get.offAll(() => const OtpAuthPage());
   }
 }

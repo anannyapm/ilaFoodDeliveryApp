@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/widgets/successpage.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 import '../../../../controller/cartcontroller.dart';
-import '../../../shared/widgets/custombutton.dart';
+import '../../../shared/widgets/custom_button.dart';
 
 void showPaymentOptionSheet() {
   CartController cartController = Get.put(CartController());

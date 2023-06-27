@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
-import 'package:ila/app/view/pages/splash/splashscreen.dart';
+import 'package:ila/app/view/pages/splash/splash_screen.dart';
 
 import 'app/controller/auth_controller.dart';
 
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: kGreen),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

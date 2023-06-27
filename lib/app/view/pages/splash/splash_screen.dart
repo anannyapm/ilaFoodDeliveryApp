@@ -4,23 +4,14 @@ import 'package:lottie/lottie.dart';
 
 import '../../../controller/auth_controller.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  SplashScreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  final AuthController authcontroller = Get.put(AuthController()); //DI
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  final AuthController authcontroller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
+    
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -36,15 +27,6 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Lottie.asset('assets/animations/delivery.json', height: 250),
           ),
         ]),
-        /* Align(
-              alignment: Alignment.bottomCenter,
-          child: Lottie.asset(
-            'assets/animations/food.json',
-            width: 200,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
-        ), */
       ),
     );
   }

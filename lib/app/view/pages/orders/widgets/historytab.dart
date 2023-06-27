@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/ordercontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/shared/widgets/customtext.dart';
+import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:intl/intl.dart';
 
 class HistoryTab extends StatelessWidget {

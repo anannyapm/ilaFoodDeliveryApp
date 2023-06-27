@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/view/shared/widgets/emptywidet.dart';
-import 'package:ila/app/view/shared/widgets/filterdialog.dart';
+import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 
 import '../../../controller/auth_controller.dart';
 import '../../../controller/homecontroller.dart';
 import '../../../utils/constants/constants.dart';
-import '../../shared/widgets/customtext.dart';
+import '../../shared/widgets/custom_text.dart';
 import '../../shared/widgets/restaurant_card.dart';
-import '../restaurants/pages/viewrestaurant.dart';
+import '../restaurants/pages/view_restaurant.dart';
 
 class FavouritePage extends StatelessWidget {
   FavouritePage({super.key});
   final AuthController authController = Get.put(AuthController());
-  //final HomeController homeController = Get.put(HomeController());
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +33,7 @@ class FavouritePage extends StatelessWidget {
                   ),
                 ),
                 kHeightBox20,
-                GetBuilder<HomeController>(
-                  init: HomeController(),
-                  builder: (homeController) {
-                    return homeController.favRestaurants.isEmpty
+                Obx(() => homeController.favRestaurants.isEmpty
                         ? const EmptyWidget()
                         : ListView.builder(
                             shrinkWrap: true,
@@ -54,9 +50,8 @@ class FavouritePage extends StatelessWidget {
                                 },
                               );
                             },
-                          );
-                  },
-                ),
+                          )),
+                
               ],
             ),
           ),
