@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/location/locationpage.dart';
+import 'package:ila/app/view/pages/location/location_page.dart';
 
 import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_text.dart';

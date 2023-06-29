@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/controller/cartcontroller.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
@@ -26,6 +27,7 @@ class HeaderCard extends StatelessWidget {
   });
 
   final HomeController homeController = Get.put(HomeController());
+  final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,9 @@ class HeaderCard extends StatelessWidget {
           children: [
             Stack(children: [
               Container(
-                height: isProduct?MediaQuery.of(context).size.height * 0.45: MediaQuery.of(context).size.height * 0.4,
+                height: isProduct
+                    ? MediaQuery.of(context).size.height * 0.45
+                    : MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
@@ -52,41 +56,43 @@ class HeaderCard extends StatelessWidget {
                     )),
               ),
               Container(
-                height:isProduct?MediaQuery.of(context).size.height * 0.45: MediaQuery.of(context).size.height * 0.4,
+                height: isProduct
+                    ? MediaQuery.of(context).size.height * 0.45
+                    : MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
                     color: kBlack.withOpacity(0.2)),
               ),
-              !isProduct?
-              Positioned(
-                right: 16,
-                bottom: 16,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: GetBuilder<HomeController>(
-                    init: HomeController(),
-                    builder: (controller) {
-                      return IconButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(kWhite)),
-                          onPressed: () async {
-                            log("pressed favorite button");
-                             await controller.updateFavoriteStatus(itemid);
+              !isProduct
+                  ? Positioned(
+                      right: 16,
+                      bottom: 16,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: GetBuilder<HomeController>(
+                          init: HomeController(),
+                          builder: (controller) {
+                            return IconButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(kWhite)),
+                                onPressed: () async {
+                                  log("pressed favorite button");
+                                  await controller.updateFavoriteStatus(itemid);
+                                },
+                                icon: Obx(() => Icon(
+                                      Icons.favorite,
+                                      color: controller.favList.contains(itemid)
+                                          ? kGreen
+                                          : kGreyDark,
+                                    )));
                           },
-                          icon: Obx(() => Icon(
-                                Icons.favorite,
-                                color:
-                                    controller.favList.contains(itemid)
-                                        ? kGreen
-                                        : kGreyDark,
-                              )));
-                    },
-                  ),
-                ),
-              ):Container(),
+                        ),
+                      ),
+                    )
+                  : Container(),
               Positioned(
                 top: 16,
                 left: 16,
@@ -120,11 +126,11 @@ class HeaderCard extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 12,
                             backgroundColor: kOrange,
-                            child: CustomText(
-                              text: "2",
-                              size: 12,
-                              color: kWhite,
-                            ),
+                            child: Obx(() => CustomText(
+                                  text: cartController.totalCount.toString(),
+                                  size: 12,
+                                  color: kWhite,
+                                )),
                           ))
                     ],
                   ),

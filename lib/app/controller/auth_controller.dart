@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/controller/mapcontroller.dart';
+import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/model/usermodel.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';
@@ -22,6 +23,7 @@ import '../services/firebase_services.dart';
 class AuthController extends GetxController {
   LoginController loginController = Get.put(LoginController());
   MapController mapController = Get.put(MapController());
+  UserController userController = Get.put(UserController());
 
   AuthService authService = AuthService();
 
@@ -31,11 +33,9 @@ class AuthController extends GetxController {
   // It represents the current user's authentication state.
   late Rx<User?> firebaseUser;
 
-  UserModel? _userModel;
-  UserModel get userModel => _userModel!;
-
   RxBool isUserAdding = false.obs;
   RxBool isLoading = false.obs;
+  RxBool isVerifying = false.obs;
 
   @override
   void onInit() {
@@ -93,7 +93,7 @@ class AuthController extends GetxController {
     } else {
       bool existStatus = await checkIfUserExist(); //check if user in db
       if (existStatus == true) {
-        if (userModel.activeStatus == true) {
+        if (userController.userModel.activeStatus == true) {
           Get.offAll(() => NavigationPage());
         } else {
           await auth
@@ -108,9 +108,11 @@ class AuthController extends GetxController {
   }
 
   Future<void> verifyPhoneNumber() async {
+    isVerifying.value = true;
     String phoneNumber = loginController.selectedCode +
         loginController.textEditingController.text.trim();
     await authService.verifyPhone(phoneNumber);
+    isVerifying.value = false;
   }
 
   Future<void> verifyOTP() async {
@@ -128,8 +130,8 @@ class AuthController extends GetxController {
       if (checkUserExist == false) {
         Get.off(() => RegisterPage());
       } else {
-        log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
-        if (userModel.activeStatus == false) {
+        /* log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}"); */
+        if (userController.userModel.activeStatus == false) {
           await auth.signOut();
 
           Get.offAll(() => const DisbledPage());
@@ -167,7 +169,9 @@ class AuthController extends GetxController {
     DocumentSnapshot snapshot =
         await userCollectionRef.doc(firebaseUser.value!.uid).get();
     if (snapshot.exists) {
-      _userModel = UserModel.fromSnapshot(snapshot);
+      userController.setUser(UserModel.fromSnapshot(snapshot));
+      await userController.getUserAddress();
+      log(userController.userModel.toString());
 
       log("User Exist");
 
@@ -182,21 +186,23 @@ class AuthController extends GetxController {
   Future<void> addUserToFirebase() async {
     isUserAdding.value = true;
     String phoneNumber = firebaseUser.value!.phoneNumber!;
-    _userModel = UserModel(
+    userController.setUser(UserModel(
         phoneNumber: phoneNumber,
         location: [GeoPoint(mapController.lat, mapController.long)],
         address: [mapController.locationAddress],
+        completeAddress: [mapController.completeAddress],
         name: loginController.name,
         email: loginController.email,
         userCart: List.empty(),
-        favoriteList: List.empty());
+        favoriteList: List.empty()));
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)
-        .set(userModel.toSnapshot());
+        .set(userController.userModel.toSnapshot());
     isUserAdding.value = false;
+    await userController.getUserAddress();
     mapController.clearfields();
-    log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
+    //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
   }

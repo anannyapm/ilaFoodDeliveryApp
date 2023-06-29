@@ -10,6 +10,7 @@ class UserModel {
   List<dynamic>? address;
   List<dynamic>? favoriteList;
   List<dynamic>? userCart;
+  List<dynamic>? completeAddress;
   
 
   UserModel({
@@ -22,6 +23,7 @@ class UserModel {
     this.userCart,
     required this.phoneNumber,
     required this.location,
+    this.completeAddress
   });
 
   UserModel.fromSnapshot(DocumentSnapshot data) {
@@ -34,10 +36,12 @@ class UserModel {
     location = data["location"];
     userCart = data["userCart"];
     favoriteList = data["favoriteList"];
+    completeAddress = data["completeAddress"];
   }
   Map<String, dynamic> toSnapshot() {
     return {
       "deliveryAddress": address,
+      "completeAddress": completeAddress,
       "name": name,
       "email": email,
       "activeStatus": activeStatus,

@@ -7,21 +7,22 @@ import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:ila/app/view/shared/widgets/custom_textformfield.dart';
 
+import '../../../../controller/user_controller.dart';
 import '../../../shared/widgets/custom_button.dart';
 
 class UserEditSheet extends StatelessWidget {
   UserEditSheet({super.key});
   final LoginController loginController = Get.put(LoginController());
-  final AuthController authController = Get.put(AuthController());
+  final UserController userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController =
-        TextEditingController(text: authController.userModel.name!);
+        TextEditingController(text: userController.userModel.name!);
     TextEditingController emailController =
-        TextEditingController(text: authController.userModel.email!);
+        TextEditingController(text: userController.userModel.email!);
     TextEditingController phoneController =
-        TextEditingController(text: authController.userModel.phoneNumber!);
+        TextEditingController(text: userController.userModel.phoneNumber!);
     return SingleChildScrollView(
       child: GetBuilder<AuthController>(
         init: AuthController(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ila/app/controller/cartcontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';
 
@@ -15,7 +16,7 @@ void main() async {
   await Firebase.initializeApp().then(
     (value) => Get.put(AuthController()),
   );
-  //Get.put(HomeController());
+  Get.put(CartController());
 
   runApp(const MyApp());
 }

@@ -9,9 +9,10 @@ import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_text.dart';
 
 class MapPage extends StatelessWidget {
+  final bool isFromProfile;
   final MapController mapController = Get.put(MapController());
 
-  MapPage({super.key});
+  MapPage({super.key, required this.isFromProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class MapPage extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         mapController.clearfields();
+
                         Get.back();
                       },
                       icon: const Icon(
@@ -75,9 +77,21 @@ class MapPage extends StatelessWidget {
                 Obx(() => Center(
                       child: Column(
                         children: [
-                          CustomText(
-                            text: mapController.locationAddress,
-                            overflow: TextOverflow.ellipsis,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                color: kWarning,
+                              ),
+                              kWidthBox10,
+                              CustomText(
+                                text: mapController.locationAddress,
+                                weight: FontWeight.bold,
+                                size: 18,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -89,7 +103,7 @@ class MapPage extends StatelessWidget {
                       child: Obx(() => CustomButton(
                           padding: 15,
                           text: CustomText(
-                            text: mapController.isEditMode.value
+                            text:!isFromProfile?"PROCEED": mapController.isEditMode.value
                                 ? "EDIT ADDRESS"
                                 : "ADD COMPLETE LOCATION",
                             color: kWhite,
@@ -97,7 +111,9 @@ class MapPage extends StatelessWidget {
                             weight: FontWeight.bold,
                           ),
                           function: () {
-                            _getAddAddressSheet();
+                            isFromProfile?
+                            _getAddAddressSheet():Get.back();
+
                             //mapController.updateLocation();
                           },
                           color: kGreen))),
@@ -140,6 +156,29 @@ class MapPage extends StatelessWidget {
                         icon: const Icon(Icons.close))
                   ],
                 ),
+                Obx(() => Center(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_pin,
+                                color: kWarning,
+                              ),
+                              kWidthBox10,
+                              Expanded(
+                                child: CustomText(
+                                  text: mapController.locationAddress,
+                                  weight: FontWeight.bold,
+                                  size: 16,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )),
                 TextFormField(
                   minLines: 1,
                   maxLines: 3,
@@ -161,8 +200,9 @@ class MapPage extends StatelessWidget {
                           weight: FontWeight.bold,
                           size: 18,
                         ),
-                        function: () {
-                          mapController.onSaveAddress();
+                        function: () async {
+                          await mapController.onSaveAddress();
+                          //Get.back();
                         },
                         color: kGreen,
                         padding: 0))

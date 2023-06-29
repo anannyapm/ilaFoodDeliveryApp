@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/auth_controller.dart';
-import 'package:ila/app/controller/login_controller.dart';
+import 'package:ila/app/controller/user_controller.dart';
 
 import '../model/carousel_model.dart';
 import '../model/category_model.dart';
@@ -13,11 +12,12 @@ import '../model/restaurant_model.dart';
 import '../services/firebase_services.dart';
 
 class HomeController extends GetxController {
-  AuthController authController = Get.put(AuthController());
-  LoginController loginController = Get.put(LoginController());
+  UserController userController = Get.put(UserController());
+  //LoginController loginController = Get.put(LoginController());
 
   RxList<RestuarantModel> restaurants = RxList<RestuarantModel>([]);
   RxList<RestuarantModel> favRestaurants = RxList<RestuarantModel>([]);
+  RxList<RestuarantModel> topRestaurants = RxList<RestuarantModel>([]);
   RxList<RestuarantModel> nearbyRestaurants = RxList<RestuarantModel>([]);
   RxList<ProductModel> restaurantBasedProducts = RxList<ProductModel>([]);
   RxList<ProductModel> products = RxList<ProductModel>([]);
@@ -37,7 +37,6 @@ class HomeController extends GetxController {
   RxBool isRecommended = false.obs;
 
   RxInt itemCount = 0.obs;
-  
 
   void toggleRecommended(bool value) {
     isRecommended.value = value;
@@ -67,6 +66,7 @@ class HomeController extends GetxController {
   void initializeRestaurants() async {
     await getAllRestaurants();
     getNearbyRestaurant();
+    getTopRestaurants();
     await getFavfromUserDB();
     getFavouriteRestaurant();
   }
@@ -95,9 +95,9 @@ class HomeController extends GetxController {
       final distance = Geolocator.distanceBetween(
           restaurant.location!.latitude,
           restaurant.location!.longitude,
-          authController
+          userController
               .userModel.location![primaryAddressIndex.value].latitude,
-          authController
+          userController
               .userModel.location![primaryAddressIndex.value].longitude);
       log((distance / 1000).toString());
       log((distance < 10).toString());
@@ -107,7 +107,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getFavfromUserDB() async {
-    final userDocRef = userCollectionRef.doc(authController.userModel.userId);
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
     final DocumentSnapshot userSnap = await userDocRef.get();
 
@@ -115,6 +115,13 @@ class HomeController extends GetxController {
 
     favList = fav.map((element) => element).toList().obs;
     log("favlist:$favList");
+  }
+
+  void getTopRestaurants() {
+    topRestaurants.clear();
+    List<RestuarantModel> topRes =
+        restaurants.where((restaurant) => restaurant.rating! > 4.0).toList();
+    topRestaurants.addAll(topRes);
   }
 
   void getFavouriteRestaurant() {
@@ -128,9 +135,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> updateFavoriteStatus(String? id) async {
-    /*   final restaurantDocRef = restaurantCollectionRef.doc(id);
-    final restaurantSnap = await restaurantDocRef.get(); */
-
+   
     if (favList.contains(id)) {
       await removeFromFavorites(id);
     } else {
@@ -143,7 +148,7 @@ class HomeController extends GetxController {
     favList.add(id);
     getFavouriteRestaurant();
 
-    final userDocRef = userCollectionRef.doc(authController.userModel.userId);
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
     await userDocRef.update({
       'favoriteList': FieldValue.arrayUnion([id])
     });
@@ -154,7 +159,7 @@ class HomeController extends GetxController {
     favList.remove(id);
     getFavouriteRestaurant();
 
-    final userDocRef = userCollectionRef.doc(authController.userModel.userId);
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
     firebaseFirestore.runTransaction((transaction) async {
       final DocumentSnapshot snapshot = await transaction.get(userDocRef);

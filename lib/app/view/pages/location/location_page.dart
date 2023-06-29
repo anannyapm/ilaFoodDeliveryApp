@@ -70,7 +70,7 @@ class LocationPage extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      mapController.openMapPage();
+                                      mapController.openMapPage(false);
                                     },
                                     child: const Text('Edit Location'),
                                   ),

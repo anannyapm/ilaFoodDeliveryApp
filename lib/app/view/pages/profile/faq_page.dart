@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
+import '../../shared/widgets/close_widget.dart';
 import '../../shared/widgets/custom_text.dart';
 
 class FaqPage extends StatelessWidget {
@@ -20,16 +20,7 @@ class FaqPage extends StatelessWidget {
               kHeightBox10,
               Row(
                         children: [
-                          IconButton(
-                            onPressed: () => Get.back(),
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    kGreylight.withOpacity(0.4))),
-                            icon: const Icon(
-                              Icons.keyboard_arrow_left,
-                              size: 30,
-                            ),
-                          ),
+                          const CloseWidget(),
                           kWidthBox15,
                           const CustomText(
                             text: "FAQs",
@@ -79,6 +70,7 @@ class FaqPage extends StatelessWidget {
     );
   }
 }
+
 
 class FAQItem extends StatefulWidget {
   final String question;

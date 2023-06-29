@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/navigationcontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
-import 'package:ila/app/view/pages/cart/cartpage.dart';
+import 'package:ila/app/view/pages/cart/cart_page.dart';
 import 'package:ila/app/view/pages/favourite/favouritepage.dart';
 import 'package:ila/app/view/pages/orders/orderpage.dart';
 import 'package:ila/app/view/pages/profile/profile_page.dart';

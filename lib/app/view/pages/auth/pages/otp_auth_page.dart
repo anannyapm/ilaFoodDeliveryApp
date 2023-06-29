@@ -56,9 +56,9 @@ class OtpAuthPage extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
 
-                      child: Obx(() =>CustomButton(
+                      child: Obx(() => CustomButton(
                         padding: 15,
-                        text: CustomText(text: "GET OTP",color: kWhite,size: 18,weight: FontWeight.bold,),
+                        text:authController.isVerifying.value?const Center(child: CircularProgressIndicator(),): CustomText(text: "GET OTP",color: kWhite,size: 18,weight: FontWeight.bold,),
                          function: () async {
                             loginController.isLogButtonEnabled.value
                                 ? await authController.verifyPhoneNumber()

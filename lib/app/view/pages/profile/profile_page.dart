@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/navigationcontroller.dart';
+import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/profile/faq_page.dart';
 import 'package:ila/app/view/pages/profile/settings_page.dart';
@@ -16,6 +17,7 @@ import '../../shared/widgets/custom_text.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
+  final UserController userController = Get.put(UserController());
   final AuthController authController = Get.put(AuthController());
   final NavigationController navigationController =
       Get.put(NavigationController());
@@ -43,12 +45,12 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: authController.userModel.name!,
+                          text: userController.userModel.name!,
                           weight: FontWeight.bold,
                           size: 22,
                         ),
                         CustomText(
-                          text: authController.userModel.phoneNumber!,
+                          text: userController.userModel.phoneNumber!,
                           size: 18,
                           color: kGreylight,
                         ),
@@ -69,8 +71,7 @@ class ProfilePage extends StatelessWidget {
                 ProfileViewMoreWidget(
                     text: "Addresses",
                     icon: Ionicons.map_outline,
-                    function: () => Get.bottomSheet(AddressSheet(),
-                        backgroundColor: kWhite),
+                    function: () => Get.to(()=>AddressSheet()),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Cart",

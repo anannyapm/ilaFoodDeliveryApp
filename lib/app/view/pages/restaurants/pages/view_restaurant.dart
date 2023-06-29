@@ -142,9 +142,7 @@ class ViewRestaurantPage extends StatelessWidget {
                           itemBuilder: (BuildContext context, int index) {
                             final item = productList[index];
                             return ProductCard(
-                                imageUrl: item.image!,
-                                title: item.name!,
-                                price: item.price.toString(),
+                                product:item,
                                 onTap: () =>
                                     Get.to(() => ProductPage(product: item)));
                           },

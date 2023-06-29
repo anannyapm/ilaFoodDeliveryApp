@@ -8,7 +8,8 @@ import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 import 'package:ila/app/view/shared/widgets/item_card.dart';
 import 'package:ila/app/view/shared/widgets/restaurant_card.dart';
 
-import '../../../../controller/auth_controller.dart';
+import '../../../../controller/user_controller.dart';
+import '../../../../model/restaurant_model.dart';
 import '../../../../utils/constants/constants.dart';
 import '../../restaurants/pages/view_restaurant.dart';
 import '../../search/pages/search_page.dart';
@@ -19,7 +20,7 @@ import '../widgets/sectiontitle.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final AuthController authController = Get.put(AuthController());
+  final UserController userController = Get.put(UserController());
   final HomeController homeController = Get.put(HomeController());
 
   @override
@@ -32,7 +33,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HeaderWidget(authController: authController),
+                HeaderWidget(userController: userController),
                 kHeightBox20,
                 const SearchWidget(),
                 kHeightBox20,
@@ -77,38 +78,41 @@ class HomePage extends StatelessWidget {
                 kHeightBox20,
                 kHeightBox10,
                 SectionTitleWidget(
-                  title: "Restaurants Near You",
+                  title: homeController.nearbyRestaurants.isEmpty
+                      ? "Top Restaurants"
+                      : "Restaurants Near You",
                   function: () => Get.to(() => RestaurantPage()),
                 ),
                 kHeightBox10,
                 Obx(
                   () {
+                    RxList<RestuarantModel> listReferenceList =
+                        homeController.nearbyRestaurants.isEmpty
+                            ? homeController.topRestaurants
+                            : homeController.nearbyRestaurants;
                     return homeController.isResLoading.value
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : homeController.nearbyRestaurants.isEmpty
-                            ? const EmptyWidget()
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    homeController.nearbyRestaurants.length,
-                                itemBuilder: (context, index) {
-                                  final resItem =
-                                      homeController.nearbyRestaurants[index];
-                                  return RestaurantCard(
-                                    restaurant: resItem,
+                        : listReferenceList.isEmpty?const EmptyWidget(): ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: listReferenceList.length,
+                            itemBuilder: (context, index) {
+                              final resItem =
+                                  listReferenceList[index];
+                              return RestaurantCard(
+                                restaurant: resItem,
 
-                                    onTap: () {
-                                      Get.to(() => ViewRestaurantPage(
-                                          restaurant: resItem));
-                                    },
-
-                                    // isFav: resItem.isFavorite!
-                                  );
+                                onTap: () {
+                                  Get.to(() =>
+                                      ViewRestaurantPage(restaurant: resItem));
                                 },
+
+                                // isFav: resItem.isFavorite!
                               );
+                            },
+                          );
                   },
                 )
               ],

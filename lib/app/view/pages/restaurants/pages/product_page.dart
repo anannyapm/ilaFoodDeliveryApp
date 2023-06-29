@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/controller/cartcontroller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
@@ -13,12 +14,14 @@ class ProductPage extends StatelessWidget {
   final ProductModel product;
 
   final HomeController homeController = Get.put(HomeController());
+  final CartController cartController = Get.put(CartController());
 
   ProductPage({super.key, required this.product});
   @override
   Widget build(BuildContext context) {
     final String rName =
         homeController.getrestaurantName(product.restaurantId!);
+    cartController.isAdded.value = cartController.cartList.contains(product);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -125,16 +128,26 @@ class ProductPage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
                   width: double.infinity,
-                  child: CustomButton(
+                  child: Obx(() => CustomButton(
                       padding: 15,
                       text: CustomText(
-                        text: "ADD TO CART",
+                        text: cartController.isAdded.value
+                            ? "REMOVE FROM CART"
+                            : "ADD TO CART",
                         color: kWhite,
                         size: 18,
                         weight: FontWeight.bold,
                       ),
-                      function: () {},
-                      color: kGreen),
+                      function: () {
+                        if (cartController.isAdded.value) {
+                          cartController.removeFromCart(product);
+                        } else {
+                          cartController.addToCart(product);
+                        }
+                        cartController.isAdded.value =
+                            !cartController.isAdded.value;
+                      },
+                      color:cartController.isAdded.value?kWarning: kGreen)),
                 ),
               )
             ],

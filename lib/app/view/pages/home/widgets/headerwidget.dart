@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/homecontroller.dart';
-import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/view/pages/cart/widgets/changeaddress.dart';
 import 'package:ila/app/view/pages/home/pages/notificationpage.dart';
-import 'package:ionicons/ionicons.dart';
 
-import '../../../../controller/auth_controller.dart';
+import '../../../../controller/user_controller.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/custom_text.dart';
 
 class HeaderWidget extends StatelessWidget {
   HeaderWidget({
     super.key,
-    required this.authController,
+    required this.userController,
   });
 
-  final AuthController authController;
+  final UserController userController;
   final HomeController homeController = Get.put(HomeController());
 
   @override
@@ -36,7 +34,7 @@ class HeaderWidget extends StatelessWidget {
             Row(
               children: [
                 Obx(() => CustomText(
-                      text: authController.userModel
+                      text: userController.userModel
                           .address![homeController.primaryAddressIndex.value]!,
                       weight: FontWeight.bold,
                       size: 15,

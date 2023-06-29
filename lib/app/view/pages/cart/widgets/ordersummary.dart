@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/homecontroller.dart';
-import 'package:ila/app/controller/login_controller.dart';
+import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/widgets/paymentoption.dart';
@@ -11,7 +10,7 @@ import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import '../../../shared/widgets/custom_button.dart';
 
 void showOrderSummarySheet() {
-  AuthController authController = Get.put(AuthController());
+  UserController userController = Get.put(UserController());
   HomeController homeController = Get.put(HomeController());
 
   Get.bottomSheet(
@@ -42,7 +41,7 @@ void showOrderSummarySheet() {
                 ),
                 CustomText(
                   color: kGreyDark,
-                    text: authController.userModel
+                    text: userController.userModel
                         .address![homeController.primaryAddressIndex.value]),
               ],
             ),
@@ -54,7 +53,7 @@ void showOrderSummarySheet() {
                   text: "PHONE",
                   color: kGreyDark,
                 ),
-                CustomText(color: kGreyDark,text: authController.userModel.phoneNumber!),
+                CustomText(color: kGreyDark,text: userController.userModel.phoneNumber!),
               ],
             ),
             kHeightBox20,

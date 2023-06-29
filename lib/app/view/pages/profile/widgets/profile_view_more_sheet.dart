@@ -21,29 +21,32 @@ class ProfileViewMoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                color: color,
-              ),
-              kWidthBox15,
-              CustomText(
-                text: text,
-                size: 20,
-              )
-            ],
-          ),
-          IconButton(
-              onPressed: function,
-              icon: Icon(
-                Icons.keyboard_arrow_right,
-                color: kGreyDark,
-              )),
-        ],
+      child: GestureDetector(
+        onTap: function,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  icon,
+                  color: color,
+                ),
+                kWidthBox15,
+                CustomText(
+                  text: text,
+                  size: 20,
+                )
+              ],
+            ),
+            IconButton(
+                onPressed: function,
+                icon: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: kGreyDark,
+                )),
+          ],
+        ),
       ),
     );
   }
