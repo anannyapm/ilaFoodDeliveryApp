@@ -9,6 +9,7 @@ import 'package:ila/app/controller/mapcontroller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/model/usermodel.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';
 import 'package:ila/app/view/pages/auth/pages/registerpage.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
@@ -172,6 +173,9 @@ class AuthController extends GetxController {
       userController.setUser(UserModel.fromSnapshot(snapshot));
       await userController.getUserAddress();
       log(userController.userModel.toString());
+      cartController.getCartList();
+      log("cart");
+    cartController.cartList.isEmpty ? log("empty") : log(cartController.cartList.toString());
 
       log("User Exist");
 
@@ -202,6 +206,7 @@ class AuthController extends GetxController {
     isUserAdding.value = false;
     await userController.getUserAddress();
     mapController.clearfields();
+    cartController.getCartList();
     //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);

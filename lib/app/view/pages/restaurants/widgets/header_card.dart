@@ -6,6 +6,7 @@ import 'package:ila/app/controller/cartcontroller.dart';
 import 'package:ila/app/controller/homecontroller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
+import 'package:ila/app/view/pages/cart/cart_page.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class HeaderCard extends StatelessWidget {
@@ -27,7 +28,8 @@ class HeaderCard extends StatelessWidget {
   });
 
   final HomeController homeController = Get.put(HomeController());
-  final CartController cartController = Get.put(CartController());
+  final CartController cartController = Get.find();
+  //final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -112,27 +114,32 @@ class HeaderCard extends StatelessWidget {
                 right: 16,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Stack(
-                    children: [
-                      IconButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(kWhite)),
-                          onPressed: () {},
-                          icon: const Icon(Icons.shopping_bag_outlined)),
-                      Positioned(
-                          bottom: 2,
-                          right: 0.5,
-                          child: CircleAvatar(
-                            radius: 12,
-                            backgroundColor: kOrange,
-                            child: Obx(() => CustomText(
-                                  text: cartController.totalCount.toString(),
-                                  size: 12,
-                                  color: kWhite,
-                                )),
-                          ))
-                    ],
+                  child: GestureDetector(
+                    onTap:()=> Get.to(()=>CartPage()) ,
+                    child: Stack(
+                      children: [
+                        IconButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(kWhite)),
+                            onPressed: () {
+                              Get.to(()=>CartPage());
+                            },
+                            icon: const Icon(Icons.shopping_bag_outlined)),
+                        Positioned(
+                            bottom: 2,
+                            right: 0.5,
+                            child: CircleAvatar(
+                              radius: 12,
+                              backgroundColor: kOrange,
+                              child: Obx(() => CustomText(
+                                    text: cartController.totalCount.toString(),
+                                    size: 12,
+                                    color: kWhite,
+                                  )),
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ),

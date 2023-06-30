@@ -14,14 +14,17 @@ class ProductPage extends StatelessWidget {
   final ProductModel product;
 
   final HomeController homeController = Get.put(HomeController());
-  final CartController cartController = Get.put(CartController());
+  //final CartController cartController = Get.put(CartController());
+  final CartController cartController = Get.find();
 
   ProductPage({super.key, required this.product});
   @override
   Widget build(BuildContext context) {
     final String rName =
         homeController.getrestaurantName(product.restaurantId!);
-    cartController.isAdded.value = cartController.cartList.contains(product);
+    cartController.isAdded.value = cartController.isItemAlreadyAdded(product);
+    cartController.itemCount.value = 1;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -64,62 +67,73 @@ class ProductPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CustomText(
-                        text: "₹${product.price.toString()}",
-                        size: 30,
+                        text: "₹${product.price.toString()}/Item",
+                        size: 28,
                       ),
-                      Container(
-                        width: 135,
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: kBlack),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              iconSize: 14,
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStatePropertyAll(kGreylight)),
-                              icon: Icon(
-                                Icons.remove,
-                                color: kWhite,
-                              ),
-                              onPressed: () {
-                                if (homeController.itemCount.value > 0) {
-                                  homeController.itemCount.value--;
-                                }
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8, right: 8),
-                              child: Obx(
-                                () => CustomText(
-                                  text:
-                                      homeController.itemCount.value.toString(),
+                      Obx(() => cartController.isItemAlreadyAdded(product)
+                          ? CustomText(
+                              text:
+                                  "Quantity : ${cartController.cartList.firstWhere((element) => element.productId == product.docId).quantity}",
                                   size: 18,
-                                  color: kWhite,
-                                ),
+                                  weight: FontWeight.bold,
+                                  )
+                          : Container(
+                              width: 135,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: kBlack),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    iconSize: 14,
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                kGreylight)),
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: kWhite,
+                                    ),
+                                    onPressed: () {
+                                      if (cartController.itemCount.value > 1) {
+                                        cartController.itemCount.value--;
+                                      }
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    child: Obx(
+                                      () => CustomText(
+                                        text: cartController.itemCount.value
+                                            .toString(),
+                                        size: 18,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    iconSize: 14,
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                kGreylight)),
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: kWhite,
+                                    ),
+                                    onPressed: () {
+                                      cartController.itemCount.value++;
+                                    },
+                                  ),
+                                ],
                               ),
-                            ),
-                            IconButton(
-                              iconSize: 14,
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStatePropertyAll(kGreylight)),
-                              icon: Icon(
-                                Icons.add,
-                                color: kWhite,
-                              ),
-                              onPressed: () {
-                                homeController.itemCount.value++;
-                              },
-                            ),
-                          ],
-                        ),
-                      )
+                            ))
                     ],
                   ),
                 ),
@@ -140,14 +154,15 @@ class ProductPage extends StatelessWidget {
                       ),
                       function: () {
                         if (cartController.isAdded.value) {
-                          cartController.removeFromCart(product);
+                          cartController.removeCartItem(product.docId!);
                         } else {
-                          cartController.addToCart(product);
+                          cartController.addProductToCart(
+                              product, cartController.itemCount.value);
                         }
                         cartController.isAdded.value =
                             !cartController.isAdded.value;
                       },
-                      color:cartController.isAdded.value?kWarning: kGreen)),
+                      color: cartController.isAdded.value ? kWarning : kGreen)),
                 ),
               )
             ],

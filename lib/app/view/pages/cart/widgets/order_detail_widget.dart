@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/model/cart_model.dart';
 
 import '../../../../controller/cartcontroller.dart';
 import '../../../../utils/constants/color_constants.dart';
@@ -13,49 +17,50 @@ class OrderDetailWidget extends StatelessWidget {
     super.key,
   });
 
-  final CartController cartController = Get.find();
+  final CartController cartController = Get.put(CartController());
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => cartController.totalCount == 0
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              kHeightBox20,
-              const CustomText(
-                text: "Your Cart is Empty :(",
-                size: 18,
-              ),
-              kHeightBox20,
-              const Image(
-                image: NetworkImage(
-                  "https://www.iconbunny.com/icons/media/catalog/product/1/0/1067.12-empty-cart-icon-iconbunny.jpg",
+        ? Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const CustomText(
+                  text: "Your Cart is Empty :(",
+                  size: 18,
                 ),
-                width: 250,
-              ),
-              kHeightBox10,
-              SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: CustomButton(
-                      text: CustomText(
-                        text: "Explore More",
-                        color: kWhite,
-                        size: 16,
-                        weight: FontWeight.bold,
-                      ),
-                      function: () => Get.to(() => SearchPage()),
-                      color: kOrange,
-                      padding: 0))
-            ],
+                kHeightBox20,
+                const Image(
+                  image: AssetImage(
+                    "assets/images/emptycart.jpg",
+                  ),
+                  width: 250,
+                ),
+                kHeightBox10,
+                SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: CustomButton(
+                        text: CustomText(
+                          text: "Explore More",
+                          color: kWhite,
+                          size: 16,
+                          weight: FontWeight.bold,
+                        ),
+                        function: () => Get.to(() => SearchPage()),
+                        color: kOrange,
+                        padding: 0))
+              ],
+            ),
           )
         : ListView.separated(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
             itemCount: cartController.totalCount,
             itemBuilder: (context, index) {
-              
-              final item = cartController.cartList[index];
+              CartItemModel item = cartController.cartList[index];
+
               return Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
@@ -69,8 +74,8 @@ class OrderDetailWidget extends StatelessWidget {
                             image: DecorationImage(
                                 image: NetworkImage(item.image!),
                                 fit: BoxFit.cover)),
-                        width: 80,
-                        height: 80,
+                        width: 70,
+                        height: 70,
                       ),
                     ),
                     Expanded(
@@ -83,99 +88,114 @@ class OrderDetailWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    CustomText(
-                                      text: item.name!,
-                                      size: 16,
-                                      overflow: TextOverflow.ellipsis,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomText(
+                                          text:
+                                              "Item ID#${item.itemId!.substring(0, 6)}",
+                                          color: kGreylight,
+                                          weight: FontWeight.bold,
+                                          size: 15,
+                                        ),
+                                        CustomText(
+                                          text: item.name!.toUpperCase(),
+                                          size: 16,
+                                          overflow: TextOverflow.ellipsis,
+                                          weight: FontWeight.bold,
+                                          lines: 2,
+                                        ),
+                                      ],
                                     ),
                                     GestureDetector(
                                         //padding: EdgeInsets.zero,
                                         onTap: () {
-                                          cartController.removeFromCart(item);
+                                          cartController
+                                              .removeCartItem(item.productId!);
                                         },
                                         child: Icon(
-                                          Icons.remove_circle_outline,
-                                          color: kWarning,
+                                          Icons.close,
+                                          color: kGreylight,
+                                          size: 22,
                                         ))
                                   ],
                                 ),
-                                CustomText(
-                                  text: item.price.toString(),
-                                  size: 16,
-                                ),
-                                kHeightBox10
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Expanded(
+                                 Expanded(
                                   child: CustomText(
-                                    text: "₹250.00",
-                                    size: 20,
+                                    text:( item.price!*item.quantity!).toString(),
+                                    size: 18,
                                     weight: FontWeight.bold,
                                   ),
                                 ),
-                                GetBuilder<CartController>(
-                                  init: CartController(),
-                                  builder: (controller) {
-                                    return Row(
+                               // Obx(() => 
+                                Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            if (controller.itemCount.value >
-                                                0) {
-                                              controller.itemCount.value--;
-                                            }
+                                            cartController.decreaseQuantity(
+                                                item.productId!);
                                           },
                                           child: CircleAvatar(
                                             radius: 12,
                                             backgroundColor:
-                                                kOrange.withOpacity(0.7),
+                                                kGrey.withOpacity(0.3),
                                             child: Icon(
                                               Icons.remove,
                                               size: 15,
-                                              color: kWhite,
+                                              color: kBlack,
                                             ),
                                           ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 8, right: 8),
-                                          child: Obx(
-                                            () => CustomText(
-                                              text: controller.itemCount.value
-                                                  .toString(),
+                                          child: //Obx(
+                                           //() => 
+                                            CustomText(
+                                              text: item.quantity.toString(),
                                               size: 18,
                                               color: kBlack,
                                               weight: FontWeight.bold,
                                             ),
-                                          ),
-                                        ),
+                                         ),
+                                        //),
                                         GestureDetector(
                                           onTap: () {
-                                            controller.itemCount.value++;
+                                            cartController.increaseQuantity(
+                                                item.productId!);
                                           },
                                           child: CircleAvatar(
                                             radius: 12,
                                             backgroundColor:
-                                                kOrange.withOpacity(0.7),
+                                                kGrey.withOpacity(0.3),
                                             child: Icon(
-                                              Icons.remove,
+                                              Icons.add,
                                               size: 15,
-                                              color: kWhite,
+                                              color: kBlack,
                                             ),
                                           ),
                                         ),
                                       ],
-                                    );
+                                    )
+                                    //)
+                               /*  GetBuilder<CartController>(
+                                  init: CartController(),
+                                  builder: (controller) {
+                                    return ;
                                   },
-                                ),
+                                ), */
                               ],
                             )
                           ],
@@ -186,7 +206,9 @@ class OrderDetailWidget extends StatelessWidget {
                 ),
               );
             },
-            separatorBuilder: (context, index) => const Divider(),
+            separatorBuilder: (context, index) => Divider(
+              color: kGreylight.withOpacity(0.2),
+            ),
           ));
   }
 }

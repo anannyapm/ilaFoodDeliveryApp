@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ila/app/controller/cartcontroller.dart';
+import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';
 
@@ -14,9 +15,13 @@ void main() async {
 
   //authcontroller will be avilable to our app from everywhere
   await Firebase.initializeApp().then(
-    (value) => Get.put(AuthController()),
+    (value) {
+      Get.put(AuthController());
+     Get.put(CartController());
+
+    },
   );
-  Get.put(CartController());
+  //Get.put(UserController());
 
   runApp(const MyApp());
 }

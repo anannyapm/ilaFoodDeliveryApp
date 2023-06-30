@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ila/app/model/cart_model.dart';
 
 class UserModel {
   String? userId;
@@ -9,7 +10,7 @@ class UserModel {
   List<dynamic>? location;
   List<dynamic>? address;
   List<dynamic>? favoriteList;
-  List<dynamic>? userCart;
+  List<CartItemModel>? userCart;
   List<dynamic>? completeAddress;
   
 
@@ -21,8 +22,8 @@ class UserModel {
     this.address,
     this.favoriteList,
     this.userCart,
-    required this.phoneNumber,
-    required this.location,
+    this.phoneNumber,
+    this.location,
     this.completeAddress
   });
 
@@ -34,10 +35,23 @@ class UserModel {
     address = data["deliveryAddress"];
     phoneNumber = data["phoneNumber"];
     location = data["location"];
-    userCart = data["userCart"];
+    userCart = _convertCartItems(data["userCart"]);
     favoriteList = data["favoriteList"];
     completeAddress = data["completeAddress"];
   }
+
+  List<CartItemModel> _convertCartItems(List cartFomDb){
+    List<CartItemModel> result = [];
+    if(cartFomDb.isNotEmpty){
+      for (var element in cartFomDb) {
+      result.add(CartItemModel.fromMap(element));
+    }
+    }
+    return result;
+  }
+
+  List cartItemsToJson() => userCart!.map((item) => item.toJson()).toList();
+
   Map<String, dynamic> toSnapshot() {
     return {
       "deliveryAddress": address,
@@ -47,7 +61,7 @@ class UserModel {
       "activeStatus": activeStatus,
       "phoneNumber": phoneNumber,
       "location": location,
-      "userCart":userCart,
+      "userCart":cartItemsToJson(),
       "favoriteList":favoriteList
     };
   }

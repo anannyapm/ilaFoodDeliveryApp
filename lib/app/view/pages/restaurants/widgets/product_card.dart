@@ -17,6 +17,7 @@ class ProductCard extends StatelessWidget {
   });
 
   final CartController cartController = Get.find();
+  //final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -80,19 +81,19 @@ class ProductCard extends StatelessWidget {
                                 backgroundColor:
                                     MaterialStatePropertyAll(kOrange)),
                             onPressed: () {
-                              final isAdded =
-                                  cartController.cartList.contains(product);
+                              bool isAdded =
+                                  cartController.isItemAlreadyAdded(product);
+                              //cartController.cartList.where((cartitem) => cartitem.productId==product.docId);
 
                               if (isAdded) {
-                                cartController.removeFromCart(product);
+                                cartController.removeCartItem(product.docId!);
                               } else {
-                                cartController.addToCart(product);
+                                cartController.addProductToCart(product, 1);
                               }
-                              
+                              isAdded = !isAdded;
                             },
                             icon: Icon(
-                                 cartController.cartList.contains(product)
-
+                              cartController.isItemAlreadyAdded(product)
                                   ? Icons.remove
                                   : Icons.add,
                               color: kWhite,

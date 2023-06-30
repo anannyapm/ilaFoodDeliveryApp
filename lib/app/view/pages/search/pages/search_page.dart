@@ -11,6 +11,7 @@ import 'package:ila/app/view/shared/widgets/filter_dialog.dart';
 
 import '../../../../controller/searchcontroller.dart';
 import '../../../../utils/constants/color_constants.dart';
+import '../../../shared/widgets/close_widget.dart';
 
 class SearchPage extends StatelessWidget {
   final String categoryName;
@@ -28,17 +29,32 @@ class SearchPage extends StatelessWidget {
     if (categoryName != "") {
       searchController.controller.text = categoryName;
     }
+   
     return Scaffold(
         body: SafeArea(
       child: Container(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+              kHeightBox10,
+              Row(
+                children: [
+                  const CloseWidget(),
+                          kWidthBox15,
+                          const CustomText(
+                            text: "Search",
+                            size: 20,
+                          )
+                ],
+              ),
               kHeightBox20,
+              
               SearchBar(
                 controller: searchController.controller,
                 focusNode: searchController.myfocusNode,
-                onTap: () => searchController.myfocusNode.requestFocus(),
+                onTap: () {
+                  searchController.myfocusNode.requestFocus();
+                },
                 hintText: "Search dishes,restaurants",
                 trailing: [
                   IconButton(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/constants/constants.dart';
@@ -18,23 +20,21 @@ class CheckoutDetailWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomText(
-            text: "Price Details",
-            size: 18,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
                 text: "Price",
                 color: kGreyDark,
+                weight: FontWeight.w600,
                 size: 16,
               ),
-              CustomText(
-                text: "₹250.00",
-                color: kGreyDark,
-                size: 16,
-              ),
+              Obx(() => CustomText(
+                    text: cartController.totalItemPrice.value.toString(),
+                    color: kBlueShade,
+                    weight: FontWeight.w600,
+                    size: 16,
+                  )),
             ],
           ),
           Row(
@@ -43,11 +43,13 @@ class CheckoutDetailWidget extends StatelessWidget {
               CustomText(
                 text: "Discount",
                 color: kGreyDark,
+                weight: FontWeight.w600,
                 size: 16,
               ),
               CustomText(
                 text: "₹50.00",
-                color: kGreyDark,
+                weight: FontWeight.w600,
+                color: kBlueShade,
                 size: 16,
               ),
             ],
@@ -57,30 +59,33 @@ class CheckoutDetailWidget extends StatelessWidget {
             children: [
               CustomText(
                 text: "Delivery Charges",
+                weight: FontWeight.w600,
                 color: kGreyDark,
                 size: 16,
               ),
               CustomText(
                 text: "₹50.00",
-                color: kGreyDark,
+                weight: FontWeight.w600,
+                color: kBlueShade,
                 size: 16,
               ),
             ],
           ),
           kHeightBox20,
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Spacer(),
               CustomText(
                 text: "Total: ",
                 color: kGreyDark,
+                weight: FontWeight.w600,
                 size: 18,
               ),
-              const CustomText(
-                text: "₹250.00",
-                size: 24,
-                weight: FontWeight.bold,
-              )
+              Obx(() => CustomText(
+                    text: cartController.totalCartPrice.value.toString(),
+                    size: 22,
+                    weight: FontWeight.bold,
+                  ))
             ],
           ),
           kHeightBox20,
@@ -97,10 +102,9 @@ class CheckoutDetailWidget extends StatelessWidget {
                   function: () {
                     return showOrderSummarySheet();
                   },
-                  color: kGreen))
+                  color: kOrange))
         ],
       ),
     );
   }
 }
-

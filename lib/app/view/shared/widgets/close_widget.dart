@@ -12,13 +12,15 @@ class CloseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 28,
+      padding: const EdgeInsets.all(0),
       onPressed: () => Get.back(),
       style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(
               kGreylight.withOpacity(0.4))),
       icon: const Icon(
         Icons.keyboard_arrow_left,
-        size: 30,
+        //size: 30,
       ),
     );
   }

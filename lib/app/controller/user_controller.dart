@@ -1,35 +1,35 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../model/usermodel.dart';
 import '../services/firebase_services.dart';
 
 class UserController extends GetxController {
-  UserModel? _usermodel;
+  static UserController instance = Get.find();
+  Rx<UserModel> usermodel=UserModel().obs;
   RxList addressList = [].obs;
   RxList latlongList = [].obs;
   RxList completeAddrList = [].obs;
   RxBool isLoading = false.obs;
 
-  UserModel get userModel => _usermodel!;
+  UserModel get userModel => usermodel.value;
   Future<void> setUser(user) async {
-    _usermodel = user;
-    
+    usermodel.value = user;
   }
 
   Future<void> getUserAddress() async {
-
     //FIX THE BUG!!!!!!
     isLoading.value = true;
     DocumentReference userDocRef = userCollectionRef.doc(userModel.userId);
 
-     DocumentSnapshot userSnap = await userDocRef.get();
+    DocumentSnapshot userSnap = await userDocRef.get();
 
-     List<dynamic> location = userSnap.get('deliveryAddress');
-     List<dynamic> latlng = userSnap.get('location');
-     List<dynamic> compAdd = userSnap.get('completeAddress');
+    List<dynamic> location = userSnap.get('deliveryAddress');
+    List<dynamic> latlng = userSnap.get('location');
+    List<dynamic> compAdd = userSnap.get('completeAddress');
 
     addressList.clear();
     latlongList.clear();
