@@ -175,7 +175,9 @@ class AuthController extends GetxController {
       log(userController.userModel.toString());
       cartController.getCartList();
       log("cart");
-    cartController.cartList.isEmpty ? log("empty") : log(cartController.cartList.toString());
+      cartController.cartList.isEmpty
+          ? log("empty")
+          : log(cartController.cartList.toString());
 
       log("User Exist");
 
@@ -198,7 +200,8 @@ class AuthController extends GetxController {
         name: loginController.name,
         email: loginController.email,
         userCart: List.empty(),
-        favoriteList: List.empty()));
+        favoriteList: List.empty(),
+        discounts: cartController.selectedDiscount.value));
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)

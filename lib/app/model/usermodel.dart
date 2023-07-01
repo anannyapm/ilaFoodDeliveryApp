@@ -12,20 +12,20 @@ class UserModel {
   List<dynamic>? favoriteList;
   List<CartItemModel>? userCart;
   List<dynamic>? completeAddress;
-  
+  num? discounts;
 
-  UserModel({
-    this.userId,
-    this.name,
-    this.email,
-    this.activeStatus = true,
-    this.address,
-    this.favoriteList,
-    this.userCart,
-    this.phoneNumber,
-    this.location,
-    this.completeAddress
-  });
+  UserModel(
+      {this.userId,
+      this.name,
+      this.email,
+      this.activeStatus = true,
+      this.address,
+      this.favoriteList,
+      this.userCart,
+      this.phoneNumber,
+      this.location,
+      this.completeAddress,
+      this.discounts});
 
   UserModel.fromSnapshot(DocumentSnapshot data) {
     userId = data.id;
@@ -38,14 +38,15 @@ class UserModel {
     userCart = _convertCartItems(data["userCart"]);
     favoriteList = data["favoriteList"];
     completeAddress = data["completeAddress"];
+    discounts = data["discounts"];
   }
 
-  List<CartItemModel> _convertCartItems(List cartFomDb){
+  List<CartItemModel> _convertCartItems(List cartFomDb) {
     List<CartItemModel> result = [];
-    if(cartFomDb.isNotEmpty){
+    if (cartFomDb.isNotEmpty) {
       for (var element in cartFomDb) {
-      result.add(CartItemModel.fromMap(element));
-    }
+        result.add(CartItemModel.fromMap(element));
+      }
     }
     return result;
   }
@@ -61,8 +62,9 @@ class UserModel {
       "activeStatus": activeStatus,
       "phoneNumber": phoneNumber,
       "location": location,
-      "userCart":cartItemsToJson(),
-      "favoriteList":favoriteList
+      "userCart": cartItemsToJson(),
+      "favoriteList": favoriteList,
+      "discounts":discounts
     };
   }
 }

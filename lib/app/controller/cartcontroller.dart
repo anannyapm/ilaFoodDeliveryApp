@@ -1,7 +1,8 @@
 import 'dart:developer';
-
+import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/model/carousel_model.dart';
 import 'package:ila/app/model/cart_model.dart';
 import 'package:ila/app/model/product_model.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
@@ -14,6 +15,8 @@ class CartController extends GetxController {
   static CartController instance = Get.find();
   RxList<CartItemModel> cartList = <CartItemModel>[].obs;
 
+  RxDouble scratchCardOpacity = 0.0.obs;
+
   int get totalCount => cartList.length;
   RxDouble totalItemPrice = 0.0.obs;
   RxDouble totalCartPrice = 0.0.obs;
@@ -25,7 +28,10 @@ class CartController extends GetxController {
     'Cash On Delivery'
   ];
 
+  RxNum applyDiscount = RxNum(0);
+
   RxBool isAdded = false.obs;
+  RxBool isCouponApplied = false.obs;
 
   final selectedOption = Rx<String?>(null);
 
@@ -45,7 +51,20 @@ class CartController extends GetxController {
     selectedOption.value = option;
   }
 
-  getCartList() {
+  calculateDiscount() async {
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+    final userSnap = await userDocRef.get();
+    final discount = userSnap.get('discounts');
+
+    if (discount <= 50) {
+      applyDiscount.value = discount;
+    } else {
+      applyDiscount.value = 50;
+      /* userDocRef.update({"discounts": discount - applyDiscount}); */ // DO IT AFTER SUBMISSION
+    }
+  }
+
+  getCartList() async {
     totalItemPrice.value = 0.0;
     cartList.clear();
     if (userController.userModel.userCart!.isNotEmpty) {
@@ -54,7 +73,9 @@ class CartController extends GetxController {
         tempList.add(cartitem);
         totalItemPrice.value += cartitem.price! * cartitem.quantity!;
       }
-    totalCartPrice.value = totalItemPrice.value + 50 ;
+      await calculateDiscount();
+
+      totalCartPrice.value = totalItemPrice.value + applyDiscount.value;
 
       cartList.addAll(tempList);
     }
@@ -138,5 +159,25 @@ class CartController extends GetxController {
       "userCart": FieldValue.arrayUnion([item.toJson()])
     });
     getCartList();
+  }
+
+  RxNum selectedDiscount = RxNum(0);
+
+  Future<void> fetchAndSelectRandomDiscount(CarouselModel carouselModel) async {
+    final List discounts = carouselModel.discounts!;
+
+    if (discounts.isNotEmpty) {
+      final int randomIndex = math.Random().nextInt(discounts.length);
+      selectedDiscount.value = discounts[randomIndex];
+    }
+  }
+
+  Future<void> addDiscountToUser(num discountValue) async {
+    isCouponApplied.value = true;
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+    final userSnap = await userDocRef.get();
+    final currentDiscount = userSnap.get('discounts');
+    userController.userModel.discounts =userController.userModel.discounts! + selectedDiscount.value;
+    userDocRef.update({"discounts": currentDiscount + selectedDiscount.value});
   }
 }

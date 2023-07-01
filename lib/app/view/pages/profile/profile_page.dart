@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/navigationcontroller.dart';
 import 'package:ila/app/controller/user_controller.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/profile/faq_page.dart';
 import 'package:ila/app/view/pages/profile/settings_page.dart';
@@ -67,11 +68,28 @@ class ProfilePage extends StatelessWidget {
                         ))
                   ],
                 ),
+                kHeightBox10,
+                Row(
+                  children: [
+                    const CustomText(
+                      text: "Discount Balance ",
+                      weight: FontWeight.bold,
+                      size: 18,
+                    ),
+                    kWidthBox15,
+                    Obx(() => CustomText(
+                          text: "₹ ${userController.userModel.discounts}",
+                          color: kGreen,
+                          weight: FontWeight.bold,
+                          size: 18,
+                        )),
+                  ],
+                ),
                 kHeightBox20,
                 ProfileViewMoreWidget(
                     text: "Addresses",
                     icon: Ionicons.map_outline,
-                    function: () => Get.to(()=>AddressSheet()),
+                    function: () => Get.to(() => AddressSheet()),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Cart",
