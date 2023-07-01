@@ -30,7 +30,7 @@ class CheckoutDetailWidget extends StatelessWidget {
                 size: 16,
               ),
               Obx(() => CustomText(
-                    text: cartController.totalItemPrice.value.toString(),
+                    text:"₹${cartController.totalItemPrice.value}",
                     color: kBlueShade,
                     weight: FontWeight.w600,
                     size: 16,
@@ -47,7 +47,7 @@ class CheckoutDetailWidget extends StatelessWidget {
                 size: 16,
               ),
               CustomText(
-                text: cartController.applyDiscount.value.toString(),
+                text:"₹${cartController.applyDiscount.value}",
                 weight: FontWeight.w600,
                 color: kBlueShade,
                 size: 16,
@@ -82,7 +82,7 @@ class CheckoutDetailWidget extends StatelessWidget {
                 size: 18,
               ),
               Obx(() => CustomText(
-                    text: cartController.totalCartPrice.value.toString(),
+                    text:"₹${cartController.totalCartPrice.value}",
                     size: 22,
                     weight: FontWeight.bold,
                   ))

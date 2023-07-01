@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/view/pages/home/widgets/scratch_card.dart';
 
 import '../../../../utils/constants/color_constants.dart';

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../model/category_model.dart';
 import '../model/product_model.dart';
 import '../model/restaurant_model.dart';
-import 'homecontroller.dart';
+import 'home_controller.dart';
 
 class SearchFilterController extends GetxController {
   final HomeController homeController = Get.put(HomeController());

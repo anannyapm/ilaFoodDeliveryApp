@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/model/cart_model.dart';
 
-import '../../../../controller/cartcontroller.dart';
+import '../../../../controller/cart_controller.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/constants/constants.dart';
 import '../../../shared/widgets/custom_button.dart';
@@ -132,7 +132,7 @@ class OrderDetailWidget extends StatelessWidget {
                               children: [
                                  Expanded(
                                   child: CustomText(
-                                    text:( item.price!*item.quantity!).toString(),
+                                    text:"₹${item.price!*item.quantity!}",
                                     size: 18,
                                     weight: FontWeight.bold,
                                   ),
@@ -189,13 +189,7 @@ class OrderDetailWidget extends StatelessWidget {
                                         ),
                                       ],
                                     )
-                                    //)
-                               /*  GetBuilder<CartController>(
-                                  init: CartController(),
-                                  builder: (controller) {
-                                    return ;
-                                  },
-                                ), */
+                                   
                               ],
                             )
                           ],

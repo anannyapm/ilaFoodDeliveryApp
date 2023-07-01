@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
-import 'package:ila/app/controller/mapcontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/controller/map_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/close_widget.dart';

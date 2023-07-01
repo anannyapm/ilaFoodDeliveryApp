@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/cartcontroller.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/cart_controller.dart';
+import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/view/pages/cart/widgets/changeaddress.dart';
 import 'package:ila/app/view/pages/cart/widgets/checkout_widget.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/view/pages/categories/pages/categorypage.dart';
 import 'package:ila/app/view/pages/restaurants/pages/restaurant_page.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';

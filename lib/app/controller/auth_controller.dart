@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/login_controller.dart';
-import 'package:ila/app/controller/mapcontroller.dart';
+import 'package:ila/app/controller/map_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/model/usermodel.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
@@ -174,6 +174,7 @@ class AuthController extends GetxController {
       await userController.getUserAddress();
       log(userController.userModel.toString());
       cartController.getCartList();
+      cartController.getTotalPrice();
       log("cart");
       cartController.cartList.isEmpty
           ? log("empty")

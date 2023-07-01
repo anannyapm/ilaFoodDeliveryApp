@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/login_controller.dart';
-import 'package:ila/app/controller/mapcontroller.dart';
+import 'package:ila/app/controller/map_controller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';

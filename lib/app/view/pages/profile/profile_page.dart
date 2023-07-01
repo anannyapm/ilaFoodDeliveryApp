@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
-import 'package:ila/app/controller/navigationcontroller.dart';
+import 'package:ila/app/controller/navigation_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';

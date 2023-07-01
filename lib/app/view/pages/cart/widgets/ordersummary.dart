@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/controller/payment_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
@@ -12,6 +13,7 @@ import '../../../shared/widgets/custom_button.dart';
 void showOrderSummarySheet() {
   UserController userController = Get.put(UserController());
   HomeController homeController = Get.put(HomeController());
+  PaymentController paymentController = Get.put(PaymentController());
 
   Get.bottomSheet(
     Container(
@@ -27,8 +29,8 @@ void showOrderSummarySheet() {
                   text: "Order Summary",
                   size: 18,
                 ),
-                IconButton(onPressed:()=> Get.back(), icon: const Icon(Icons.close))
-
+                IconButton(
+                    onPressed: () => Get.back(), icon: const Icon(Icons.close))
               ],
             ),
             kHeightBox20,
@@ -40,7 +42,7 @@ void showOrderSummarySheet() {
                   color: kGreyDark,
                 ),
                 CustomText(
-                  color: kGreyDark,
+                    color: kGreyDark,
                     text: userController.userModel
                         .address![homeController.primaryAddressIndex.value]),
               ],
@@ -53,7 +55,9 @@ void showOrderSummarySheet() {
                   text: "PHONE",
                   color: kGreyDark,
                 ),
-                CustomText(color: kGreyDark,text: userController.userModel.phoneNumber!),
+                CustomText(
+                    color: kGreyDark,
+                    text: userController.userModel.phoneNumber!),
               ],
             ),
             kHeightBox20,
@@ -73,21 +77,19 @@ void showOrderSummarySheet() {
             ),
             kHeightBox20,
             SizedBox(
-                        width: double.infinity,
-                        child:CustomButton(
-                            padding: 15,
-                            text: CustomText(
-                              text: "CONTINUE",
-                              color: kWhite,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            function: () {
-                              return showPaymentOptionSheet();
-                            },
-                            color: kGreen)
-                       
-                      )
+                width: double.infinity,
+                child: CustomButton(
+                    padding: 15,
+                    text: CustomText(
+                      text: "PROCEED TO PAY",
+                      color: kWhite,
+                      size: 18,
+                      weight: FontWeight.bold,
+                    ),
+                    function: () {
+                      paymentController.initiatePayment();
+                    },
+                    color: kGreen))
           ],
         ),
       ),

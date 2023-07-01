@@ -10,7 +10,7 @@ import 'package:ila/app/view/pages/restaurants/widgets/product_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 
-import '../../../../controller/homecontroller.dart';
+import '../../../../controller/home_controller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
 

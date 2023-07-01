@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 
 import '../../../controller/auth_controller.dart';
-import '../../../controller/homecontroller.dart';
+import '../../../controller/home_controller.dart';
 import '../../../utils/constants/constants.dart';
 import '../../shared/widgets/custom_text.dart';
 import '../../shared/widgets/restaurant_card.dart';

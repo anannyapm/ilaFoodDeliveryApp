@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:ila/app/controller/onboardingcontroller.dart';
+import 'package:ila/app/controller/onboarding_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/pages/view_restaurant.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';

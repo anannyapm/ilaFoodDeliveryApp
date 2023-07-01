@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ila/app/controller/cartcontroller.dart';
+import 'package:ila/app/controller/cart_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';

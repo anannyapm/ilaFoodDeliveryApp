@@ -44,6 +44,7 @@ class CartController extends GetxController {
   @override
   void onReady() {
     ever(userController.usermodel, (callback) => getCartList);
+
     super.onReady();
   }
 
@@ -64,6 +65,15 @@ class CartController extends GetxController {
     }
   }
 
+  getTotalPrice() async {
+    for (var cartitem in cartList) {
+      totalItemPrice.value += cartitem.price! * cartitem.quantity!;
+    }
+    await calculateDiscount();
+
+    totalCartPrice.value = totalItemPrice.value + applyDiscount.value - 50;
+  }
+
   getCartList() async {
     totalItemPrice.value = 0.0;
     cartList.clear();
@@ -71,11 +81,7 @@ class CartController extends GetxController {
       List<CartItemModel> tempList = [];
       for (var cartitem in userController.userModel.userCart!) {
         tempList.add(cartitem);
-        totalItemPrice.value += cartitem.price! * cartitem.quantity!;
       }
-      await calculateDiscount();
-
-      totalCartPrice.value = totalItemPrice.value + applyDiscount.value;
 
       cartList.addAll(tempList);
     }
@@ -98,6 +104,8 @@ class CartController extends GetxController {
             userCollectionRef.doc(userController.userModel.userId);
         log(item.toJson().toString());
 
+        userController.userModel.userCart!.add(item);
+
         userDocRef.update({
           "userCart": FieldValue.arrayUnion([item.toJson()])
         });
@@ -116,6 +124,8 @@ class CartController extends GetxController {
       //final name = cartitem.name;
       cartList.removeWhere((element) => element.productId == prodId);
       final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+      userController.userModel.userCart!.remove(cartitem);
+
       userDocRef.update({
         "userCart": FieldValue.arrayRemove([cartitem.toJson()])
       });
@@ -126,39 +136,57 @@ class CartController extends GetxController {
     }
   }
 
-  void decreaseQuantity(String prodId) {
-    CartItemModel item =
-        cartList.firstWhere((item) => item.productId == prodId);
+  void decreaseQuantity(String prodId) async {
+   /*  CartItemModel item =
+        cartList.firstWhere((item) => item.productId == prodId); */
+    CartItemModel itemFromModel = userController.userModel.userCart!
+        .firstWhere((element) => element.productId == prodId);
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
-    if (item.quantity! > 1) {
-      userDocRef.update({
-        "userCart": FieldValue.arrayRemove([item.toJson()])
-      });
-      item.quantity = item.quantity! - 1;
+    if (itemFromModel.quantity! > 1) {
 
-      userDocRef.update({
-        "userCart": FieldValue.arrayUnion([item.toJson()])
+      await userDocRef.update({
+        "userCart": FieldValue.arrayRemove([itemFromModel.toJson()])
       });
-    }
+      
+    itemFromModel.quantity = itemFromModel.quantity! - 1;
+      
+      await userDocRef.update({
+        "userCart": FieldValue.arrayUnion([itemFromModel.toJson()])
+      });
+
+      
     getCartList();
+    getTotalPrice();
+    }
+
+    
+
   }
 
-  void increaseQuantity(String prodId) {
-    CartItemModel item =
+  void increaseQuantity(String prodId) async {
+   /*  CartItemModel item =
         cartList.firstWhere((item) => item.productId == prodId);
-
+ */
+CartItemModel itemFromModel = userController.userModel.userCart!
+        .firstWhere((element) => element.productId == prodId);
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
-    userDocRef.update({
-      "userCart": FieldValue.arrayRemove([item.toJson()])
+    await userDocRef.update({
+      "userCart": FieldValue.arrayRemove([itemFromModel.toJson()])
     });
-    item.quantity = item.quantity! + 1;
 
-    userDocRef.update({
-      "userCart": FieldValue.arrayUnion([item.toJson()])
+       itemFromModel.quantity = itemFromModel.quantity! + 1;
+
+
+    await userDocRef.update({
+      "userCart": FieldValue.arrayUnion([itemFromModel.toJson()])
     });
+
+     
+
     getCartList();
+    getTotalPrice();
   }
 
   RxNum selectedDiscount = RxNum(0);
@@ -177,7 +205,8 @@ class CartController extends GetxController {
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
     final userSnap = await userDocRef.get();
     final currentDiscount = userSnap.get('discounts');
-    userController.userModel.discounts =userController.userModel.discounts! + selectedDiscount.value;
+    userController.userModel.discounts =
+        userController.userModel.discounts! + selectedDiscount.value;
     userDocRef.update({"discounts": currentDiscount + selectedDiscount.value});
   }
 }

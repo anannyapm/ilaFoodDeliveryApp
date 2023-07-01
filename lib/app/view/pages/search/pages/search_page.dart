@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/homecontroller.dart';
+import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/pages/product_page.dart';
 import 'package:ila/app/view/pages/restaurants/pages/view_restaurant.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:ila/app/view/shared/widgets/filter_dialog.dart';
 
-import '../../../../controller/searchcontroller.dart';
+import '../../../../controller/search_controller.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/close_widget.dart';
 

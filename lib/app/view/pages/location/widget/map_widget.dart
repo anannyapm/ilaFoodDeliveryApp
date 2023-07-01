@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ila/app/controller/mapcontroller.dart';
+import 'package:ila/app/controller/map_controller.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 
 import '../../../../utils/constants/color_constants.dart';

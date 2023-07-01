@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/navigationcontroller.dart';
+import 'package:ila/app/controller/navigation_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/cart/cart_page.dart';
 import 'package:ila/app/view/pages/favourite/favourite_page.dart';

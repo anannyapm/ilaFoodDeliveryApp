@@ -11,6 +11,7 @@
 .svn/
 migrate_working_dir/
 **lib/utils/api
+lib/app/utils/api/razorpay_key.dart
 
 # IntelliJ related
 *.iml
