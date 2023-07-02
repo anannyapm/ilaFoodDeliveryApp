@@ -176,6 +176,9 @@ class AuthController extends GetxController {
       cartController.getCartList();
       cartController.getTotalPrice();
       log("cart");
+      await orderController.getAllOrders();
+    orderController.getOngoingOrders();
+   orderController. getOrderHistory();
       cartController.cartList.isEmpty
           ? log("empty")
           : log(cartController.cartList.toString());

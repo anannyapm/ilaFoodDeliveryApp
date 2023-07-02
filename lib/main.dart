@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ila/app/controller/cart_controller.dart';
 import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/controller/order_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';
 
@@ -18,6 +19,7 @@ void main() async {
     (value) {
       Get.put(AuthController());
       Get.put(CartController());
+      Get.put(OrderController());
       //Get.put(HomeController(), permanent: true);
     },
   );

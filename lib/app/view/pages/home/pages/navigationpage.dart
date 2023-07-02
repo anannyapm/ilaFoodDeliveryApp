@@ -18,7 +18,7 @@ class NavigationPage extends StatelessWidget {
     HomePage(),
     FavouritePage(),
     ProfilePage(),
-    const OrdersPage(),
+     OrdersPage(),
     CartPage(),
   ];
   @override

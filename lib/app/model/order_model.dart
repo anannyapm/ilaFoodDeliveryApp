@@ -59,7 +59,7 @@ class OrderModel {
       "isDelivered": isDelivered,
       "address": address,
       "location": location,
-      "createdAt": createdAt!.millisecondsSinceEpoch
+      "createdAt": Timestamp.fromDate(createdAt!)
     };
   }
 

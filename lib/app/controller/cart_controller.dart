@@ -269,6 +269,8 @@ class CartController extends GetxController {
     );
     try {
       await orderCollectionRef.add(orderModel.toSnapshot());
+      await orderController.getAllOrders();
+      orderController.getOngoingOrders();
     } catch (e) {
       log(e.toString());
     }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/orders/widgets/historytab.dart';
 import 'package:ila/app/view/pages/orders/widgets/ongoingtab.dart';
 
+import '../../../controller/order_controller.dart';
 import '../../shared/widgets/custom_text.dart';
 
 class OrdersPage extends StatelessWidget {
-  const OrdersPage({super.key});
+   OrdersPage({super.key});
+  final OrderController orderController = Get.put(OrderController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,7 @@ class OrdersPage extends StatelessWidget {
               ]),
               Expanded(
                   child:
-                      TabBarView(children: [const OngoingTab(), HistoryTab()]))
+                      TabBarView(children: [ OngoingTab(orderController: orderController,), HistoryTab(orderController: orderController,)]))
             ],
           ),
         ),
