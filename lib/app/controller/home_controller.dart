@@ -12,6 +12,8 @@ import '../model/restaurant_model.dart';
 import '../services/firebase_services.dart';
 
 class HomeController extends GetxController {
+  static HomeController instance = Get.find();
+
   UserController userController = Get.put(UserController());
   //LoginController loginController = Get.put(LoginController());
 
@@ -175,13 +177,13 @@ class HomeController extends GetxController {
     });
   }
 
-  String getrestaurantName(String id) {
+  dynamic getrestaurant(String id) {
     for (var item in restaurants) {
       if (item.docId == id) {
-        return item.name!;
+        return item;
       }
     }
-    return "";
+    return null;
   }
 
   Future<void> getAllRestaurants() async {

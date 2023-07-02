@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/model/carousel_model.dart';
 import 'package:ila/app/model/cart_model.dart';
+import 'package:ila/app/model/order_model.dart';
 import 'package:ila/app/model/product_model.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
@@ -13,13 +14,18 @@ import '../utils/constants/controllers.dart';
 
 class CartController extends GetxController {
   static CartController instance = Get.find();
+
   RxList<CartItemModel> cartList = <CartItemModel>[].obs;
+
+  String activeRestaurantID = "";
+  int deliveryCharge = 0;
+  double discountValue = 0;
 
   RxDouble scratchCardOpacity = 0.0.obs;
 
   int get totalCount => cartList.length;
-  RxDouble totalItemPrice = 0.0.obs;
-  RxDouble totalCartPrice = 0.0.obs;
+  RxDouble totalItemPrice = 0.00.obs;
+  RxDouble totalCartPrice = 0.00.obs;
 
   RxInt itemCount = 1.obs;
   final List<String> options = [
@@ -37,7 +43,8 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
-    //getCartList();
+    orderCollectionRef = firebaseFirestore.collection("orders");
+
     super.onInit();
   }
 
@@ -71,7 +78,8 @@ class CartController extends GetxController {
     }
     await calculateDiscount();
 
-    totalCartPrice.value = totalItemPrice.value + applyDiscount.value - 50;
+    totalCartPrice.value =
+        totalItemPrice.value - applyDiscount.value + deliveryCharge;
   }
 
   getCartList() async {
@@ -97,9 +105,23 @@ class CartController extends GetxController {
             "Check your cart", "${product.name} is already added", kWarning);
       } else {
         String itemId = const Uuid().v1().toString();
+        if (cartList.isEmpty) {
+          activeRestaurantID = product.restaurantId!;
+          deliveryCharge =
+              (homeController.getrestaurant(activeRestaurantID)!).deliveryfee;
+        } else {
+          if (!(product.restaurantId == activeRestaurantID)) {
+            showSnackBar("Oops!", "Please checkout items from last restuarant",
+                kWarning);
+            return;
+          }
+        }
+
         CartItemModel item = CartItemModel(itemId, product.docId, quantity,
             product.image, product.price, product.name);
         cartList.add(item);
+        getTotalPrice();
+
         final userDocRef =
             userCollectionRef.doc(userController.userModel.userId);
         log(item.toJson().toString());
@@ -136,39 +158,53 @@ class CartController extends GetxController {
     }
   }
 
+  void clearCartData() {
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+
+    try {
+      userController.userModel.userCart = [];
+
+      userDocRef.update({"userCart": []});
+      getCartList();
+      activeRestaurantID = "";
+      deliveryCharge = 0;
+      discountValue = 0;
+      totalCartPrice.value = 0;
+      totalItemPrice.value = 0;
+    } catch (e) {
+      showSnackBar("Error", "Something went wrong", kWarning);
+      log(e.toString());
+    }
+  }
+
   void decreaseQuantity(String prodId) async {
-   /*  CartItemModel item =
+    /*  CartItemModel item =
         cartList.firstWhere((item) => item.productId == prodId); */
     CartItemModel itemFromModel = userController.userModel.userCart!
         .firstWhere((element) => element.productId == prodId);
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
     if (itemFromModel.quantity! > 1) {
-
       await userDocRef.update({
         "userCart": FieldValue.arrayRemove([itemFromModel.toJson()])
       });
-      
-    itemFromModel.quantity = itemFromModel.quantity! - 1;
-      
+
+      itemFromModel.quantity = itemFromModel.quantity! - 1;
+
       await userDocRef.update({
         "userCart": FieldValue.arrayUnion([itemFromModel.toJson()])
       });
 
-      
-    getCartList();
-    getTotalPrice();
+      getCartList();
+      getTotalPrice();
     }
-
-    
-
   }
 
   void increaseQuantity(String prodId) async {
-   /*  CartItemModel item =
+    /*  CartItemModel item =
         cartList.firstWhere((item) => item.productId == prodId);
  */
-CartItemModel itemFromModel = userController.userModel.userCart!
+    CartItemModel itemFromModel = userController.userModel.userCart!
         .firstWhere((element) => element.productId == prodId);
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
@@ -176,14 +212,11 @@ CartItemModel itemFromModel = userController.userModel.userCart!
       "userCart": FieldValue.arrayRemove([itemFromModel.toJson()])
     });
 
-       itemFromModel.quantity = itemFromModel.quantity! + 1;
-
+    itemFromModel.quantity = itemFromModel.quantity! + 1;
 
     await userDocRef.update({
       "userCart": FieldValue.arrayUnion([itemFromModel.toJson()])
     });
-
-     
 
     getCartList();
     getTotalPrice();
@@ -208,5 +241,36 @@ CartItemModel itemFromModel = userController.userModel.userCart!
     userController.userModel.discounts =
         userController.userModel.discounts! + selectedDiscount.value;
     userDocRef.update({"discounts": currentDiscount + selectedDiscount.value});
+  }
+
+  Future<void> addToOrders() async {
+    List<dynamic> productIds = [];
+    String orderID = const Uuid().v1().toString().substring(0, 8);
+
+    for (CartItemModel item in cartList) {
+      productIds.add(item.productId);
+    }
+    OrderModel orderModel = OrderModel(
+      orderId: orderID,
+      restaurantId: activeRestaurantID,
+      customerId: userController.userModel.userId,
+      productIds: productIds,
+      deliveryFee: deliveryCharge,
+      subTotal: totalItemPrice.value,
+      total: totalCartPrice.value,
+      isAccepted: false,
+      isDelivered: false,
+      createdAt: DateTime.now(),
+      isCancelled: false,
+      location: userController
+          .userModel.location![homeController.primaryAddressIndex.value],
+      address: userController
+          .userModel.completeAddress![homeController.primaryAddressIndex.value],
+    );
+    try {
+      await orderCollectionRef.add(orderModel.toSnapshot());
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

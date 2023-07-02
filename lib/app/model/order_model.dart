@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderModel {
   String? orderId;
   String? customerId;
+  String? restaurantId;
   List<dynamic>? productIds;
   num? deliveryFee;
   num? subTotal;
@@ -11,9 +12,12 @@ class OrderModel {
   bool? isDelivered;
   DateTime? createdAt;
   bool? isCancelled;
+  GeoPoint? location;
+  String? address;
 
   OrderModel(
       {required this.orderId,
+      required this.restaurantId,
       required this.customerId,
       required this.productIds,
       required this.deliveryFee,
@@ -22,10 +26,13 @@ class OrderModel {
       required this.isAccepted,
       required this.isDelivered,
       required this.createdAt,
-      required this.isCancelled});
+      required this.isCancelled,
+      required this.address,
+      required this.location});
 
   OrderModel.fromSnapshot(DocumentSnapshot data) {
     orderId = data["orderId"];
+    restaurantId = data["restaurantId"];
     customerId = data["customerId"];
     productIds = data["productIds"];
     deliveryFee = data["deliveryFee"];
@@ -34,19 +41,24 @@ class OrderModel {
     isAccepted = data["isAccepted"];
     isDelivered = data["isDelivered"];
     isCancelled = data["isCancelled"];
+    address = data["address"];
+    location = data["location"];
     createdAt = data["createdAt"].toDate();
   }
   Map<String, dynamic> toSnapshot() {
     return {
-      "orderId":orderId,
+      "orderId": orderId,
+      "restaurantId":restaurantId,
       "customerId": customerId,
       "productIds": productIds,
       "deliveryFee": deliveryFee,
       "subTotal": subTotal,
       "total": total,
-      "isCancelled":isCancelled,
+      "isCancelled": isCancelled,
       "isAccepted": isAccepted,
       "isDelivered": isDelivered,
+      "address": address,
+      "location": location,
       "createdAt": createdAt!.millisecondsSinceEpoch
     };
   }

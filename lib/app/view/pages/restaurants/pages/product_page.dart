@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/cart_controller.dart';
+import 'package:ila/app/model/restaurant_model.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
@@ -20,8 +21,11 @@ class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
   @override
   Widget build(BuildContext context) {
-    final String rName =
-        homeController.getrestaurantName(product.restaurantId!);
+    String rName = "";
+    final restaurant = homeController.getrestaurant(product.restaurantId!);
+    if (restaurant != null) {
+      rName = restaurant!.name;
+    }
     cartController.isAdded.value = cartController.isItemAlreadyAdded(product);
     cartController.itemCount.value = 1;
 
@@ -77,9 +81,9 @@ class ProductPage extends StatelessWidget {
                           ? CustomText(
                               text:
                                   "Quantity : ${cartController.cartList.firstWhere((element) => element.productId == product.docId).quantity}",
-                                  size: 18,
-                                  weight: FontWeight.bold,
-                                  )
+                              size: 18,
+                              weight: FontWeight.bold,
+                            )
                           : Container(
                               width: 135,
                               padding: const EdgeInsets.all(5),

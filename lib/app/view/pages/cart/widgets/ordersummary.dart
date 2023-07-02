@@ -5,7 +5,7 @@ import 'package:ila/app/controller/payment_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/cart/widgets/paymentoption.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 import '../../../shared/widgets/custom_button.dart';
@@ -68,8 +68,8 @@ void showOrderSummarySheet() {
                   color: kGreyDark,
                   size: 18,
                 ),
-                const CustomText(
-                  text: "₹250.00",
+                CustomText(
+                  text: cartController.totalCartPrice.toString(),
                   size: 24,
                   weight: FontWeight.bold,
                 )
@@ -87,7 +87,11 @@ void showOrderSummarySheet() {
                       weight: FontWeight.bold,
                     ),
                     function: () {
-                      paymentController.initiatePayment();
+                      paymentController.initiatePayment(
+                          amount: (cartController.totalCartPrice * 100).toInt(),
+                          name: userController.userModel.name!,
+                          phoneNumber: userController.userModel.phoneNumber,
+                          );
                     },
                     color: kGreen))
           ],

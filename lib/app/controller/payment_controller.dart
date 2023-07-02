@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:ila/app/services/payment_services.dart';
 import 'package:ila/app/utils/api/razorpay_key.dart';
@@ -26,18 +28,22 @@ class PaymentController extends GetxController {
     super.onClose();
   }
 
-  void initiatePayment() {
+  void initiatePayment({required int amount,required String name,required phoneNumber,String email="test@razorpay.com"}) {
     var options = {
       'key': razorPayKey.razorKey,
-      'amount': 10000, // Payment amount in paise (e.g., 10000 paise = ₹100)
-      'name': 'ILA trial',
-      'description': 'Test Payment',
-      'prefill': {'contact': '1234567890', 'email': 'test@example.com'},
+      'amount': amount, // Payment amount in paise (e.g., 10000 paise = ₹100)
+      'name': name,
+      'description': 'Test Payment for ILA App',
+      'prefill': {'contact': phoneNumber,'email': email},
       'external': {
         'wallets': ['paytm'] // Supported wallets for external payments
       }
     };
 
-    _razorpay.open(options);
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

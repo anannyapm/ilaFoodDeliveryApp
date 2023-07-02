@@ -6,6 +6,7 @@ class CartItemModel {
   num? price;
   int? quantity;
 
+
   CartItemModel(this.itemId, this.productId, this.quantity, this.image,
       this.price, this.name);
 

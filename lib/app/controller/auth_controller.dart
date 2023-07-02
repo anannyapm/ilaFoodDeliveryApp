@@ -202,7 +202,7 @@ class AuthController extends GetxController {
         email: loginController.email,
         userCart: List.empty(),
         favoriteList: List.empty(),
-        discounts: cartController.selectedDiscount.value));
+        discounts: cartController.selectedDiscount.value)); 
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)
