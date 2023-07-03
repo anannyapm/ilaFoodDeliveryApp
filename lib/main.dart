@@ -20,7 +20,7 @@ void main() async {
       Get.put(AuthController());
       Get.put(CartController());
       Get.put(OrderController());
-      //Get.put(HomeController(), permanent: true);
+      Get.put(HomeController());
     },
   );
   //Get.put(UserController());

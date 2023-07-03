@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/home_controller.dart';
@@ -130,66 +128,62 @@ class OrderDetailWidget extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Expanded(
+                                Expanded(
                                   child: CustomText(
-                                    text:"₹${item.price!*item.quantity!}",
+                                    text: "₹${item.price! * item.quantity!}",
                                     size: 18,
                                     weight: FontWeight.bold,
                                   ),
                                 ),
-                               // Obx(() => 
+                                // Obx(() =>
                                 Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            cartController.decreaseQuantity(
-                                                item.productId!);
-                                          },
-                                          child: CircleAvatar(
-                                            radius: 12,
-                                            backgroundColor:
-                                                kGrey.withOpacity(0.3),
-                                            child: Icon(
-                                              Icons.remove,
-                                              size: 15,
-                                              color: kBlack,
-                                            ),
-                                          ),
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        cartController
+                                            .decreaseQuantity(item.productId!);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 12,
+                                        backgroundColor: kGrey.withOpacity(0.3),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 15,
+                                          color: kBlack,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8, right: 8),
-                                          child: //Obx(
-                                           //() => 
-                                            CustomText(
-                                              text: item.quantity.toString(),
-                                              size: 18,
-                                              color: kBlack,
-                                              weight: FontWeight.bold,
-                                            ),
-                                         ),
-                                        //),
-                                        GestureDetector(
-                                          onTap: () {
-                                            cartController.increaseQuantity(
-                                                item.productId!);
-                                          },
-                                          child: CircleAvatar(
-                                            radius: 12,
-                                            backgroundColor:
-                                                kGrey.withOpacity(0.3),
-                                            child: Icon(
-                                              Icons.add,
-                                              size: 15,
-                                              color: kBlack,
-                                            ),
-                                          ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8, right: 8),
+                                      child: //Obx(
+                                          //() =>
+                                          CustomText(
+                                        text: item.quantity.toString(),
+                                        size: 18,
+                                        color: kBlack,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    //),
+                                    GestureDetector(
+                                      onTap: () {
+                                        cartController
+                                            .increaseQuantity(item.productId!);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 12,
+                                        backgroundColor: kGrey.withOpacity(0.3),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 15,
+                                          color: kBlack,
                                         ),
-                                      ],
-                                    )
-                                   
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             )
                           ],

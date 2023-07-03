@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/model/order_model.dart';
 import 'package:ila/app/services/firebase_services.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderController extends GetxController {
   static OrderController instance = Get.find();
@@ -10,13 +13,13 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     orderCollectionRef = firebaseFirestore.collection("orders");
-    
+    restaurantCollectionRef = firebaseFirestore.collection("restaurant");
 
     super.onInit();
   }
 
   final RxMap _tempReview = {}.obs;
-  final RxMap _ratingstatusdummy = {}.obs;
+  //final RxMap _ratingstatusdummy = {}.obs;
 
   RxBool isOrdersLoading = false.obs;
 
@@ -24,23 +27,14 @@ class OrderController extends GetxController {
   RxList<OrderModel> ongoingOrders = RxList<OrderModel>([]);
   RxList<OrderModel> oldOrders = RxList<OrderModel>([]);
 
-  Map get tempReview => _tempReview;
-  Map get ratingStatusDummy => _ratingstatusdummy;
   final TextEditingController reviewTextController = TextEditingController();
-  final RxDouble _selectedRating = 0.0.obs;
-  double get selectedRating => _selectedRating.value;
+  final RxBool ratingStatus = false.obs;
 
-  setRating(double value) {
-    _selectedRating.value = value;
-  }
+  RxBool hasCallSupport = false.obs;
 
   addReview(index) {
     _tempReview[index] = reviewTextController.text;
     reviewTextController.clear();
-  }
-
-  setratingstatus(index) {
-    _ratingstatusdummy[index] = selectedRating;
   }
 
   Future<void> getAllOrders() async {
@@ -63,7 +57,8 @@ class OrderController extends GetxController {
     ongoingOrders.clear();
     List<OrderModel> tempOrders = [];
     for (OrderModel order in orders) {
-      if (order.isDelivered == false && order.isCancelled == false) {
+      if (order.orderStatus != "delivered" &&
+          order.orderStatus != "cancelled") {
         tempOrders.add(order);
       }
     }
@@ -75,20 +70,74 @@ class OrderController extends GetxController {
     final snapshotObject = await orderCollectionRef
         .where('orderId', isEqualTo: order.orderId)
         .get();
-    await snapshotObject.docs.first.reference.update({"isCancelled": true});
+    await snapshotObject.docs.first.reference
+        .update({"orderStatus": "cancelled"});
     await getAllOrders();
     getOngoingOrders();
     getOrderHistory();
+  }
+
+  Future<void> addRating(num rating, OrderModel order) async {
+    try {
+      final restaurantDocRef = restaurantCollectionRef.doc(order.restaurantId);
+      final restaurantSnap = await restaurantDocRef.get();
+      final currentRate = restaurantSnap.get('rating');
+      log(currentRate.toString());
+
+      double newRating =
+          double.parse(((currentRate + rating) / 2).toStringAsFixed(1));
+
+      restaurantDocRef.update({'rating': newRating});
+
+      final ordersnapshotObject = await orderCollectionRef
+          .where('orderId', isEqualTo: order.orderId)
+          .get();
+      await ordersnapshotObject.docs.first.reference.update({'isRated': true});
+      order.isRated = true;
+
+      await getAllOrders();
+      homeController.initializeRestaurants();
+      getOrderHistory();
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   getOrderHistory() {
     oldOrders.clear();
     List<OrderModel> tempOrders = [];
     for (OrderModel order in orders) {
-      if (order.isDelivered == true || order.isCancelled == true) {
+      if (order.orderStatus == "delivered" ||
+          order.orderStatus == "cancelled") {
         tempOrders.add(order);
       }
     }
     oldOrders.addAll(tempOrders);
+  }
+
+  int getOrderCurrentStatus(OrderModel order) {
+    if (order.orderStatus == "placed") {
+      return 1;
+    } else if (order.orderStatus == "preparing") {
+      return 2;
+    } else if (order.orderStatus == "outForDelivery") {
+      return 3;
+    } else if (order.orderStatus == "arrivingSoon") {
+      return 4;
+    } else {
+      return 1;
+    }
+  }
+
+  Future<void> makePhoneCall(String phoneNumber) async {
+    try {
+      final Uri launchUri = Uri(
+        scheme: 'tel',
+        path: phoneNumber,
+      );
+      await launchUrl(launchUri);
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

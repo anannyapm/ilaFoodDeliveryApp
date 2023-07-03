@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/cart_controller.dart';
-import 'package:ila/app/model/restaurant_model.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';

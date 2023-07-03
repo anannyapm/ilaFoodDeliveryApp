@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ila/app/model/restaurant_model.dart';
-import 'package:ila/app/view/pages/orders/widgets/trackwidget.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
+import 'package:ila/app/view/pages/orders/widgets/track_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../model/order_model.dart';
 import '../../../../utils/constants/color_constants.dart';
@@ -11,12 +13,12 @@ import '../../../shared/widgets/custom_text.dart';
 class TrackOrderWidget extends StatelessWidget {
   final RestuarantModel restaurant;
   final OrderModel order;
-  const TrackOrderWidget({super.key, required this.restaurant, required this.order});
+  const TrackOrderWidget(
+      {super.key, required this.restaurant, required this.order});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 620,
+    return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -28,9 +30,8 @@ class TrackOrderWidget extends StatelessWidget {
                   width: 80,
                   height: 80,
                   decoration: ShapeDecoration(
-                    image:  DecorationImage(
-                      image: NetworkImage(
-                          restaurant.image!),
+                    image: DecorationImage(
+                      image: NetworkImage(restaurant.image!),
                       fit: BoxFit.fill,
                     ),
                     shape: RoundedRectangleBorder(
@@ -41,7 +42,7 @@ class TrackOrderWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     CustomText(
+                    CustomText(
                       text: restaurant.name!,
                       size: 16,
                       weight: FontWeight.bold,
@@ -83,7 +84,7 @@ class TrackOrderWidget extends StatelessWidget {
               ],
             ),
             kHeightBox20,
-             CustomText(
+            CustomText(
               text: "${restaurant.deliverytime} Min",
               size: 30,
               weight: FontWeight.w800,
@@ -95,55 +96,76 @@ class TrackOrderWidget extends StatelessWidget {
               color: kGrey,
             ),
             kHeightBox20,
-            const TrackWidget(currentStage: 2),
+            TrackWidget(
+                currentStage: orderController.getOrderCurrentStatus(order)),
             kHeightBox20,
             const Divider(),
-            kHeightBox20,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(
-                          "https://images.pexels.com/photos/6868618/pexels-photo-6868618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"),
-                    ),
-                    kWidthBox15,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            (order.orderStatus == 'outForDelivery' ||
+                    order.orderStatus == 'arrivingSoon')
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
-                          text: "Daniel Chad",
-                          color: kBlueShade,
-                          size: 20,
-                          weight: FontWeight.bold,
+                        Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 30,
+                              backgroundImage: NetworkImage(
+                                  "https://cdn-icons-png.flaticon.com/512/305/305976.png"),
+                            ),
+                            kWidthBox15,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  text: order.deliveryPersonName!,
+                                  color: kBlueShade,
+                                  size: 20,
+                                  weight: FontWeight.bold,
+                                ),
+                                CustomText(
+                                  text: "Delivery Person",
+                                  color: kGrey,
+                                  size: 16,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        CustomText(
-                          text: "Delivery Person",
-                          color: kGrey,
-                          size: 16,
-                        ),
+                        GestureDetector(
+                          onTap: () {
+                            orderController
+                                .makePhoneCall(order.deliveryPersonPhone!);
+                          },
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: kBlueShade),
+                            child: Icon(
+                              Icons.call_outlined,
+                              color: kWhite,
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 45,
-                    width: 45,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: kBlueShade),
-                    child: Icon(
-                      Icons.call_outlined,
-                      color: kWhite,
-                    ),
-                  ),
-                )
-              ],
-            )
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomText(
+                        text: "Deliciousness in the making !",
+                        weight: FontWeight.bold,
+                        size: 18,
+                        color: kBlueShade,
+                      ),
+                      Lottie.asset('assets/animations/loadfood.json',
+                          height: 150),
+                    ],
+                  )
           ],
         ),
       ),

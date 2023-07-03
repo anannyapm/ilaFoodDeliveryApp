@@ -115,11 +115,13 @@ class OngoingCardWidget extends StatelessWidget {
                       size: 15,
                       weight: FontWeight.bold,
                     ),
-                    function: () =>Get.bottomSheet(
-                       TrackOrderWidget(restaurant: restaurant,order: order,),
-                       backgroundColor: kWhite,
-      isScrollControlled: true
-                    ),
+                    function: () => Get.bottomSheet(
+                        TrackOrderWidget(
+                          restaurant: restaurant,
+                          order: order,
+                        ),
+                        backgroundColor: kWhite,
+                        isScrollControlled: true),
                     color: kGreen),
               ),
               SizedBox(

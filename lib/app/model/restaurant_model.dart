@@ -71,13 +71,4 @@ class RestuarantModel {
     };
   }
 
-/*   getAddress() async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(location!.latitude, location!.longitude);
-    //log(placemark[0].toString());
-    
-    if (placemark.isNotEmpty) {
-      address = placemark[0].street!+"\n"+placemark[0].locality!;
-    }
-  } */
 }

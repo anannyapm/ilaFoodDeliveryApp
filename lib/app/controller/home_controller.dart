@@ -56,13 +56,19 @@ class HomeController extends GetxController {
     restaurantCollectionRef = firebaseFirestore.collection("restaurant");
     productCollectionRef = firebaseFirestore.collection("products");
     carouselCollectionRef = firebaseFirestore.collection("carousel");
-    getAllCarousel();
+    /* getAllCarousel();
 
     getAllCategory();
 
     initializeRestaurants();
 
-    getAllProducts();
+    getAllProducts(); */
+  }
+
+  @override
+  void onReady() {
+    ever(userController.usermodel, (callback) => initializeRestaurants);
+    super.onReady();
   }
 
   void initializeRestaurants() async {
@@ -137,7 +143,6 @@ class HomeController extends GetxController {
   }
 
   Future<void> updateFavoriteStatus(String? id) async {
-   
     if (favList.contains(id)) {
       await removeFromFavorites(id);
     } else {

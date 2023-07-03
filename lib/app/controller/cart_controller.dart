@@ -8,6 +8,7 @@ import 'package:ila/app/model/order_model.dart';
 import 'package:ila/app/model/product_model.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import '../services/firebase_services.dart';
 import '../utils/constants/controllers.dart';
@@ -98,7 +99,16 @@ class CartController extends GetxController {
   bool isItemAlreadyAdded(ProductModel product) =>
       cartList.where((item) => item.productId == product.docId).isNotEmpty;
 
-  void addProductToCart(ProductModel product, int quantity) {
+  Future<void> setCurrentRestaurant() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    activeRestaurantID = prefs.getString('ACTIVE_RESTAURANT')!;
+
+    deliveryCharge =
+        (homeController.getrestaurant(activeRestaurantID)!).deliveryfee;
+  }
+
+  void addProductToCart(ProductModel product, int quantity) async {
     try {
       if (isItemAlreadyAdded(product)) {
         showSnackBar(
@@ -106,9 +116,10 @@ class CartController extends GetxController {
       } else {
         String itemId = const Uuid().v1().toString();
         if (cartList.isEmpty) {
-          activeRestaurantID = product.restaurantId!;
-          deliveryCharge =
-              (homeController.getrestaurant(activeRestaurantID)!).deliveryfee;
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          prefs.setString('ACTIVE_RESTAURANT', product.restaurantId!);
+          await setCurrentRestaurant();
         } else {
           if (!(product.restaurantId == activeRestaurantID)) {
             showSnackBar("Oops!", "Please checkout items from last restuarant",
@@ -158,7 +169,7 @@ class CartController extends GetxController {
     }
   }
 
-  void clearCartData() {
+  void clearCartData() async {
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
     try {
@@ -166,6 +177,9 @@ class CartController extends GetxController {
 
       userDocRef.update({"userCart": []});
       getCartList();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      prefs.setString('ACTIVE_RESTAURANT', "");
       activeRestaurantID = "";
       deliveryCharge = 0;
       discountValue = 0;
@@ -243,6 +257,15 @@ class CartController extends GetxController {
     userDocRef.update({"discounts": currentDiscount + selectedDiscount.value});
   }
 
+  Future<void> decrementDiscount(num usedDiscountValue) async {
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+    final userSnap = await userDocRef.get();
+    final currentDiscount = userSnap.get('discounts');
+    userController.userModel.discounts =
+        userController.userModel.discounts! - usedDiscountValue;
+    userDocRef.update({"discounts": currentDiscount - usedDiscountValue});
+  }
+
   Future<void> addToOrders() async {
     List<dynamic> productIds = [];
     String orderID = const Uuid().v1().toString().substring(0, 8);
@@ -251,24 +274,28 @@ class CartController extends GetxController {
       productIds.add(item.productId);
     }
     OrderModel orderModel = OrderModel(
-      orderId: orderID,
-      restaurantId: activeRestaurantID,
-      customerId: userController.userModel.userId,
-      productIds: productIds,
-      deliveryFee: deliveryCharge,
-      subTotal: totalItemPrice.value,
-      total: totalCartPrice.value,
-      isAccepted: false,
-      isDelivered: false,
-      createdAt: DateTime.now(),
-      isCancelled: false,
-      location: userController
-          .userModel.location![homeController.primaryAddressIndex.value],
-      address: userController
-          .userModel.completeAddress![homeController.primaryAddressIndex.value],
-    );
+        orderId: orderID,
+        restaurantId: activeRestaurantID,
+        customerId: userController.userModel.userId,
+        productIds: productIds,
+        deliveryFee: deliveryCharge,
+        subTotal: totalItemPrice.value,
+        total: totalCartPrice.value,
+        orderStatus: "placed",
+        // isAccepted: false,
+        isRated: false,
+        // isDelivered: false,
+        createdAt: DateTime.now(),
+        // isCancelled: false,
+        location: userController
+            .userModel.location![homeController.primaryAddressIndex.value],
+        address: userController.userModel
+            .completeAddress![homeController.primaryAddressIndex.value],
+        deliveryPersonName: "",
+        deliveryPersonPhone: "");
     try {
       await orderCollectionRef.add(orderModel.toSnapshot());
+      await decrementDiscount(applyDiscount.value);
       await orderController.getAllOrders();
       orderController.getOngoingOrders();
     } catch (e) {

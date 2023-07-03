@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 import 'package:ila/app/controller/cart_controller.dart';
 import 'package:ila/app/model/product_model.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';

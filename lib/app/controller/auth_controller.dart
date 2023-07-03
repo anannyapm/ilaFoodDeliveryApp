@@ -11,7 +11,7 @@ import 'package:ila/app/model/usermodel.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/auth/pages/otp_auth_page.dart';
-import 'package:ila/app/view/pages/auth/pages/registerpage.dart';
+import 'package:ila/app/view/pages/auth/pages/register_page.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/onboarding/pages/onboard_screen.dart';
 import 'package:ila/app/view/shared/pages/account_disable_page.dart';
@@ -95,6 +95,8 @@ class AuthController extends GetxController {
       bool existStatus = await checkIfUserExist(); //check if user in db
       if (existStatus == true) {
         if (userController.userModel.activeStatus == true) {
+          await fetchAllData();
+
           Get.offAll(() => NavigationPage());
         } else {
           await auth
@@ -116,6 +118,27 @@ class AuthController extends GetxController {
     isVerifying.value = false;
   }
 
+  Future<void> fetchAllData() async {
+    homeController.getAllCarousel();
+
+    homeController.getAllCategory();
+
+    homeController.initializeRestaurants();
+
+    homeController.getAllProducts();
+    await userController.getUserAddress();
+    log(userController.userModel.toString());
+    cartController.getCartList();
+    cartController.getTotalPrice();
+    log("cart");
+    await orderController.getAllOrders();
+    orderController.getOngoingOrders();
+    orderController.getOrderHistory();
+    if (cartController.cartList.isNotEmpty) {
+      await cartController.setCurrentRestaurant();
+    }
+  }
+
   Future<void> verifyOTP() async {
     try {
       if (loginController.otpCode.text.length < 6) {
@@ -126,19 +149,25 @@ class AuthController extends GetxController {
       await authService.verifyOtp(loginController.otpCode.text);
 
       final checkUserExist = await checkIfUserExist();
+
       isLoading.value = false;
+      loginController.otpCode.clear();
 
       if (checkUserExist == false) {
         Get.off(() => RegisterPage());
       } else {
-        /* log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}"); */
+        log("${userController.userModel.name} ");
         if (userController.userModel.activeStatus == false) {
           await auth.signOut();
 
           Get.offAll(() => const DisbledPage());
         } else {
           SharedPreferences prefs = await SharedPreferences.getInstance();
+
           prefs.setBool('USER_LOGGED', true);
+
+          await fetchAllData();
+
           Get.offAll(() => NavigationPage());
         }
       }
@@ -171,17 +200,6 @@ class AuthController extends GetxController {
         await userCollectionRef.doc(firebaseUser.value!.uid).get();
     if (snapshot.exists) {
       userController.setUser(UserModel.fromSnapshot(snapshot));
-      await userController.getUserAddress();
-      log(userController.userModel.toString());
-      cartController.getCartList();
-      cartController.getTotalPrice();
-      log("cart");
-      await orderController.getAllOrders();
-    orderController.getOngoingOrders();
-   orderController. getOrderHistory();
-      cartController.cartList.isEmpty
-          ? log("empty")
-          : log(cartController.cartList.toString());
 
       log("User Exist");
 
@@ -205,15 +223,16 @@ class AuthController extends GetxController {
         email: loginController.email,
         userCart: List.empty(),
         favoriteList: List.empty(),
-        discounts: cartController.selectedDiscount.value)); 
+        discounts: cartController.selectedDiscount.value));
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)
         .set(userController.userModel.toSnapshot());
     isUserAdding.value = false;
-    await userController.getUserAddress();
+
     mapController.clearfields();
-    cartController.getCartList();
+
+    await fetchAllData();
     //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);

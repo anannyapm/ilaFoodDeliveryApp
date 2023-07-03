@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../controller/order_controller.dart';
@@ -18,7 +17,8 @@ class HistoryCardWidget extends StatelessWidget {
     super.key,
     required this.restaurant,
     required this.order,
-    required this.orderController, required this.index,
+    required this.orderController,
+    required this.index,
   });
 
   final int index;
@@ -28,6 +28,8 @@ class HistoryCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    orderController.ratingStatus.value = order.isRated!;
+    log(orderController.ratingStatus.value.toString());
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -39,52 +41,41 @@ class HistoryCardWidget extends StatelessWidget {
                 height: 80,
                 decoration: ShapeDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(
-                        restaurant.image!),
+                    image: NetworkImage(restaurant.image!),
                     fit: BoxFit.fill,
                   ),
                   shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(8)),
+                      borderRadius: BorderRadius.circular(8)),
                 ),
               ),
               kWidthBox15,
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          text: order.isDelivered!
-                              ? "Completed"
-                              : "Cancelled",
+                          text: order.orderStatus=="delivered" ? "Completed" : "Cancelled",
                           size: 16,
                           weight: FontWeight.bold,
-                          color: order.isDelivered!
-                              ? kGreen
-                              : kWarning,
+                          color: order.orderStatus=="delivered" ? kGreen : kWarning,
                         ),
-                         CustomText(
+                        CustomText(
                           text: "#${order.orderId}",
                         ),
                       ],
                     ),
-                     CustomText(
+                    CustomText(
                       text: restaurant.name!,
                       size: 16,
                       weight: FontWeight.bold,
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment:
-                          MainAxisAlignment.center,
-                      crossAxisAlignment:
-                          CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomText(
                           text: '₹${order.total!.toInt()}\t',
@@ -98,10 +89,8 @@ class HistoryCardWidget extends StatelessWidget {
                           color: kGrey,
                         ),
                         CustomText(
-                            text: DateFormat(
-                                    '\tdd  MMM,hh:mm a ')
-                                .format(
-                                   order.createdAt!)),
+                            text: DateFormat('\tdd  MMM,hh:mm a ')
+                                .format(order.createdAt!)),
                         Container(
                           width: 6,
                           height: 6,
@@ -124,131 +113,85 @@ class HistoryCardWidget extends StatelessWidget {
             ],
           ),
           kHeightBox20,
-          order.isDelivered!
-              ? orderController.ratingStatusDummy
-                      .containsKey(index)
-                  ? RatingBarIndicator(
-                      rating: orderController
-                          .ratingStatusDummy[index],
-                      itemBuilder: (context, _) =>
-                          Icon(
-                        Icons.star,
-                        color: kGreen,
-                      ),
-                      itemCount: 5,
-                      itemSize: 20.0,
-                    )
-                  : Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          text: "Rate Now",
-                          size: 14,
-                          weight: FontWeight.bold,
-                          color: kOrange,
-                        ),
-                        kWidthBox15,
-                        RatingBar(
+          order.orderStatus=="delivered"
+              ?
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  orderController.ratingStatus.value
+                        ? CustomText(
+                            text: "Rating Added",
+                            size: 14,
+                            weight: FontWeight.bold,
+                            color: kOrange,
+                          )
+                        : CustomText(
+                            text: "Rate Now",
+                            size: 14,
+                            weight: FontWeight.bold,
+                            color: kOrange,
+                          ),
+                    kWidthBox15,
+                    orderController.ratingStatus.value
+                        ? RatingBarIndicator(
+                            rating: restaurant.rating!.toDouble(),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: kGreen,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                          )
+                        : RatingBar(
                             glow: false,
                             allowHalfRating: true,
                             itemSize: 20,
-                            ratingWidget:
-                                RatingWidget(
-                                    full: Icon(
-                                        Icons.star,
-                                        color:
-                                            kOrange),
-                                    half: Icon(
-                                      Icons.star_half,
-                                      color: kOrange,
-                                    ),
-                                    empty: Icon(
-                                      Icons
-                                          .star_outline,
-                                      color: kBlack,
-                                    )),
+                            ratingWidget: RatingWidget(
+                                full: Icon(Icons.star, color: kOrange),
+                                half: Icon(
+                                  Icons.star_half,
+                                  color: kOrange,
+                                ),
+                                empty: Icon(
+                                  Icons.star_outline,
+                                  color: kBlack,
+                                )),
                             onRatingUpdate: (value) {
-                              orderController
-                                  .setRating(value);
-                              log(orderController
-                                  .selectedRating
-                                  .toString());
-                              Get.dialog(AlertDialog(
-                                surfaceTintColor:
-                                    kWhite,
-                                elevation: 0,
-                                content:
-                                    SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      const CustomText(
-                                        text:
-                                            "Review Restuarant",
-                                        size: 18,
-                                        weight:
-                                            FontWeight
-                                                .bold,
-                                      ),
-                                      kHeightBox10,
-                                      TextFormField(
-                                        maxLines: 3,
-                                        minLines: 1,
-                                        decoration:
-                                            const InputDecoration(
-                                          // border: OutlineInputBorder(borderSide: BorderSide(color: kBlueShade)),
-                                          hintText:
-                                              "Tell us your opinion",
+                              //
+                              //orderController.setRating(value);
 
-                                          labelText:
-                                              "Tell us your opinion",
-                                        ),
-                                        controller:
-                                            orderController
-                                                .reviewTextController,
-                                      ),
-                                    ],
-                                  ),
+                              Get.dialog(AlertDialog(
+                                surfaceTintColor: kWhite,
+                                elevation: 0,
+                                title: CustomText(
+                                  text: "Would you like to submit rating?",
+                                  size: 16,
+                                  weight: FontWeight.bold,
+                                  color: kBlueShade,
                                 ),
                                 actions: [
                                   TextButton(
-                                      onPressed: () {
-                                        orderController
-                                            .addReview(
-                                                index);
-                                        orderController
-                                            .setratingstatus(
-                                                index);
+                                      onPressed: () async {
+                                        await orderController.addRating(
+                                            value, order);
+
+                                        orderController.ratingStatus.value =
+                                            false;
                                         Get.back();
                                       },
-                                      child:
-                                          const CustomText(
-                                        text:
-                                            "Submit",
-                                        weight:
-                                            FontWeight
-                                                .bold,
-                                        size: 16,
-                                      )),
+                                      child: const CustomText(text: "Yes")),
                                   TextButton(
-                                      onPressed: () {
-                                        orderController
-                                            .setratingstatus(
-                                                index);
+                                      onPressed: () async {
                                         Get.back();
                                       },
-                                      child:
-                                          CustomText(
-                                        text: "Skip",
-                                        size: 16,
-                                        color:
-                                            kOrange,
-                                      ))
+                                      child: const CustomText(text: "No"))
                                 ],
                               ));
                             })
-                      ],
-                    )
+                  ],
+                )
+              //)
+
               : Container(),
         ],
       ),

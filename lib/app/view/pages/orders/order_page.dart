@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/orders/widgets/historytab.dart';
-import 'package:ila/app/view/pages/orders/widgets/ongoingtab.dart';
+import 'package:ila/app/view/pages/orders/widgets/history_tab.dart';
+import 'package:ila/app/view/pages/orders/widgets/ongoing_tab.dart';
 
 import '../../../controller/order_controller.dart';
 import '../../shared/widgets/custom_text.dart';

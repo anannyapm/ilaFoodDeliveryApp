@@ -4,7 +4,7 @@ import 'package:ila/app/controller/navigation_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/pages/cart/cart_page.dart';
 import 'package:ila/app/view/pages/favourite/favourite_page.dart';
-import 'package:ila/app/view/pages/orders/orderpage.dart';
+import 'package:ila/app/view/pages/orders/order_page.dart';
 import 'package:ila/app/view/pages/profile/profile_page.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 

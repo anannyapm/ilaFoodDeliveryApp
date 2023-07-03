@@ -3,11 +3,10 @@ import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
 import 'package:ila/app/controller/navigation_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
-import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/profile/faq_page.dart';
 import 'package:ila/app/view/pages/profile/settings_page.dart';
-import 'package:ila/app/view/pages/profile/widgets/address_sheet.dart';
+import 'package:ila/app/view/pages/profile/widgets/address_page.dart';
 import 'package:ila/app/view/pages/profile/widgets/profile_view_more_sheet.dart';
 import 'package:ila/app/view/pages/profile/widgets/user_edit_sheet.dart';
 import 'package:ionicons/ionicons.dart';
@@ -89,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                 ProfileViewMoreWidget(
                     text: "Addresses",
                     icon: Ionicons.map_outline,
-                    function: () => Get.to(() => AddressSheet()),
+                    function: () => Get.to(() => AddressPage()),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Cart",
@@ -110,12 +109,12 @@ class ProfilePage extends StatelessWidget {
                 ProfileViewMoreWidget(
                     text: "FAQs",
                     icon: Ionicons.help_circle_outline,
-                    function: () => Get.to(const FaqPage()),
+                    function: () => Get.to(() => const FaqPage()),
                     color: kOrange),
                 ProfileViewMoreWidget(
                     text: "Settings",
                     icon: Ionicons.settings_outline,
-                    function: () => Get.to(const SettingsPage()),
+                    function: () => Get.to(() => const SettingsPage()),
                     color: kIconBlue),
                 ProfileViewMoreWidget(
                     text: "Review App",

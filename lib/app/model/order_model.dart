@@ -8,27 +8,35 @@ class OrderModel {
   num? deliveryFee;
   num? subTotal;
   num? total;
-  bool? isAccepted;
-  bool? isDelivered;
+  String? orderStatus;
+  //bool? isAccepted;
+  bool? isRated;
+  //bool? isDelivered;
   DateTime? createdAt;
-  bool? isCancelled;
+  //bool? isCancelled;
   GeoPoint? location;
   String? address;
+  String? deliveryPersonName;
+  String? deliveryPersonPhone;
 
   OrderModel(
       {required this.orderId,
+      required this.isRated,
       required this.restaurantId,
       required this.customerId,
       required this.productIds,
       required this.deliveryFee,
       required this.subTotal,
       required this.total,
-      required this.isAccepted,
-      required this.isDelivered,
+      required this.orderStatus,
+      // required this.isAccepted,
+      //required this.isDelivered,
       required this.createdAt,
-      required this.isCancelled,
+      // required this.isCancelled,
       required this.address,
-      required this.location});
+      required this.location,
+      required this.deliveryPersonName,
+      required this.deliveryPersonPhone});
 
   OrderModel.fromSnapshot(DocumentSnapshot data) {
     orderId = data["orderId"];
@@ -38,53 +46,36 @@ class OrderModel {
     deliveryFee = data["deliveryFee"];
     subTotal = data["subTotal"];
     total = data["total"];
-    isAccepted = data["isAccepted"];
-    isDelivered = data["isDelivered"];
-    isCancelled = data["isCancelled"];
+    //isAccepted = data["isAccepted"];
+    isRated = data["isRated"];
+    orderStatus = data["orderStatus"];
+    //isDelivered = data["isDelivered"];
+    //isCancelled = data["isCancelled"];
     address = data["address"];
     location = data["location"];
     createdAt = data["createdAt"].toDate();
+    deliveryPersonName = data["deliveryPersonName"];
+    deliveryPersonPhone = data["deliveryPersonPhone"];
   }
   Map<String, dynamic> toSnapshot() {
     return {
       "orderId": orderId,
-      "restaurantId":restaurantId,
+      "restaurantId": restaurantId,
       "customerId": customerId,
       "productIds": productIds,
       "deliveryFee": deliveryFee,
       "subTotal": subTotal,
       "total": total,
-      "isCancelled": isCancelled,
-      "isAccepted": isAccepted,
-      "isDelivered": isDelivered,
+      //"isCancelled": isCancelled,
+      "isRated": isRated,
+      "orderStatus": orderStatus,
+      //"isAccepted": isAccepted,
+      //"isDelivered": isDelivered,
       "address": address,
       "location": location,
-      "createdAt": Timestamp.fromDate(createdAt!)
+      "createdAt": Timestamp.fromDate(createdAt!),
+      "deliveryPersonName": deliveryPersonName,
+      "deliveryPersonPhone": deliveryPersonPhone
     };
   }
-
-  /* static List<OrderModel> orders = [
-    OrderModel(
-      isCancelled: false,
-        orderId: "152",
-        customerId: "cEtEhtcS8e1OvQg12pJi",
-        productIds: ['F63uNjELX49yhd5Mx3N9', 'x2VnLD4gRW5fZNT7gqe4'],
-        deliveryFee: 20,
-        subTotal: 20,
-        total: 40,
-        isAccepted: false,
-        isDelivered: false,
-        createdAt: DateTime.now()),
-    OrderModel(
-      isCancelled: false,
-        orderId: "458",
-        customerId: "sMbaP1lsyexq9ZmPCI7C",
-        productIds: ['x2VnLD4gRW5fZNT7gqe4', 'F63uNjELX49yhd5Mx3N9'],
-        deliveryFee: 50,
-        subTotal: 150,
-        total: 200,
-        isAccepted: false,
-        isDelivered: false,
-        createdAt: DateTime.now()),
-  ]; */
 }
