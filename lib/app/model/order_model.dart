@@ -9,11 +9,8 @@ class OrderModel {
   num? subTotal;
   num? total;
   String? orderStatus;
-  //bool? isAccepted;
   bool? isRated;
-  //bool? isDelivered;
   DateTime? createdAt;
-  //bool? isCancelled;
   GeoPoint? location;
   String? address;
   String? deliveryPersonName;
@@ -29,10 +26,7 @@ class OrderModel {
       required this.subTotal,
       required this.total,
       required this.orderStatus,
-      // required this.isAccepted,
-      //required this.isDelivered,
       required this.createdAt,
-      // required this.isCancelled,
       required this.address,
       required this.location,
       required this.deliveryPersonName,
@@ -46,11 +40,8 @@ class OrderModel {
     deliveryFee = data["deliveryFee"];
     subTotal = data["subTotal"];
     total = data["total"];
-    //isAccepted = data["isAccepted"];
     isRated = data["isRated"];
     orderStatus = data["orderStatus"];
-    //isDelivered = data["isDelivered"];
-    //isCancelled = data["isCancelled"];
     address = data["address"];
     location = data["location"];
     createdAt = data["createdAt"].toDate();
@@ -66,11 +57,8 @@ class OrderModel {
       "deliveryFee": deliveryFee,
       "subTotal": subTotal,
       "total": total,
-      //"isCancelled": isCancelled,
       "isRated": isRated,
       "orderStatus": orderStatus,
-      //"isAccepted": isAccepted,
-      //"isDelivered": isDelivered,
       "address": address,
       "location": location,
       "createdAt": Timestamp.fromDate(createdAt!),

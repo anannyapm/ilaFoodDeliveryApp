@@ -57,6 +57,7 @@ dependencies:
   uuid: ^3.0.7
   scratcher: ^2.3.0
   url_launcher: ^6.1.11
+  flutter_local_notifications: ^15.0.0
 
 dev_dependencies:
   flutter_test:

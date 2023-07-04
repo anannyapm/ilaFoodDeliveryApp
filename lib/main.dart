@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ila/app/controller/cart_controller.dart';
 import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/controller/order_controller.dart';
+import 'package:ila/app/controller/notification_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';
 
 import 'app/controller/auth_controller.dart';
@@ -21,9 +23,11 @@ void main() async {
       Get.put(CartController());
       Get.put(OrderController());
       Get.put(HomeController());
+      Get.put(NotificationController());
     },
   );
   //Get.put(UserController());
+  await notificationController.initNotifications();
 
   runApp(const MyApp());
 }

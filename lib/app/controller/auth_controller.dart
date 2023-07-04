@@ -137,6 +137,7 @@ class AuthController extends GetxController {
     if (cartController.cartList.isNotEmpty) {
       await cartController.setCurrentRestaurant();
     }
+    notificationController.getAllNotifications();
   }
 
   Future<void> verifyOTP() async {
@@ -200,6 +201,7 @@ class AuthController extends GetxController {
         await userCollectionRef.doc(firebaseUser.value!.uid).get();
     if (snapshot.exists) {
       userController.setUser(UserModel.fromSnapshot(snapshot));
+      await changeDeviceKey(deviceKey, userController.userModel.userId);
 
       log("User Exist");
 
@@ -223,7 +225,8 @@ class AuthController extends GetxController {
         email: loginController.email,
         userCart: List.empty(),
         favoriteList: List.empty(),
-        discounts: cartController.selectedDiscount.value));
+        discounts: cartController.selectedDiscount.value,
+        deviceKey: deviceKey));
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)
@@ -236,6 +239,19 @@ class AuthController extends GetxController {
     //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
+  }
+
+  Future<void> changeDeviceKey(String? deviceKey, String? userID) async {
+    final userDocRef = userCollectionRef.doc(userID);
+    final userSnapshot = await userDocRef.get();
+
+    if (userSnapshot.exists) {
+      final userDeviceKey = userSnapshot['deviceKey'];
+      if (userDeviceKey != deviceKey) {
+        await userDocRef.update({'deviceKey': deviceKey});
+        userController.userModel.deviceKey = deviceKey;
+      }
+    }
   }
 
   Future<void> logout() async {

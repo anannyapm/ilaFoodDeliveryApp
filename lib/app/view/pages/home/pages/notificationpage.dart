@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/model/notification_model.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../utils/constants/color_constants.dart';
@@ -7,18 +9,9 @@ import '../../../../utils/constants/constants.dart';
 import '../../../shared/widgets/custom_text.dart';
 
 class NotificationPage extends StatelessWidget {
-  final List<String> notifications = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis',
-    'Ut enim ad minim veniam, quis nostrud exercitation', 
-  ];
-  final List<String> dummyImages = [
-    'https://images.pexels.com/photos/2983099/pexels-photo-2983099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    'https://images.pexels.com/photos/1343464/pexels-photo-1343464.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    'https://img.freepik.com/premium-vector/warning-icon-red-vector-graphics_292645-287.jpg?w=2000', 
-  ];
 
-  NotificationPage({super.key});
+
+  const NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +43,54 @@ class NotificationPage extends StatelessWidget {
               ),
               kHeightBox20,
               Expanded(
-                child: ListView.separated(
-                  itemCount: notifications.length,
-                  itemBuilder: (context, index) {
-                    
-                    return ListTile(
-                      contentPadding: const EdgeInsets.only(top: 5),
-                      leading:CircleAvatar(radius: 35,backgroundImage: NetworkImage(dummyImages[index]),) ,
-                      title:CustomText(text: notifications[index],color: kGreyDark,size: 15,) ,
-                      subtitle: CustomText(text:"Today,${DateFormat("h:mm a").format(DateTime.now())}",color: kGrey,size: 13,),
-                      
-                     
-                    );
-                  },
-                  separatorBuilder: (context, index) => Divider(color: kGrey.withOpacity(0.4),),
-                ),
+                child: Obx(() => Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: ListView.separated(
+                        itemCount: notificationController
+                            .notifications.length, 
+                        itemBuilder: (context, index) {
+                          NotificationModel item =
+                              notificationController.notifications[index];
+                          return ListTile(
+                            contentPadding: const EdgeInsets.only(top: 5),
+                            leading:  CircleAvatar(
+                              backgroundColor:kOffBlue,
+                              radius: 25,
+                              child: Icon(Icons.notifications,color:index==notificationController.notifications.length-1?kBlueShade:kGreen ),
+                              
+                            ),
+                            title: CustomText(
+                              text: item.title!,
+                              color: kGreyDark,
+                              size: 16,
+                              weight: FontWeight.bold,
+                            ),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  text: item.body!,
+                                  lines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: kGreyDark,
+                                  size: 15,
+                                ),
+                                CustomText(
+                                  text: DateFormat("h:mm a")
+                                      .format(item.startTime!),
+                                  color: kBlueShade.withOpacity(0.7),
+                                  size: 13,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => Divider(
+                          color: kGrey.withOpacity(0.4),
+                        ),
+                      ),
+                )),
               ),
             ],
           ),
