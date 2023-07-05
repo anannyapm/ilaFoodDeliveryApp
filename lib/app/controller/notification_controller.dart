@@ -29,6 +29,7 @@ class NotificationController extends GetxController {
   }
 
   RxList<NotificationModel> notifications = RxList<NotificationModel>([]);
+  RxBool isLoading = false.obs;
 
   final _androidChannel = const AndroidNotificationChannel(
       'ila_notification_channel', 'ila_notifications',
@@ -43,8 +44,11 @@ class NotificationController extends GetxController {
     String title = message.notification?.title ?? '';
     DateTime startTime = message.sentTime ?? DateTime.now();
 
-    NotificationModel notificationModel =
-        NotificationModel(body: body, title: title, startTime: startTime,userId: userController.userModel.userId);
+    NotificationModel notificationModel = NotificationModel(
+        body: body,
+        title: title,
+        startTime: startTime,
+        userId: userController.userModel.userId);
 
     notificationCollectionRef
         .add(notificationModel.toSnapshot())
@@ -121,12 +125,13 @@ class NotificationController extends GetxController {
   }
 
   Future<void> getAllNotifications() async {
+    isLoading.value = true;
     QuerySnapshot querySnapshot = await notificationCollectionRef
-      .where('userId', isEqualTo: userController.userModel.userId)
-      .get();
+        .where('userId', isEqualTo: userController.userModel.userId)
+        .get();
     notifications.value = querySnapshot.docs
         .map((querysnap) => NotificationModel.fromSnapshot(querysnap))
         .toList();
-        
+    isLoading.value = false;
   }
 }

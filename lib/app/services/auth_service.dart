@@ -77,6 +77,4 @@ class AuthService {
     // Sign the user in (or link) with the credential
     await auth.signInWithCredential(credential);
   }
-
- 
 }

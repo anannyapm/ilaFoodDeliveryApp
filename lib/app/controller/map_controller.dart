@@ -86,7 +86,7 @@ class MapController extends GetxController {
       if (isEditMode.value == true) {
         isEditMode.value = false;
         await updateAddress();
-         await userController.setUser(UserModel.fromSnapshot(
+        await userController.setUser(UserModel.fromSnapshot(
             await userCollectionRef
                 .doc(userController.userModel.userId)
                 .get()));
@@ -96,8 +96,8 @@ class MapController extends GetxController {
         //Get.off(()=>AddressPage());
         showSnackBar("Done", "Update Success", kGreen);
       } else {
-       await addNewAddress();
-         await userController.setUser(UserModel.fromSnapshot(
+        await addNewAddress();
+        await userController.setUser(UserModel.fromSnapshot(
             await userCollectionRef
                 .doc(userController.userModel.userId)
                 .get()));
@@ -123,19 +123,25 @@ class MapController extends GetxController {
         List<dynamic> list =
             List<dynamic>.from(snapshot.get('deliveryAddress'));
         list[indexSelected] = locationAddress;
+        userController.userModel.address![indexSelected] = locationAddress;
 
         transaction.update(userDocRef, {"deliveryAddress": list});
 
         List<dynamic> locList = List<dynamic>.from(snapshot.get('location'));
         locList[indexSelected] = GeoPoint(lat, long);
+        userController.userModel.location![indexSelected] = GeoPoint(lat, long);
 
         transaction.update(userDocRef, {"location": locList});
 
         List<dynamic> completeAddrList =
             List<dynamic>.from(snapshot.get('completeAddress'));
         completeAddrList[indexSelected] = completeAddress;
+        userController.userModel.completeAddress![indexSelected] =
+            completeAddress;
 
         transaction.update(userDocRef, {"completeAddress": completeAddrList});
+       // userController.getUserAddress();
+
 /* 
         log(completeAddrList.toString());
         userController.userModel.completeAddress = completeAddrList;
@@ -167,8 +173,42 @@ class MapController extends GetxController {
         compAddress.add(completeAddress);
 
         transaction.update(userDocRef, {"completeAddress": compAddress});
+        userController.userModel.address!.add(locationAddress);
+        userController.userModel.location!.add(GeoPoint(lat, long));
+        userController.userModel.completeAddress!.add(completeAddress);
+       // userController.getUserAddress();
+      }
+    });
+  }
 
-      
+  Future<void> removeAddress() async {
+    final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+
+    firebaseFirestore.runTransaction((transaction) async {
+      final DocumentSnapshot snapshot = await transaction.get(userDocRef);
+
+      if (snapshot.exists) {
+        List<dynamic> list =
+            List<dynamic>.from(snapshot.get('deliveryAddress'));
+        list.removeAt(indexSelected);
+
+        transaction.update(userDocRef, {"deliveryAddress": list});
+
+        List<dynamic> locList = List<dynamic>.from(snapshot.get('location'));
+        locList.removeAt(indexSelected);
+
+        transaction.update(userDocRef, {"location": locList});
+
+        List<dynamic> completeAddrList =
+            List<dynamic>.from(snapshot.get('completeAddress'));
+        completeAddrList.removeAt(indexSelected);
+
+        transaction.update(userDocRef, {"completeAddress": completeAddrList});
+        userController.userModel.address!.remove(locationAddress);
+        userController.userModel.location!.remove(GeoPoint(lat, long));
+        userController.userModel.completeAddress!.remove(completeAddress);
+        userController.getUserAddress();
+
       }
     });
   }

@@ -74,49 +74,62 @@ class MapPage extends StatelessWidget {
                       )),
                 ),
                 kHeightBox20,
-                Obx(() => Center(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.location_pin,
-                                color: kWarning,
-                              ),
-                              kWidthBox10,
-                              CustomText(
-                                text: mapController.locationAddress,
-                                weight: FontWeight.bold,
-                                size: 18,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ],
+                Obx(() => Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.location_pin,
+                                  color: kWarning,
+                                ),
+                                kWidthBox10,
+                                Expanded(
+                                  child: CustomText(
+                                    text: mapController.locationAddress,
+                                    weight: FontWeight.bold,
+                                    size: 18,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     )),
                 kHeightBox20,
                 Center(
                   child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      child: Obx(() => CustomButton(
-                          padding: 15,
-                          text: CustomText(
-                            text:!isFromProfile?"PROCEED": mapController.isEditMode.value
-                                ? "EDIT ADDRESS"
-                                : "ADD COMPLETE LOCATION",
-                            color: kWhite,
-                            size: 18,
-                            weight: FontWeight.bold,
-                          ),
-                          function: () {
-                            isFromProfile?
-                            _getAddAddressSheet():Get.back();
+                      child: //Obx(() =>
+                          CustomButton(
+                              padding: 15,
+                              text: CustomText(
+                                text: !isFromProfile
+                                    ? "PROCEED"
+                                    : mapController.isEditMode.value
+                                        ? "EDIT ADDRESS"
+                                        : "ADD COMPLETE LOCATION",
+                                color: kWhite,
+                                size: 18,
+                                weight: FontWeight.bold,
+                              ),
+                              function: () {
+                                if (isFromProfile) {
+                                  _getAddAddressSheet();
+                                } else {
+                                mapController.updateLocation();
 
-                            //mapController.updateLocation();
-                          },
-                          color: kGreen))),
+                                 // Get.back();
+                                }
+                              },
+                              color: kGreen)
+                      //)
+                      ),
                 ),
                 kHeightBox20
               ],

@@ -24,7 +24,7 @@ import '../services/firebase_services.dart';
 class AuthController extends GetxController {
   LoginController loginController = Get.put(LoginController());
   MapController mapController = Get.put(MapController());
-  UserController userController = Get.put(UserController());
+  //UserController userController = Get.put(UserController());
 
   AuthService authService = AuthService();
 
@@ -216,7 +216,7 @@ class AuthController extends GetxController {
   Future<void> addUserToFirebase() async {
     isUserAdding.value = true;
     String phoneNumber = firebaseUser.value!.phoneNumber!;
-    userController.setUser(UserModel(
+    await userController.setUser(UserModel(
         phoneNumber: phoneNumber,
         location: [GeoPoint(mapController.lat, mapController.long)],
         address: [mapController.locationAddress],
@@ -231,14 +231,16 @@ class AuthController extends GetxController {
     await userCollectionRef
         .doc(firebaseUser.value!.uid)
         .set(userController.userModel.toSnapshot());
+    userController.userModel.userId = firebaseUser.value!.uid;
     isUserAdding.value = false;
 
-    mapController.clearfields();
+    log(userController.userModel.userId!);
 
     await fetchAllData();
     //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
+    mapController.clearfields();
   }
 
   Future<void> changeDeviceKey(String? deviceKey, String? userID) async {

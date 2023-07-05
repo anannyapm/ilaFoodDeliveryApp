@@ -115,6 +115,12 @@ class OrderController extends GetxController {
     oldOrders.addAll(tempOrders);
   }
 
+  Future<void> fetchAllOrderData() async {
+    await getAllOrders();
+    getOngoingOrders();
+    getOrderHistory();
+  }
+
   int getOrderCurrentStatus(OrderModel order) {
     if (order.orderStatus == "placed") {
       return 1;

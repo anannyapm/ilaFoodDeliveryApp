@@ -43,7 +43,9 @@ class LocationPage extends StatelessWidget {
                       onPressed: () async {
                         int status = await mapController.getCurrentLocation();
                         if (status == 1) {
-                          Get.dialog(Obx(() => authController.isUserAdding.value?const Center(child: CircularProgressIndicator()): AlertDialog(
+                          Get.dialog(
+                            //Obx(() => 
+                          /* authController.isUserAdding.value?const Center(child: CircularProgressIndicator()):  */AlertDialog(
                                 alignment: Alignment.center,
                                 surfaceTintColor: kWhite,
                                 title: const Text(
@@ -75,7 +77,9 @@ class LocationPage extends StatelessWidget {
                                     child: const Text('Edit Location'),
                                   ),
                                 ],
-                              )));
+                              )
+                              //)
+                              );
                         }
                         if (status == 2) {
                           Get.dialog(

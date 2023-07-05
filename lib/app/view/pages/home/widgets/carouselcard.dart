@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+
 import 'package:get/get.dart';
 import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/view/pages/home/widgets/scratch_card.dart';
@@ -12,10 +14,11 @@ class CarouselCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.put(HomeController());
+    int index=math.Random().nextInt(homeController.carousels.length);
 
     return GestureDetector(
       onTap: () {
-        Get.dialog(ScratchCard(carousel:homeController.carousels[0] ,));
+        Get.dialog(ScratchCard(carousel:homeController.carousels[index] ,));
       },
       child: Container(
         height: 140,
@@ -24,7 +27,7 @@ class CarouselCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
             image: NetworkImage(
-              homeController.carousels[0].imageUrl!,
+              homeController.carousels[index].imageUrl!,
             ),
             fit: BoxFit.cover,
           ),

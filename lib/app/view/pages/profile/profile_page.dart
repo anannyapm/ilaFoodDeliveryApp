@@ -135,9 +135,9 @@ class ProfilePage extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         titleTextStyle:
-                            TextStyle(fontSize: 22, color: kBlueShade),
+                            TextStyle(fontSize: 18, color: kBlueShade,fontWeight: FontWeight.bold),
                         title: const CustomText(
-                          text: "Are you sure you want to sign out?",
+                          text: "Are you sure you want to Sign Out?",
                         ),
                         actions: [
                           TextButton(
@@ -145,7 +145,7 @@ class ProfilePage extends StatelessWidget {
                               child: CustomText(
                                 text: "No",
                                 color: kGreen,
-                                size: 20,
+                                size: 16,
                                 weight: FontWeight.bold,
                               )),
                           TextButton(
@@ -153,7 +153,7 @@ class ProfilePage extends StatelessWidget {
                               child: CustomText(
                                 text: "Yes",
                                 color: kWarning,
-                                size: 20,
+                                size: 16,
                                 weight: FontWeight.bold,
                               )),
                         ],

@@ -20,6 +20,7 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
@@ -31,28 +32,36 @@ class HeaderWidget extends StatelessWidget {
               weight: FontWeight.bold,
               size: 14,
             ),
-            Row(
+           SizedBox(
+                  
+                  width: MediaQuery.of(context).size.width*0.5,
+                  child:  Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Obx(() => CustomText(
-                      text: userController.userModel
-                          .address![homeController.primaryAddressIndex.value]!,
-                      weight: FontWeight.bold,
-                      size: 15,
-                      color: kBlueShade,
-                    )),
-                IconButton(
-                    onPressed: () => showChangeAddressBottomSheet(),
-                    icon: const Icon(
-                      Icons.edit_location_alt,
-                      size: 18,
-                    ))
+                        text: userController.userModel
+                            .address![homeController.primaryAddressIndex.value]!,
+                        weight: FontWeight.bold,
+                        size: 15,
+                        color: kBlueShade,
+                        overflow:TextOverflow.ellipsis,
+                      ),
+                ),
+                Expanded(
+                  child: IconButton(
+                      onPressed: () => showChangeAddressBottomSheet(),
+                      icon: const Icon(
+                        Icons.edit_location_alt,
+                        size: 18,
+                      )),
+                )
               ],
-            )
+            ))
           ],
         ),
         IconButton(
             onPressed: () {
-              Get.to(() => NotificationPage());
+              Get.to(() => const NotificationPage());
             },
             icon: const Icon(Icons.notifications_outlined))
       ],

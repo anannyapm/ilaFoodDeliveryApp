@@ -14,6 +14,7 @@ class UserModel {
   List<dynamic>? completeAddress;
   num? discounts;
   String? deviceKey;
+  
 
   UserModel(
       {this.userId,

@@ -20,33 +20,38 @@ class AddressPage extends StatelessWidget {
   final MapController mapController = Get.put(MapController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                kHeightBox20,
-                const CloseWidget(),
-                kHeightBox20,
-                CustomText(
-                  text: "My Addresses",
-                  size: 20,
-                  weight: FontWeight.bold,
-                  color: kOrange,
-                ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: userController.addressList.length,
-                    /* userController.userModel.address!.length */
-                    itemBuilder: (context, index) {
-                      return
-                          
-                          Obx(() => userController.isLoading.value?const Center(child: RefreshProgressIndicator(),) : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return RefreshIndicator(
+      onRefresh: userController.getUserAddress,
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  kHeightBox20,
+                  const CloseWidget(),
+                  kHeightBox20,
+                  CustomText(
+                    text: "My Addresses",
+                    size: 20,
+                    weight: FontWeight.bold,
+                    color: kOrange,
+                  ),
+                  Obx(
+                    () => userController.isLoading.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          ):
+                        userController.addressList.isEmpty?const Center(child: CustomText(text: "No Addresses Found"),): ListView.builder(
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: userController.addressList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                       child: CustomText(
@@ -62,49 +67,56 @@ class AddressPage extends StatelessWidget {
                                           onPressed: () {
                                             mapController.changeEditMode();
                                             mapController.indexSelected = index;
-      
+
                                             log(mapController.isEditMode
                                                 .toString());
-      
+
                                             mapController.setField(
                                                 userController
-                                                    .latlongList[index].latitude,
+                                                    .latlongList[index]
+                                                    .latitude,
                                                 userController
-                                                    .latlongList[index].longitude,
-                                                userController.addressList[index],
+                                                    .latlongList[index]
+                                                    .longitude,
+                                                userController
+                                                    .addressList[index],
                                                 userController
                                                     .completeAddrList[index]);
-      
+
                                             mapController.openMapPage(true);
                                           },
                                           icon: const Icon(Icons.edit)),
                                       IconButton(
                                           iconSize: 22,
-                                          onPressed: () {},
-                                          icon:
-                                              const Icon(Icons.delete_outlined)),
+                                          onPressed: () {
+                                            mapController.removeAddress();
+                                          },
+                                          icon: const Icon(
+                                              Icons.delete_outlined)),
                                     ],
                                   )
                                 ],
-                              ));
-                    }),
-                kHeightBox20,
-                Center(
-                  child: BorderedButton(
-                    text: CustomText(
-                      text: "ADD NEW ADDRESS",
-                      color: kBlueShade,
-                      size: 14,
-                      weight: FontWeight.bold,
-                    ),
-                    color: kGreen,
-                    function: _getCurrentLoc,
-      
-                    //should open page for selecting map location
+                              );
+                            }),
                   ),
-                ),
-                kHeightBox20
-              ],
+                  kHeightBox20,
+                  Center(
+                    child: BorderedButton(
+                      text: CustomText(
+                        text: "ADD NEW ADDRESS",
+                        color: kBlueShade,
+                        size: 14,
+                        weight: FontWeight.bold,
+                      ),
+                      color: kGreen,
+                      function: _getCurrentLoc,
+
+                      //should open page for selecting map location
+                    ),
+                  ),
+                  kHeightBox20
+                ],
+              ),
             ),
           ),
         ),

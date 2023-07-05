@@ -8,9 +8,8 @@ import '../../../controller/order_controller.dart';
 import '../../shared/widgets/custom_text.dart';
 
 class OrdersPage extends StatelessWidget {
-   OrdersPage({super.key});
+  OrdersPage({super.key});
   final OrderController orderController = Get.put(OrderController());
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +38,14 @@ class OrdersPage extends StatelessWidget {
                 ),
               ]),
               Expanded(
-                  child:
-                      TabBarView(children: [ OngoingTab(orderController: orderController,), HistoryTab(orderController: orderController,)]))
+                  child: TabBarView(children: [
+                OngoingTab(
+                  orderController: orderController,
+                ),
+                HistoryTab(
+                  orderController: orderController,
+                )
+              ]))
             ],
           ),
         ),

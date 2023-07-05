@@ -32,17 +32,9 @@ class CartPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               kHeightBox10,
-              const Padding(
-                padding: EdgeInsets.only(left: 8),
-                child: Row(
-                  children: [
-                    CloseWidget(),
-                    CustomText(
-                      text: "My Cart Items",
-                      size: 20,
-                    ),
-                  ],
-                ),
+              CustomText(
+                text: "My Cart Items",
+                size: 24,
               ),
               kHeightBox20,
               AddressDetailWidget(
@@ -74,37 +66,38 @@ class AddressDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomText(
-                text: "DELIVERY ADDRESS",
-                color: kGrey,
-                size: 15,
-              ),
-              Obx(() => CustomText(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              text: "DELIVERY ADDRESS",
+              color: kGrey,
+              size: 15,
+            ),
+            Obx(() => SizedBox(
+              width: MediaQuery.of(context).size.width*0.5,
+              child: CustomText(
                     text: userController.userModel
                         .address![homeController.primaryAddressIndex.value],
                     color: kGreyDark,
                     size: 16,
-                  )),
-            ],
-          ),
-          TextButton(
-              onPressed: () => showChangeAddressBottomSheet(),
-              child: CustomText(
-                text: "CHANGE",
-                color: kOrange,
-                size: 14,
-                weight: FontWeight.bold,
-              ))
-        ],
-      ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+            )),
+          ],
+        ),
+        TextButton(
+            onPressed: () => showChangeAddressBottomSheet(),
+            child: CustomText(
+              text: "CHANGE",
+              color: kOrange,
+              size: 14,
+              weight: FontWeight.bold,
+            ))
+      ],
     );
   }
 }

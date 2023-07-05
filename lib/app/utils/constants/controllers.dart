@@ -5,7 +5,7 @@ import 'package:ila/app/controller/notification_controller.dart';
 import 'package:ila/app/controller/order_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
 
-AuthController appController = AuthController.instance;
+AuthController authController = AuthController.instance;
 UserController userController = UserController.instance;
 CartController cartController = CartController.instance;
 HomeController homeController = HomeController.instance;

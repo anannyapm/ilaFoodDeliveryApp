@@ -16,7 +16,7 @@ class OngoingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // log(Timestamp.fromDate(DateTime.now()).toString());
+    
     return SingleChildScrollView(
       child: Obx(() => Container(
             margin: const EdgeInsets.all(15),

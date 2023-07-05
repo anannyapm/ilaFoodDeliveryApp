@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/utils/constants/color_constants.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/categories/pages/categorypage.dart';
 import 'package:ila/app/view/pages/restaurants/pages/restaurant_page.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
@@ -26,96 +28,100 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeaderWidget(userController: userController),
-                kHeightBox20,
-                const SearchWidget(),
-                kHeightBox20,
-                SectionTitleWidget(
-                  title: "Categories",
-                  function: () => Get.to(() => const CategoryPage()),
-                ),
-                SizedBox(
-                    height: 190,
-                    child: Obx(() {
-                      return homeController.isCategLoading.value == true
-                          ? const Center(child: CircularProgressIndicator())
-                          : homeController.categories.isEmpty
-                              ? const Center(
-                                  child:
-                                      CustomText(text: "No Categories Found"),
-                                )
-                              : ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: homeController.categories.length,
-                                  itemBuilder: (context, index) {
-                                    final item =
-                                        homeController.categories[index];
-                                    return ItemCard(
-                                        imageUrl: item.imageUrl!,
-                                        title: item.name!,
-                                        price: item.price!,
-                                        onTap: () {
-                                          Get.to(() => SearchPage(
-                                                categoryName: item.name!,
-                                              ));
-                                        });
+      body: RefreshIndicator(
+        color: kOrange,
+        onRefresh: authController.fetchAllData,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeaderWidget(userController: userController),
+                  kHeightBox20,
+                  const SearchWidget(),
+                  kHeightBox20,
+                  SectionTitleWidget(
+                    title: "Categories",
+                    function: () => Get.to(() => const CategoryPage()),
+                  ),
+                  SizedBox(
+                      height: 190,
+                      child: Obx(() {
+                        return homeController.isCategLoading.value == true
+                            ? const Center(child: CircularProgressIndicator())
+                            : homeController.categories.isEmpty
+                                ? const Center(
+                                    child:
+                                        CustomText(text: "No Categories Found"),
+                                  )
+                                : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: homeController.categories.length,
+                                    itemBuilder: (context, index) {
+                                      final item =
+                                          homeController.categories[index];
+                                      return ItemCard(
+                                          imageUrl: item.imageUrl!,
+                                          title: item.name!,
+                                          price: item.price!,
+                                          onTap: () {
+                                            Get.to(() => SearchPage(
+                                                  categoryName: item.name!,
+                                                ));
+                                          });
+                                    },
+                                  );
+                      })),
+                  kHeightBox20,
+                  Obx(() => homeController.isCarouselLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const CarouselCard()),
+                  kHeightBox20,
+                  kHeightBox10,
+                  SectionTitleWidget(
+                    title: homeController.nearbyRestaurants.isEmpty
+                        ? "Top Restaurants"
+                        : "Restaurants Near You",
+                    function: () => Get.to(() => RestaurantPage()),
+                  ),
+                  kHeightBox10,
+                  Obx(
+                    () {
+                      RxList<RestuarantModel> listReferenceList =
+                          homeController.nearbyRestaurants.isEmpty
+                              ? homeController.topRestaurants
+                              : homeController.nearbyRestaurants;
+                      return homeController.isResLoading.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : listReferenceList.isEmpty?const EmptyWidget(): ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: listReferenceList.length,
+                              itemBuilder: (context, index) {
+                                final resItem =
+                                    listReferenceList[index];
+                                return RestaurantCard(
+                                  restaurant: resItem,
+      
+                                  onTap: () {
+                                    Get.to(() =>
+                                        ViewRestaurantPage(restaurant: resItem));
                                   },
+      
+                                  // isFav: resItem.isFavorite!
                                 );
-                    })),
-                kHeightBox20,
-                Obx(() => homeController.isCarouselLoading.value
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : const CarouselCard()),
-                kHeightBox20,
-                kHeightBox10,
-                SectionTitleWidget(
-                  title: homeController.nearbyRestaurants.isEmpty
-                      ? "Top Restaurants"
-                      : "Restaurants Near You",
-                  function: () => Get.to(() => RestaurantPage()),
-                ),
-                kHeightBox10,
-                Obx(
-                  () {
-                    RxList<RestuarantModel> listReferenceList =
-                        homeController.nearbyRestaurants.isEmpty
-                            ? homeController.topRestaurants
-                            : homeController.nearbyRestaurants;
-                    return homeController.isResLoading.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : listReferenceList.isEmpty?const EmptyWidget(): ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: listReferenceList.length,
-                            itemBuilder: (context, index) {
-                              final resItem =
-                                  listReferenceList[index];
-                              return RestaurantCard(
-                                restaurant: resItem,
-
-                                onTap: () {
-                                  Get.to(() =>
-                                      ViewRestaurantPage(restaurant: resItem));
-                                },
-
-                                // isFav: resItem.isFavorite!
-                              );
-                            },
-                          );
-                  },
-                )
-              ],
+                              },
+                            );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),
