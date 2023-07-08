@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ila/app/model/cart_model.dart';
 
 class OrderModel {
   String? orderId;
   String? customerId;
   String? restaurantId;
-  List<dynamic>? productIds;
+  List<CartItemModel>? products;
   num? deliveryFee;
   num? subTotal;
   num? total;
@@ -21,7 +22,8 @@ class OrderModel {
       required this.isRated,
       required this.restaurantId,
       required this.customerId,
-      required this.productIds,
+      // required this.productIds,
+      required this.products,
       required this.deliveryFee,
       required this.subTotal,
       required this.total,
@@ -36,7 +38,8 @@ class OrderModel {
     orderId = data["orderId"];
     restaurantId = data["restaurantId"];
     customerId = data["customerId"];
-    productIds = data["productIds"];
+    //productIds = data["productIds"];
+    products = _convertCartItems(data["products"]);
     deliveryFee = data["deliveryFee"];
     subTotal = data["subTotal"];
     total = data["total"];
@@ -48,12 +51,24 @@ class OrderModel {
     deliveryPersonName = data["deliveryPersonName"];
     deliveryPersonPhone = data["deliveryPersonPhone"];
   }
+
+  List<CartItemModel> _convertCartItems(List cartFomDb) {
+    List<CartItemModel> result = [];
+    if (cartFomDb.isNotEmpty) {
+      for (var element in cartFomDb) {
+        result.add(CartItemModel.fromMap(element));
+      }
+    }
+    return result;
+  }
+  List cartItemsToJson() => products!.map((item) => item.toJson()).toList();
+
   Map<String, dynamic> toSnapshot() {
     return {
       "orderId": orderId,
       "restaurantId": restaurantId,
       "customerId": customerId,
-      "productIds": productIds,
+      "products": cartItemsToJson(),
       "deliveryFee": deliveryFee,
       "subTotal": subTotal,
       "total": total,

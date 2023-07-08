@@ -34,27 +34,27 @@ class HeaderWidget extends StatelessWidget {
             ),
            SizedBox(
                   
-                  width: MediaQuery.of(context).size.width*0.5,
+                  width: MediaQuery.of(context).size.width*0.6,
                   child:  Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Obx(() => CustomText(
-                        text: userController.userModel
-                            .address![homeController.primaryAddressIndex.value]!,
-                        weight: FontWeight.bold,
-                        size: 15,
-                        color: kBlueShade,
-                        overflow:TextOverflow.ellipsis,
-                      ),
+                Obx(() => Expanded(
+                  child: CustomText(
+                          text: userController.userModel
+                              .address![homeController.primaryAddressIndex.value]!,
+                          weight: FontWeight.bold,
+                          size: 15,
+                          color: kBlueShade,
+                          overflow:TextOverflow.ellipsis,
+                        ),
                 ),
-                Expanded(
-                  child: IconButton(
-                      onPressed: () => showChangeAddressBottomSheet(),
-                      icon: const Icon(
-                        Icons.edit_location_alt,
-                        size: 18,
-                      )),
-                )
+                ),
+                IconButton(
+                    onPressed: () => showChangeAddressBottomSheet(),
+                    icon: const Icon(
+                      Icons.edit_location_alt,
+                      size: 18,
+                    ))
               ],
             ))
           ],

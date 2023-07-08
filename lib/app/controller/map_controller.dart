@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
+import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -15,7 +16,7 @@ import '../services/firebase_services.dart';
 import '../view/pages/location/widget/map_widget.dart';
 
 class MapController extends GetxController {
-  UserController userController = Get.put(UserController());
+  // UserController userController = Get.put(UserController());
   TextEditingController addressController = TextEditingController();
   final formKey3 = GlobalKey<FormState>();
 
@@ -25,6 +26,10 @@ class MapController extends GetxController {
 
   final RxString _locationAddress = "".obs;
 
+  RxList completeAddrList = [].obs;
+  RxList locationList = [].obs;
+  RxList deliveryAddrList = [].obs;
+
   String get locationAddress => _locationAddress.value;
   String get completeAddress => _completeAddress.value;
 
@@ -32,6 +37,7 @@ class MapController extends GetxController {
   double get long => longitudeController.value;
 
   RxBool isEditMode = false.obs;
+  RxBool isLoading = false.obs;
 
   int indexSelected = 0;
 
@@ -113,6 +119,7 @@ class MapController extends GetxController {
     }
   }
 
+
   Future<void> updateAddress() async {
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
@@ -120,32 +127,29 @@ class MapController extends GetxController {
       final DocumentSnapshot snapshot = await transaction.get(userDocRef);
 
       if (snapshot.exists) {
-        List<dynamic> list =
-            List<dynamic>.from(snapshot.get('deliveryAddress'));
-        list[indexSelected] = locationAddress;
+        log(userController.addressList.toString());
+        log(userController.latlongList.toString());
+        log(userController.completeAddrList.toString());
+
+        userController.addressList[indexSelected] = locationAddress;
         userController.userModel.address![indexSelected] = locationAddress;
 
-        transaction.update(userDocRef, {"deliveryAddress": list});
+        transaction.update(
+            userDocRef, {"deliveryAddress": userController.addressList});
 
-        List<dynamic> locList = List<dynamic>.from(snapshot.get('location'));
-        locList[indexSelected] = GeoPoint(lat, long);
+        userController.latlongList[indexSelected] = GeoPoint(lat, long);
         userController.userModel.location![indexSelected] = GeoPoint(lat, long);
 
-        transaction.update(userDocRef, {"location": locList});
+        transaction
+            .update(userDocRef, {"location": userController.latlongList});
 
-        List<dynamic> completeAddrList =
-            List<dynamic>.from(snapshot.get('completeAddress'));
-        completeAddrList[indexSelected] = completeAddress;
+        userController.completeAddrList[indexSelected] = completeAddress;
         userController.userModel.completeAddress![indexSelected] =
             completeAddress;
 
-        transaction.update(userDocRef, {"completeAddress": completeAddrList});
-       // userController.getUserAddress();
-
-/* 
-        log(completeAddrList.toString());
-        userController.userModel.completeAddress = completeAddrList;
-        await userController.getUserAddress(); */
+        transaction.update(
+            userDocRef, {"completeAddress": userController.completeAddrList});
+     
       }
     });
   }
@@ -176,7 +180,7 @@ class MapController extends GetxController {
         userController.userModel.address!.add(locationAddress);
         userController.userModel.location!.add(GeoPoint(lat, long));
         userController.userModel.completeAddress!.add(completeAddress);
-       // userController.getUserAddress();
+        // userController.getUserAddress();
       }
     });
   }
@@ -208,7 +212,6 @@ class MapController extends GetxController {
         userController.userModel.location!.remove(GeoPoint(lat, long));
         userController.userModel.completeAddress!.remove(completeAddress);
         userController.getUserAddress();
-
       }
     });
   }

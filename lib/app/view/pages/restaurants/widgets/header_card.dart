@@ -45,17 +45,24 @@ class HeaderCard extends StatelessWidget {
           children: [
             Stack(children: [
               Container(
+                width: MediaQuery.of(context).size.width,
                 height: isProduct
                     ? MediaQuery.of(context).size.height * 0.45
                     : MediaQuery.of(context).size.height * 0.4,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
-                    image: DecorationImage(
+                    /* image: DecorationImage(
                       image: NetworkImage(imageUrl),
                       fit: BoxFit.cover,
-                    )),
+                    ) */),
+                    child: ClipRRect(
+                          borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image:NetworkImage(imageUrl),
+                            fit: BoxFit.cover,), ),
               ),
               Container(
                 height: isProduct

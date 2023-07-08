@@ -8,7 +8,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscure;
   final TextEditingController textcontroller;
   final TextInputType type;
-  final VoidCallback function;
+  final VoidCallback? onchanged;
+  final VoidCallback? ontap;
   final Color textColor;
   final bool readonly;
   final int maxline;
@@ -19,10 +20,10 @@ class CustomTextFormField extends StatelessWidget {
     this.obscure = false,
     required this.textcontroller,
     this.type = TextInputType.text,
-    required this.function,
+    
     this.textColor = Colors.grey,
     this.readonly = false,
-    this.maxline = 1,
+    this.maxline = 1, this.ontap, this.onchanged,
   });
 
   @override
@@ -34,8 +35,9 @@ class CustomTextFormField extends StatelessWidget {
       controller: textcontroller,
       obscureText: obscure,
       keyboardType: type,
+      onTap: ontap,
       onChanged: (value) {
-        function;
+        onchanged;
       },
       decoration: InputDecoration(
           border: const UnderlineInputBorder(),

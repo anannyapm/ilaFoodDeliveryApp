@@ -57,11 +57,13 @@ class NotificationController extends GetxController {
   }
 
   void handleMessage(RemoteMessage? message) {
+    log("here");
     if (message == null) {
       return;
     } else {
       addtoNotificationDB(message);
       getAllNotifications();
+      // message = null;
       Get.to(() => const NotificationPage());
     }
   }

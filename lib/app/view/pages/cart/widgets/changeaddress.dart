@@ -11,6 +11,7 @@ void showChangeAddressBottomSheet() {
   HomeController homeController = Get.put(HomeController());
 
   Get.bottomSheet(
+  
     Container(
       margin: const EdgeInsets.all(15),
       height: 200,
@@ -31,7 +32,7 @@ void showChangeAddressBottomSheet() {
               itemBuilder: (context, index) {
                 bool isSelected =
                     homeController.primaryAddressIndex.value == index;
-
+                
                 return ListTile(
                   selected: isSelected,
                   selectedTileColor: kOffBlue,
@@ -44,7 +45,7 @@ void showChangeAddressBottomSheet() {
                     homeController.changePrimaryAddress(index);
                     Get.back();
                     showSnackBar("Done", "Changed Address", kGreen);
-
+                
                   },
                 );
               },
@@ -54,5 +55,6 @@ void showChangeAddressBottomSheet() {
       ),
     ),
     backgroundColor: kWhite,
+    isScrollControlled: true
   );
 }

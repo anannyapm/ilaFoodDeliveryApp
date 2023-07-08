@@ -101,8 +101,15 @@ class CartController extends GetxController {
 
   Future<void> setCurrentRestaurant() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    activeRestaurantID = prefs.getString('ACTIVE_RESTAURANT')!;
+    if (!prefs.containsKey('ACTIVE_RESTAURANT')) {
+      String? restId = homeController.products
+          .firstWhere((element) => element.docId == cartList[0].productId)
+          .restaurantId;
+      prefs.setString('ACTIVE_RESTAURANT', restId!);
+      activeRestaurantID = prefs.getString('ACTIVE_RESTAURANT')!;
+    } else {
+      activeRestaurantID = prefs.getString('ACTIVE_RESTAURANT')!;
+    }
 
     deliveryCharge =
         (homeController.getrestaurant(activeRestaurantID)!).deliveryfee;
@@ -114,7 +121,7 @@ class CartController extends GetxController {
         showSnackBar(
             "Check your cart", "${product.name} is already added", kWarning);
       } else {
-        String itemId = const Uuid().v1().toString();
+        //String itemId = const Uuid().v1().toString();
         if (cartList.isEmpty) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -128,7 +135,7 @@ class CartController extends GetxController {
           }
         }
 
-        CartItemModel item = CartItemModel(itemId, product.docId, quantity,
+        CartItemModel item = CartItemModel(product.docId, quantity,
             product.image, product.price, product.name);
         cartList.add(item);
         getTotalPrice();
@@ -162,6 +169,8 @@ class CartController extends GetxController {
       userDocRef.update({
         "userCart": FieldValue.arrayRemove([cartitem.toJson()])
       });
+      getCartList();
+      getTotalPrice();
       //showSnackBar("Item Removed", "Removed $name from cart", kGreyDark);
     } catch (e) {
       showSnackBar("Error", "Cannot remove this item", kWarning);
@@ -212,6 +221,7 @@ class CartController extends GetxController {
       getCartList();
       getTotalPrice();
     }
+    return;
   }
 
   void increaseQuantity(String prodId) async {
@@ -277,7 +287,7 @@ class CartController extends GetxController {
         orderId: orderID,
         restaurantId: activeRestaurantID,
         customerId: userController.userModel.userId,
-        productIds: productIds,
+        products: cartList,
         deliveryFee: deliveryCharge,
         subTotal: totalItemPrice.value,
         total: totalCartPrice.value,
@@ -289,8 +299,8 @@ class CartController extends GetxController {
         // isCancelled: false,
         location: userController
             .userModel.location![homeController.primaryAddressIndex.value],
-        address: userController.userModel
-            .completeAddress![homeController.primaryAddressIndex.value],
+        address: userController
+            .userModel.address![homeController.primaryAddressIndex.value],
         deliveryPersonName: "",
         deliveryPersonPhone: "");
     try {

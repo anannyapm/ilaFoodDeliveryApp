@@ -131,15 +131,21 @@ class SearchPage extends StatelessWidget {
                                       Container(
                                         height: 80,
                                         width: 80,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                             borderRadius:
-                                                const BorderRadius.all(
+                                                 BorderRadius.all(
                                                     Radius.circular(10.0)),
-                                            image: DecorationImage(
+                                            /* image: DecorationImage(
                                               image: NetworkImage(searchresult
                                                   .values.first.image),
                                               fit: BoxFit.cover,
-                                            )),
+                                            ) */),
+                                            child: ClipRRect(
+                          borderRadius:BorderRadius.circular(10),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image:NetworkImage(searchresult.values.first.image!),
+                            fit: BoxFit.cover,), ),
                                       ),
                                       kWidthBox15,
                                       Column(

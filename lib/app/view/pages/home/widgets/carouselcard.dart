@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
-import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/view/pages/home/widgets/scratch_card.dart';
 
 import '../../../../utils/constants/color_constants.dart';
+import '../../../../utils/constants/controllers.dart';
 
 class CarouselCard extends StatelessWidget {
   const CarouselCard({
@@ -13,7 +13,7 @@ class CarouselCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.put(HomeController());
+    //final HomeController homeController = Get.put(HomeController());
     int index=math.Random().nextInt(homeController.carousels.length);
 
     return GestureDetector(
@@ -25,12 +25,12 @@ class CarouselCard extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
+          /* image: DecorationImage(
             image: NetworkImage(
               homeController.carousels[index].imageUrl!,
             ),
             fit: BoxFit.cover,
-          ),
+          ), */
           boxShadow: [
             BoxShadow(
               color: kGrey.withOpacity(0.7),
@@ -41,7 +41,14 @@ class CarouselCard extends StatelessWidget {
           ],
         ),
         margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
+        child: ClipRRect(
+    borderRadius: BorderRadius.circular(15),
+    child: FadeInImage(
+      placeholder: const AssetImage('assets/images/placeholder.jpg'),
+      image: NetworkImage(homeController.carousels[index].imageUrl!),
+      fit: BoxFit.cover,
+    ),
       ),
-    );
+    ));
   }
 }

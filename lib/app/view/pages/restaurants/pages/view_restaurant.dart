@@ -10,35 +10,37 @@ import 'package:ila/app/view/pages/restaurants/widgets/product_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:ila/app/view/shared/widgets/empty_widet.dart';
 
-import '../../../../controller/home_controller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
+import '../../../../utils/constants/controllers.dart';
 
 class ViewRestaurantPage extends StatelessWidget {
   final RestuarantModel restaurant;
 
-  final HomeController homeController = Get.put(HomeController());
+  //final HomeController homeController = Get.put(HomeController());
 
-  ViewRestaurantPage({super.key, required this.restaurant});
+  const ViewRestaurantPage({super.key, required this.restaurant});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeaderCard(
-                  imageUrl: restaurant.image!,
-                  rate: restaurant.rating!,
-                  isFav: restaurant.isFavorite!,
-                  isProduct: false,
-                  itemid: restaurant.docId!,
-                ),
-                kHeightBox20,
-                Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HeaderCard(
+                imageUrl: restaurant.image!,
+                rate: restaurant.rating!,
+                isFav: restaurant.isFavorite!,
+                isProduct: false,
+                itemid: restaurant.docId!,
+              ),
+              kHeightBox20,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15,5,15,5),
+                child: Column(
+                  children: [
+                    Row(
                   children: [
                     Row(
                       children: [
@@ -128,7 +130,7 @@ class ViewRestaurantPage extends StatelessWidget {
                   homeController.getProductFromRestaurant(restaurant.docId);
                   RxList<ProductModel> productList =
                       homeController.restaurantBasedProducts;
-
+              
                   return productList.isEmpty
                       ? const EmptyWidget()
                       : GridView.builder(
@@ -148,8 +150,10 @@ class ViewRestaurantPage extends StatelessWidget {
                           },
                         );
                 }),
-              ],
-            ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

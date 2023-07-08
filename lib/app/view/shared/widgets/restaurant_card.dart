@@ -46,12 +46,20 @@ class RestaurantCard extends StatelessWidget {
               Stack(children: [
                 Container(
                   height: 150,
+                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
+                      /* image: DecorationImage(
                         image: NetworkImage(restaurant.image!),
                         fit: BoxFit.cover,
-                      )),
+                      ) */),
+                      child: ClipRRect(
+                          borderRadius:BorderRadius.circular(8),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image:NetworkImage(restaurant.image!),
+                            fit: BoxFit.cover,
+                            ), )
                 ),
                 Container(
                   height: 150,

@@ -69,11 +69,17 @@ class OrderDetailWidget extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(
+                            /* image: DecorationImage(
                                 image: NetworkImage(item.image!),
-                                fit: BoxFit.cover)),
+                                fit: BoxFit.cover) */),
                         width: 70,
                         height: 70,
+                        child: ClipRRect(
+                          borderRadius:BorderRadius.circular(12),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image: NetworkImage(item.image!),
+                            fit: BoxFit.cover,), ),
                       ),
                     ),
                     Expanded(
@@ -94,13 +100,13 @@ class OrderDetailWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        CustomText(
+                                        /* CustomText(
                                           text:
                                               "Item ID#${item.itemId!.substring(0, 6)}",
                                           color: kGreylight,
                                           weight: FontWeight.bold,
                                           size: 15,
-                                        ),
+                                        ), */
                                         CustomText(
                                           text: item.name!.toUpperCase(),
                                           size: 16,

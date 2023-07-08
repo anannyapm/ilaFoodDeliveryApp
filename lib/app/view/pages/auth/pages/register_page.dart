@@ -63,7 +63,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   kHeightBox20,
                   CustomTextFormField(
-                    function: loginController.checkRegField,
+                    onchanged: loginController.checkRegField,
                     hint: 'Name',
                     label: "Name",
                     type: TextInputType.text,
@@ -71,7 +71,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   kHeightBox20,
                   CustomTextFormField(
-                    function: loginController.checkRegField,
+                    onchanged: loginController.checkRegField,
                     hint: 'Email',
                     label: "Email",
                     type: TextInputType.emailAddress,

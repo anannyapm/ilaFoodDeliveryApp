@@ -43,11 +43,17 @@ class ItemCard extends StatelessWidget {
                       ),
                     ],
                     borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
+                   /*  image: DecorationImage(
                       image: NetworkImage(imageUrl),
                       fit: BoxFit.cover,
-                    )),
+                    ) */),
                 margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
+                child: ClipRRect(
+                          borderRadius:BorderRadius.circular(20),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image:NetworkImage(imageUrl),
+                            fit: BoxFit.cover,), )
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 12.0, right: 12),

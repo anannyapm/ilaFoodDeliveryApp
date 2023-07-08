@@ -23,9 +23,9 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 260,
-        width: 145,
-        margin: const EdgeInsets.only(right: 5, top: 10),
+       height: 280,
+       //width: 120,
+        margin: const EdgeInsets.only( top: 10),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -36,8 +36,8 @@ class ProductCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  height: 104,
-                  width: 122,
+                 // height: 80,
+                  width: 140, 
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -49,11 +49,14 @@ class ProductCard extends StatelessWidget {
                         ),
                       ],
                       borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: NetworkImage(product.image!),
-                        fit: BoxFit.cover,
-                      )),
-                  margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
+                     ),
+                  margin: const EdgeInsets.fromLTRB(5, 12, 5, 10),
+                  child: ClipRRect(
+                          borderRadius:BorderRadius.circular(20),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image:NetworkImage(product.image!),
+                            fit: BoxFit.cover,), )
                 ),
               ),
               Padding(

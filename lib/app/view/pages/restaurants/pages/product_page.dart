@@ -5,15 +5,15 @@ import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
-import '../../../../controller/home_controller.dart';
 import '../../../../model/product_model.dart';
 import '../../../../utils/constants/color_constants.dart';
+import '../../../../utils/constants/controllers.dart';
 import '../../../shared/widgets/custom_button.dart';
 
 class ProductPage extends StatelessWidget {
   final ProductModel product;
 
-  final HomeController homeController = Get.put(HomeController());
+ // final HomeController homeController = Get.put(HomeController());
   //final CartController cartController = Get.put(CartController());
   final CartController cartController = Get.find();
 
@@ -30,20 +30,22 @@ class ProductPage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HeaderCard(
-                  itemid: product.docId!,
-                  isProduct: true,
-                  imageUrl: product.image!,
-                  rate: null,
-                  isFav: product.isRecommended!),
-              kHeightBox20,
-              kHeightBox10,
-              Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HeaderCard(
+                itemid: product.docId!,
+                isProduct: true,
+                imageUrl: product.image!,
+                rate: null,
+                isFav: product.isRecommended!),
+            kHeightBox20,
+            kHeightBox10,
+           Padding(
+             padding: const EdgeInsets.fromLTRB(15,5,15,5),
+             child: Column(
+              children: [
+                 Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -168,8 +170,10 @@ class ProductPage extends StatelessWidget {
                       color: cartController.isAdded.value ? kWarning : kGreen)),
                 ),
               )
-            ],
-          ),
+              ],
+             ),
+           )
+          ],
         ),
       ),
     );

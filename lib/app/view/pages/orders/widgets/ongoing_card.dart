@@ -41,13 +41,19 @@ class OngoingCardWidget extends StatelessWidget {
                     width: 80,
                     height: 80,
                     decoration: ShapeDecoration(
-                      image: DecorationImage(
+                      /* image: DecorationImage(
                         image: NetworkImage(restaurant.image!),
                         fit: BoxFit.fill,
-                      ),
+                      ), */
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),
+                    child: ClipRRect(
+                          borderRadius:BorderRadius.circular(8),
+                          child: FadeInImage(
+                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            image:NetworkImage(restaurant.image!),
+                            fit: BoxFit.cover,), )
                   ),
                   kWidthBox15,
                   Column(
@@ -83,7 +89,7 @@ class OngoingCardWidget extends StatelessWidget {
                           ),
                           kWidthBox15,
                           CustomText(
-                            text: '${order.productIds!.length} Items',
+                            text: '${order.products!.length} Items',
                             color: kGreyDark,
                             size: 15,
                             weight: FontWeight.w400,

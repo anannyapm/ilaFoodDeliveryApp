@@ -45,7 +45,7 @@ class OtpAuthPage extends StatelessWidget {
                     CountryCodeWidget(),
                     kWidthBox20,
                     CustomTextFormField(
-                      function: loginController.checkField,
+                      onchanged: loginController.checkField,
                       hint: 'Mobile Number',
                       label: "Mobile Number",
                       type: TextInputType.phone,
@@ -58,7 +58,7 @@ class OtpAuthPage extends StatelessWidget {
 
                       child: Obx(() => CustomButton(
                         padding: 15,
-                        text:authController.isVerifying.value?const Center(child: CircularProgressIndicator(),): CustomText(text: "GET OTP",color: kWhite,size: 18,weight: FontWeight.bold,),
+                        text: authController.isVerifying.value?const Center(child: CircularProgressIndicator(),): CustomText(text: "GET OTP",color: kWhite,size: 18,weight: FontWeight.bold,),
                          function: () async {
                             loginController.isLogButtonEnabled.value
                                 ? await authController.verifyPhoneNumber()

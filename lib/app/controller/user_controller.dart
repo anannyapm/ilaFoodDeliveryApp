@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../model/usermodel.dart';
@@ -8,7 +9,7 @@ import '../services/firebase_services.dart';
 
 class UserController extends GetxController {
   static UserController instance = Get.find();
-  Rx<UserModel> usermodel=UserModel().obs;
+  Rx<UserModel> usermodel = UserModel().obs;
   RxList addressList = [].obs;
   RxList latlongList = [].obs;
   RxList completeAddrList = [].obs;
@@ -45,5 +46,36 @@ class UserController extends GetxController {
     log(addressList.toString());
     log(latlongList.toString());
     log(completeAddrList.toString());
+  }
+
+  Future<bool> updateUserData(String name, String email) async {
+    try {
+      final userDocRef = userCollectionRef.doc(userModel.userId);
+      final userSnapshot = await userDocRef.get();
+      final userName = userSnapshot.get('name');
+      final userEmail = userSnapshot.get('email');
+      bool isupdated = false;
+      if (name.isNotEmpty && name != userName) {
+        await userDocRef.update({"name": name});
+        isupdated = true;
+        // usermodel.value.name = name;
+      }
+      if (email.isNotEmpty && userEmail != email) {
+        await userDocRef.update({"email": email});
+        isupdated = true;
+
+        //usermodel.value.email = email;
+      }
+      if(isupdated){
+        await setUser(UserModel.fromSnapshot(
+            await userDocRef
+                .get()));
+
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

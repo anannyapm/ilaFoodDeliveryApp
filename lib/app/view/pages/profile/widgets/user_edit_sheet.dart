@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/auth_controller.dart';
@@ -6,6 +8,7 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 import 'package:ila/app/view/shared/widgets/custom_textformfield.dart';
+import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
 
 import '../../../../controller/user_controller.dart';
 import '../../../shared/widgets/custom_button.dart';
@@ -47,24 +50,27 @@ class UserEditSheet extends StatelessWidget {
                 ),
                 kHeightBox20,
                 CustomTextFormField(
-                    textColor: kBlueShade,
-                    hint: "",
-                    label: "Name",
-                    textcontroller: nameController,
-                    function: () {}),
+                  textColor: kBlueShade,
+                  hint: "",
+                  label: "Name",
+                  textcontroller: nameController,
+                ),
                 CustomTextFormField(
                     readonly: true,
                     textColor: kBlueShade,
                     hint: "",
                     label: "Phone Number",
                     textcontroller: phoneController,
-                    function: () {}),
+                    ontap: () {
+                      showSnackBar(
+                          "Pss!", "This field can't be edited", kWarning);
+                    }),
                 CustomTextFormField(
-                    textColor: kBlueShade,
-                    hint: "",
-                    label: "Email",
-                    textcontroller: emailController,
-                    function: () {}),
+                  textColor: kBlueShade,
+                  hint: "",
+                  label: "Email",
+                  textcontroller: emailController,
+                ),
                 kHeightBox20,
                 SizedBox(
                   width: double.infinity,
@@ -76,7 +82,24 @@ class UserEditSheet extends StatelessWidget {
                         size: 18,
                         weight: FontWeight.bold,
                       ),
-                      function: () {},
+                      function: () async {
+                        bool output = await userController.updateUserData(
+                            nameController.text.trim(),
+                            emailController.text.trim());
+                        log(output.toString());
+                        if (output == true) {
+                          Get.back();
+                          nameController.clear();
+                          emailController.clear();
+                          return showSnackBar(
+                              "Done", "Profile Updated!", kGreen);
+                        } else {
+                          Get.back();
+
+                          return showSnackBar(
+                              "OOPS", "Something went wrong!", kWarning);
+                        }
+                      },
                       color: kGreen),
                 ),
                 kHeightBox20

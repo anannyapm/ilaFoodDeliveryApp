@@ -7,6 +7,7 @@ import 'package:ila/app/controller/cart_controller.dart';
 import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/controller/order_controller.dart';
 import 'package:ila/app/controller/notification_controller.dart';
+import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';
@@ -20,6 +21,7 @@ void main() async {
   await Firebase.initializeApp().then(
     (value) {
       Get.put(AuthController());
+      Get.put(UserController());
       Get.put(CartController());
       Get.put(OrderController());
       Get.put(HomeController());

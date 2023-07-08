@@ -44,11 +44,11 @@ class ProfilePage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(
-                          text: userController.userModel.name!,
-                          weight: FontWeight.bold,
-                          size: 22,
-                        ),
+                        Obx(() => CustomText(
+                              text: userController.userModel.name!,
+                              weight: FontWeight.bold,
+                              size: 22,
+                            )),
                         CustomText(
                           text: userController.userModel.phoneNumber!,
                           size: 18,
@@ -134,8 +134,10 @@ class ProfilePage extends StatelessWidget {
                         surfaceTintColor: kWhite,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
-                        titleTextStyle:
-                            TextStyle(fontSize: 18, color: kBlueShade,fontWeight: FontWeight.bold),
+                        titleTextStyle: TextStyle(
+                            fontSize: 18,
+                            color: kBlueShade,
+                            fontWeight: FontWeight.bold),
                         title: const CustomText(
                           text: "Are you sure you want to Sign Out?",
                         ),
