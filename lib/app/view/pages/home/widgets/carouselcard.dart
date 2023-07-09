@@ -18,7 +18,7 @@ class CarouselCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Get.dialog(ScratchCard(carousel:homeController.carousels[index] ,));
+       homeController.carousels.isNotEmpty? Get.dialog(ScratchCard(carousel:homeController.carousels[index] ,)):null;
       },
       child: Container(
         height: 140,
@@ -43,9 +43,10 @@ class CarouselCard extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
         child: ClipRRect(
     borderRadius: BorderRadius.circular(15),
-    child: FadeInImage(
+    child:homeController.carousels.isEmpty? const Image(image: AssetImage('assets/images/ilabanner.png')) : FadeInImage(
+      fadeInDuration: const Duration(milliseconds: 300),
       placeholder: const AssetImage('assets/images/placeholder.jpg'),
-      image: NetworkImage(homeController.carousels[index].imageUrl!),
+      image:NetworkImage(homeController.carousels[index].imageUrl!),
       fit: BoxFit.cover,
     ),
       ),

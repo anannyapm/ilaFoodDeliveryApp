@@ -7,8 +7,6 @@ class RestuarantModel {
   String? deliverytime;
   String? description;
   String? image;
-  bool? isFavorite;
-  bool? isNear;
   bool? isOpen;
   bool? isRecommended;
   GeoPoint? location;
@@ -24,8 +22,7 @@ class RestuarantModel {
     required this.deliverytime,
     required this.description,
     required this.image,
-    required this.isFavorite,
-    required this.isNear,
+
     required this.isOpen,
     required this.isRecommended,
     required this.location,
@@ -42,8 +39,7 @@ class RestuarantModel {
     deliverytime = data["deliverytime"];
     description = data["description"];
     image = data["image"];
-    isFavorite = data["isFavorite"];
-    isNear = data["isNear"];
+
     isOpen = data["isOpen"];
     isRecommended = data["isRecommended"];
     location = data["location"];
@@ -60,8 +56,7 @@ class RestuarantModel {
       "deliverytime": deliverytime,
       "description": description,
       "image": image,
-      "isFavorite": isFavorite,
-      "isNear": isNear,
+
       "isOpen": isOpen,
       "isRecommended": isRecommended,
       "location": location,

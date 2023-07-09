@@ -12,12 +12,12 @@ class NotificationModel {
       this.body,
       this.title,
       this.startTime,
-      this.userId});
+      });
 
   NotificationModel.fromSnapshot(DocumentSnapshot data) {
     notificationId = data.id;
     body = data["body"];
-    userId = data["userId"];
+   
     startTime = data["startTime"].toDate();
     title = data["title"];
   }
@@ -26,7 +26,7 @@ class NotificationModel {
       
       "startTime": Timestamp.fromDate(startTime!),
       "body": body,
-      "userId":userId,
+      
       "title": title
     };
   }

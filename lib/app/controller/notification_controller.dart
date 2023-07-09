@@ -1,12 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/home/pages/notificationpage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../model/notification_model.dart';
 import '../services/firebase_services.dart';
@@ -31,24 +29,62 @@ class NotificationController extends GetxController {
   RxList<NotificationModel> notifications = RxList<NotificationModel>([]);
   RxBool isLoading = false.obs;
 
-  final _androidChannel = const AndroidNotificationChannel(
+  Future<void> initializeOneSignal() async {
+    OneSignal.shared.setNotificationWillShowInForegroundHandler(
+        (OSNotificationReceivedEvent event) async {
+      // Will be called whenever a notification is received in foreground
+      // Display Notification, pass null param for not displaying the notification
+      event.complete(event.notification);
+
+      await addtoNotificationDB(event.notification.body ?? "",
+          event.notification.title ?? "", DateTime.now());
+      getAllNotifications();
+    });
+
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      Get.to(() => const NotificationPage());
+
+      // Will be called whenever a notification is opened/button pressed.
+    });
+
+    OneSignal.shared.setPermissionObserver((OSPermissionStateChanges changes) {
+      // Will be called whenever the permission changes
+      // (ie. user taps Allow on the permission prompt in iOS)
+    });
+
+    OneSignal.shared
+        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+      // Will be called whenever the subscription changes
+      // (ie. user gets registered with OneSignal and gets a user ID)
+    });
+
+    OneSignal.shared.setEmailSubscriptionObserver(
+        (OSEmailSubscriptionStateChanges emailChanges) {
+      // Will be called whenever then user's email subscription changes
+      // (ie. OneSignal.setEmail(email) is called and the user gets registered
+    });
+  }
+
+  /* final _androidChannel = const AndroidNotificationChannel(
       'ila_notification_channel', 'ila_notifications',
       description: 'This channel is used for important notifications from ila',
       importance: Importance.defaultImportance);
 
   final FlutterLocalNotificationsPlugin _localNotifications =
-      FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin(); */
 
-  void addtoNotificationDB(RemoteMessage message) {
-    String body = message.notification?.body ?? '';
+  Future<void> addtoNotificationDB(
+      String body, String title, DateTime startTime) async {
+    /* String body = message.notification?.body ?? '';
     String title = message.notification?.title ?? '';
     DateTime startTime = message.sentTime ?? DateTime.now();
-
+ */
     NotificationModel notificationModel = NotificationModel(
-        body: body,
-        title: title,
-        startTime: startTime,
-        userId: userController.userModel.userId);
+      body: body,
+      title: title,
+      startTime: startTime,
+    );
 
     notificationCollectionRef
         .add(notificationModel.toSnapshot())
@@ -56,12 +92,12 @@ class NotificationController extends GetxController {
         .catchError((error) => log('Failed to add notification: $error'));
   }
 
-  void handleMessage(RemoteMessage? message) {
+  /* void handleMessage(RemoteMessage? message) {
     log("here");
     if (message == null) {
       return;
     } else {
-      addtoNotificationDB(message);
+      // addtoNotificationDB(message);
       getAllNotifications();
       // message = null;
       Get.to(() => const NotificationPage());
@@ -125,15 +161,33 @@ class NotificationController extends GetxController {
     initPushNotifications();
     initLocalNotifications();
   }
-
+ */
   Future<void> getAllNotifications() async {
     isLoading.value = true;
     QuerySnapshot querySnapshot = await notificationCollectionRef
-        .where('userId', isEqualTo: userController.userModel.userId)
+        .orderBy('startTime', descending: true)
         .get();
     notifications.value = querySnapshot.docs
         .map((querysnap) => NotificationModel.fromSnapshot(querysnap))
         .toList();
     isLoading.value = false;
   }
+
+  Future<void> _deleteAllNotification() async {
+    final notificationSnapshot = await notificationCollectionRef.get();
+    final batch = firebaseFirestore.batch();
+
+    for (var doc in notificationSnapshot.docs) {
+      batch.delete(doc.reference);
+    }
+
+    
+
+    await batch.commit();
+  }
+  void deleteNotification() async {
+      await _deleteAllNotification();
+      await getAllNotifications();
+      Get.back();
+    }
 }

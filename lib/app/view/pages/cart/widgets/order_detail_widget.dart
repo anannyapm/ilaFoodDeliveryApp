@@ -77,6 +77,7 @@ class OrderDetailWidget extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius:BorderRadius.circular(12),
                           child: FadeInImage(
+      fadeInDuration: const Duration(milliseconds: 300),
                             placeholder: const AssetImage('assets/images/placeholder.jpg'),
                             image: NetworkImage(item.image!),
                             fit: BoxFit.cover,), ),

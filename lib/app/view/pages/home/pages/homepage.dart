@@ -86,7 +86,7 @@ class HomePage extends StatelessWidget {
                     title: homeController.nearbyRestaurants.isEmpty
                         ? "Top Restaurants"
                         : "Restaurants Near You",
-                    function: () => Get.to(() => RestaurantPage()),
+                    function: () => Get.to(() => const RestaurantPage()),
                   ),
                   kHeightBox10,
                   Obx(

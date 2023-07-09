@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/shared/widgets/show_snackbar.dart';

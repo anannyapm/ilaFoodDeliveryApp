@@ -41,136 +41,139 @@ class ProductPage extends StatelessWidget {
                 isFav: product.isRecommended!),
             kHeightBox20,
             kHeightBox10,
-           Padding(
-             padding: const EdgeInsets.fromLTRB(15,5,15,5),
-             child: Column(
-              children: [
-                 Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: kBlueShade)),
-                child: CustomText(
-                  text: rName,
-                  size: 16,
-                ),
-              ),
-              kHeightBox20,
-              CustomText(
-                text: product.name!,
-                size: 24,
-                weight: FontWeight.bold,
-              ),
-              Expanded(
-                child: CustomText(
-                    text: product.description!, size: 15, color: kBlueShade),
-              ),
-              kHeightBox20,
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        text: "₹${product.price.toString()}/Item",
-                        size: 28,
-                      ),
-                      Obx(() => cartController.isItemAlreadyAdded(product)
-                          ? CustomText(
-                              text:
-                                  "Quantity : ${cartController.cartList.firstWhere((element) => element.productId == product.docId).quantity}",
-                              size: 18,
-                              weight: FontWeight.bold,
-                            )
-                          : Container(
-                              width: 135,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: kBlack),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    iconSize: 14,
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                kGreylight)),
-                                    icon: Icon(
-                                      Icons.remove,
-                                      color: kWhite,
-                                    ),
-                                    onPressed: () {
-                                      if (cartController.itemCount.value > 1) {
-                                        cartController.itemCount.value--;
-                                      }
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, right: 8),
-                                    child: Obx(
-                                      () => CustomText(
-                                        text: cartController.itemCount.value
-                                            .toString(),
-                                        size: 18,
-                                        color: kWhite,
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    iconSize: 14,
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                kGreylight)),
-                                    icon: Icon(
-                                      Icons.add,
-                                      color: kWhite,
-                                    ),
-                                    onPressed: () {
-                                      cartController.itemCount.value++;
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ))
-                    ],
+           Expanded(
+             child: Padding(
+               padding: const EdgeInsets.fromLTRB(15,5,15,15),
+               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: kBlueShade)),
+                  child: CustomText(
+                    text: rName,
+                    size: 16,
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Obx(() => CustomButton(
-                      padding: 15,
-                      text: CustomText(
-                        text: cartController.isAdded.value
-                            ? "REMOVE FROM CART"
-                            : "ADD TO CART",
-                        color: kWhite,
-                        size: 18,
-                        weight: FontWeight.bold,
-                      ),
-                      function: () {
-                        if (cartController.isAdded.value) {
-                          cartController.removeCartItem(product.docId!);
-                        } else {
-                          cartController.addProductToCart(
-                              product, cartController.itemCount.value);
-                        }
-                        cartController.isAdded.value =
-                            !cartController.isAdded.value;
-                      },
-                      color: cartController.isAdded.value ? kWarning : kGreen)),
+                kHeightBox20,
+                CustomText(
+                  text: product.name!,
+                  size: 24,
+                  weight: FontWeight.bold,
                 ),
-              )
-              ],
+                Expanded(
+                  child: CustomText(
+                      text: product.description!, size: 15, color: kBlueShade),
+                ),
+                kHeightBox20,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomText(
+                          text: "₹${product.price.toString()}/Item",
+                          size: 28,
+                        ),
+                        Obx(() => cartController.isItemAlreadyAdded(product)
+                            ? CustomText(
+                                text:
+                                    "Quantity : ${cartController.cartList.firstWhere((element) => element.productId == product.docId).quantity}",
+                                size: 18,
+                                weight: FontWeight.bold,
+                              )
+                            : Container(
+                                width: 135,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: kBlack),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      iconSize: 14,
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  kGreylight)),
+                                      icon: Icon(
+                                        Icons.remove,
+                                        color: kWhite,
+                                      ),
+                                      onPressed: () {
+                                        if (cartController.itemCount.value > 1) {
+                                          cartController.itemCount.value--;
+                                        }
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8, right: 8),
+                                      child: Obx(
+                                        () => CustomText(
+                                          text: cartController.itemCount.value
+                                              .toString(),
+                                          size: 18,
+                                          color: kWhite,
+                                        ),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      iconSize: 14,
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStatePropertyAll(
+                                                  kGreylight)),
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: kWhite,
+                                      ),
+                                      onPressed: () {
+                                        cartController.itemCount.value++;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ))
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Obx(() => CustomButton(
+                        padding: 15,
+                        text: CustomText(
+                          text: cartController.isAdded.value
+                              ? "REMOVE FROM CART"
+                              : "ADD TO CART",
+                          color: kWhite,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        function: () {
+                          if (cartController.isAdded.value) {
+                            cartController.removeCartItem(product.docId!);
+                          } else {
+                            cartController.addProductToCart(
+                                product, cartController.itemCount.value);
+                          }
+                          cartController.isAdded.value =
+                              !cartController.isAdded.value;
+                        },
+                        color: cartController.isAdded.value ? kWarning : kGreen)),
+                  ),
+                )
+                ],
+               ),
              ),
            )
           ],

@@ -2,11 +2,9 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/login_controller.dart';
 import 'package:ila/app/controller/map_controller.dart';
-import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/model/usermodel.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
@@ -16,6 +14,7 @@ import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/pages/onboarding/pages/onboard_screen.dart';
 import 'package:ila/app/view/shared/pages/account_disable_page.dart';
 import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_service.dart';
@@ -71,7 +70,11 @@ class AuthController extends GetxController {
 
   getDeviceKey() async {
     try {
-      deviceKey = await FirebaseMessaging.instance.getToken();
+      final status = await OneSignal.shared.getDeviceState();
+      final tokenId = status?.userId;
+      log(tokenId.toString());
+      deviceKey = tokenId ?? "";
+      //await FirebaseMessaging.instance.getToken();
     } catch (e) {
       log("could not get the key");
     }
@@ -217,18 +220,17 @@ class AuthController extends GetxController {
     isUserAdding.value = true;
     String phoneNumber = firebaseUser.value!.phoneNumber!;
     await userController.setUser(UserModel(
-        phoneNumber: phoneNumber,
-        location: [GeoPoint(mapController.lat, mapController.long)],
-        address: [mapController.locationAddress],
-        completeAddress: [mapController.completeAddress],
-        name: loginController.name,
-        email: loginController.email,
-        userCart: List.empty(),
-        favoriteList: List.empty(),
-        discounts: cartController.selectedDiscount.value,
-        deviceKey: deviceKey,
-        
-        ));
+      phoneNumber: phoneNumber,
+      location: [GeoPoint(mapController.lat, mapController.long)],
+      address: [mapController.locationAddress],
+      completeAddress: [mapController.completeAddress],
+      name: loginController.name,
+      email: loginController.email,
+      userCart: List.empty(),
+      favoriteList: List.empty(),
+      discounts: cartController.selectedDiscount.value,
+      deviceKey: deviceKey,
+    ));
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)

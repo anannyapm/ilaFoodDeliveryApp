@@ -51,6 +51,7 @@ class OngoingCardWidget extends StatelessWidget {
                     child: ClipRRect(
                           borderRadius:BorderRadius.circular(8),
                           child: FadeInImage(
+      fadeInDuration: const Duration(milliseconds: 300),
                             placeholder: const AssetImage('assets/images/placeholder.jpg'),
                             image:NetworkImage(restaurant.image!),
                             fit: BoxFit.cover,), )

@@ -38,7 +38,9 @@ class HeaderWidget extends StatelessWidget {
                   child:  Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Obx(() => Expanded(
+                Obx(() => SizedBox(
+                  width: MediaQuery.of(context).size.width*0.4,
+
                   child: CustomText(
                           text: userController.userModel
                               .address![homeController.primaryAddressIndex.value]!,
@@ -49,12 +51,14 @@ class HeaderWidget extends StatelessWidget {
                         ),
                 ),
                 ),
-                IconButton(
-                    onPressed: () => showChangeAddressBottomSheet(),
-                    icon: const Icon(
-                      Icons.edit_location_alt,
-                      size: 18,
-                    ))
+                Expanded(
+                  child: IconButton(
+                      onPressed: () => showChangeAddressBottomSheet(),
+                      icon: const Icon(
+                        Icons.edit_location_alt,
+                        size: 18,
+                      )),
+                )
               ],
             ))
           ],

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
@@ -9,10 +11,10 @@ class PaymentServices {
   handlePaymentSuccess(PaymentSuccessResponse response) async{
     // Payment successful
     String? paymentId = response.paymentId;
-    await cartController.addToOrders();
+    await cartController.addToOrders(paymentId);
     cartController.clearCartData();
     Get.off(() => const SuccessPage());
-    showSnackBar("Payment Successful", "Payment ID: $paymentId", kGreen);
+    log("Payment Successful - ID: $paymentId");
 
   }
 
@@ -21,7 +23,7 @@ class PaymentServices {
     String? errorMessage = response.message;
     showSnackBar(
         "Payment Failed",
-        "Code: ${response.code}\nDescription: $errorMessage}",
+        "$errorMessage",
         kWarning);
 
   }

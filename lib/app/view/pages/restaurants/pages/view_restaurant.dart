@@ -31,7 +31,7 @@ class ViewRestaurantPage extends StatelessWidget {
               HeaderCard(
                 imageUrl: restaurant.image!,
                 rate: restaurant.rating!,
-                isFav: restaurant.isFavorite!,
+                isFav: homeController.favList.contains(restaurant.docId),
                 isProduct: false,
                 itemid: restaurant.docId!,
               ),

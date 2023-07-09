@@ -143,6 +143,7 @@ class SearchPage extends StatelessWidget {
                                             child: ClipRRect(
                           borderRadius:BorderRadius.circular(10),
                           child: FadeInImage(
+      fadeInDuration: const Duration(milliseconds: 300),
                             placeholder: const AssetImage('assets/images/placeholder.jpg'),
                             image:NetworkImage(searchresult.values.first.image!),
                             fit: BoxFit.cover,), ),

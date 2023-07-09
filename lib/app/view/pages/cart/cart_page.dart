@@ -8,7 +8,6 @@ import 'package:ila/app/controller/user_controller.dart';
 import 'package:ila/app/view/pages/cart/widgets/changeaddress.dart';
 import 'package:ila/app/view/pages/cart/widgets/checkout_widget.dart';
 import 'package:ila/app/view/pages/cart/widgets/order_detail_widget.dart';
-import 'package:ila/app/view/shared/widgets/close_widget.dart';
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
 import '../../shared/widgets/custom_text.dart';
@@ -32,7 +31,7 @@ class CartPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               kHeightBox10,
-              CustomText(
+              const CustomText(
                 text: "My Cart Items",
                 size: 24,
               ),

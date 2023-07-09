@@ -60,6 +60,7 @@ class HeaderCard extends StatelessWidget {
                     child: ClipRRect(
                           borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
                           child: FadeInImage(
+      fadeInDuration: const Duration(milliseconds: 300),
                             placeholder: const AssetImage('assets/images/placeholder.jpg'),
                             image:NetworkImage(imageUrl),
                             fit: BoxFit.cover,), ),

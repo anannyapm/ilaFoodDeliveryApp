@@ -276,7 +276,7 @@ class CartController extends GetxController {
     userDocRef.update({"discounts": currentDiscount - usedDiscountValue});
   }
 
-  Future<void> addToOrders() async {
+  Future<void> addToOrders(String? paymentId) async {
     List<dynamic> productIds = [];
     String orderID = const Uuid().v1().toString().substring(0, 8);
 
@@ -285,6 +285,7 @@ class CartController extends GetxController {
     }
     OrderModel orderModel = OrderModel(
         orderId: orderID,
+        paymentRefId: paymentId,
         restaurantId: activeRestaurantID,
         customerId: userController.userModel.userId,
         products: cartList,

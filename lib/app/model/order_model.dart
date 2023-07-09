@@ -3,6 +3,7 @@ import 'package:ila/app/model/cart_model.dart';
 
 class OrderModel {
   String? orderId;
+  String? paymentRefId;
   String? customerId;
   String? restaurantId;
   List<CartItemModel>? products;
@@ -22,6 +23,7 @@ class OrderModel {
       required this.isRated,
       required this.restaurantId,
       required this.customerId,
+      required this.paymentRefId,
       // required this.productIds,
       required this.products,
       required this.deliveryFee,
@@ -37,6 +39,7 @@ class OrderModel {
   OrderModel.fromSnapshot(DocumentSnapshot data) {
     orderId = data["orderId"];
     restaurantId = data["restaurantId"];
+    paymentRefId = data["paymentRefId"];
     customerId = data["customerId"];
     //productIds = data["productIds"];
     products = _convertCartItems(data["products"]);
@@ -61,11 +64,13 @@ class OrderModel {
     }
     return result;
   }
+
   List cartItemsToJson() => products!.map((item) => item.toJson()).toList();
 
   Map<String, dynamic> toSnapshot() {
     return {
       "orderId": orderId,
+      "paymentRefId":paymentRefId,
       "restaurantId": restaurantId,
       "customerId": customerId,
       "products": cartItemsToJson(),
