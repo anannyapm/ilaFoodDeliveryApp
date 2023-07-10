@@ -128,7 +128,7 @@ class HomeController extends GetxController {
   void getTopRestaurants() {
     topRestaurants.clear();
     List<RestuarantModel> topRes =
-        restaurants.where((restaurant) => restaurant.rating! > 4.0).toList();
+        restaurants.where((restaurant) => restaurant.rating! >= 4.0).toList();
     topRestaurants.addAll(topRes);
   }
 

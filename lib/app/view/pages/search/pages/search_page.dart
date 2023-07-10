@@ -12,6 +12,7 @@ import 'package:ila/app/view/shared/widgets/filter_dialog.dart';
 import '../../../../controller/search_controller.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/close_widget.dart';
+import '../../home/pages/navigationpage.dart';
 
 class SearchPage extends StatelessWidget {
   final String categoryName;
@@ -29,7 +30,7 @@ class SearchPage extends StatelessWidget {
     if (categoryName != "") {
       searchController.controller.text = categoryName;
     }
-   
+
     return Scaffold(
         body: SafeArea(
       child: Container(
@@ -39,16 +40,15 @@ class SearchPage extends StatelessWidget {
               kHeightBox10,
               Row(
                 children: [
-                  const CloseWidget(),
-                          kWidthBox15,
-                          const CustomText(
-                            text: "Search",
-                            size: 20,
-                          )
+                   CloseWidget(actionfunction:()=> Get.offAll(NavigationPage(),)),
+                  kWidthBox15,
+                  const CustomText(
+                    text: "Search",
+                    size: 20,
+                  )
                 ],
               ),
               kHeightBox20,
-              
               SearchBar(
                 controller: searchController.controller,
                 focusNode: searchController.myfocusNode,
@@ -115,15 +115,25 @@ class SearchPage extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
+                                    
                                     if (searchresult.keys.first ==
                                         'Restaurant') {
-                                      Get.to(() => ViewRestaurantPage(
-                                          restaurant:
-                                              searchresult.values.first));
+                                      categoryName.isEmpty
+                                          ? Get.to(() => ViewRestaurantPage(
+                                              restaurant:
+                                                  searchresult.values.first))
+                                          : Get.off(() => ViewRestaurantPage(
+                                              restaurant:
+                                                  searchresult.values.first));
                                     } else if (searchresult.keys.first ==
                                         'Dish') {
-                                      Get.to(() => ProductPage(
-                                          product: searchresult.values.first));
+                                      categoryName.isEmpty
+                                          ? Get.to(() => ProductPage(
+                                              product:
+                                                  searchresult.values.first))
+                                          : Get.off(() => ProductPage(
+                                              product:
+                                                  searchresult.values.first));
                                     }
                                   },
                                   child: Row(
@@ -132,21 +142,27 @@ class SearchPage extends StatelessWidget {
                                         height: 80,
                                         width: 80,
                                         decoration: const BoxDecoration(
-                                            borderRadius:
-                                                 BorderRadius.all(
-                                                    Radius.circular(10.0)),
-                                            /* image: DecorationImage(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          /* image: DecorationImage(
                                               image: NetworkImage(searchresult
                                                   .values.first.image),
                                               fit: BoxFit.cover,
-                                            ) */),
-                                            child: ClipRRect(
-                          borderRadius:BorderRadius.circular(10),
-                          child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(searchresult.values.first.image!),
-                            fit: BoxFit.cover,), ),
+                                            ) */
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: FadeInImage(
+                                            fadeInDuration: const Duration(
+                                                milliseconds: 300),
+                                            placeholder: const AssetImage(
+                                                'assets/images/placeholder.jpg'),
+                                            image: NetworkImage(searchresult
+                                                .values.first.image!),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
                                       kWidthBox15,
                                       Column(

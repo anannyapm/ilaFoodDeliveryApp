@@ -31,7 +31,7 @@ class AddressPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   kHeightBox20,
-                  const CloseWidget(),
+                   CloseWidget(actionfunction: ()=>Get.back(),),
                   kHeightBox20,
                   CustomText(
                     text: "My Addresses",

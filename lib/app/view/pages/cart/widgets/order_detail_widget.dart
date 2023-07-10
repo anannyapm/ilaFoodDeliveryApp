@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/controller/navigation_controller.dart';
 import 'package:ila/app/model/cart_model.dart';
+import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 
 import '../../../../controller/cart_controller.dart';
 import '../../../../utils/constants/color_constants.dart';
@@ -47,7 +49,12 @@ class OrderDetailWidget extends StatelessWidget {
                           size: 16,
                           weight: FontWeight.bold,
                         ),
-                        function: () => Get.to(() => SearchPage()),
+                        function: () =>Get.off(
+                          ()=>SearchPage()
+                          
+                                  /*  GetPageRoute(page: ()=>SearchPage()),
+                                  predicate: (route) => route == MaterialPageRoute(builder: (ctx)=>NavigationPage()) */
+                                    ),
                         color: kOrange,
                         padding: 0))
               ],
@@ -68,19 +75,23 @@ class OrderDetailWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12)),
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            /* image: DecorationImage(
+                          borderRadius: BorderRadius.circular(15),
+                          /* image: DecorationImage(
                                 image: NetworkImage(item.image!),
-                                fit: BoxFit.cover) */),
+                                fit: BoxFit.cover) */
+                        ),
                         width: 70,
                         height: 70,
                         child: ClipRRect(
-                          borderRadius:BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12),
                           child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
+                            fadeInDuration: const Duration(milliseconds: 300),
+                            placeholder: const AssetImage(
+                                'assets/images/placeholder.jpg'),
                             image: NetworkImage(item.image!),
-                            fit: BoxFit.cover,), ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(

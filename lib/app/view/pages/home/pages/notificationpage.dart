@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/model/notification_model.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
-import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -12,7 +11,7 @@ import '../../../shared/widgets/custom_text.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,55 +22,22 @@ class NotificationPage extends StatelessWidget {
             children: [
               kHeightBox10,
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Get.back(),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                kGreylight.withOpacity(0.4))),
-                        icon: const Icon(
-                          Icons.keyboard_arrow_left,
-                          size: 30,
-                        ),
-                      ),
-                      kWidthBox15,
-                      const CustomText(
-                        text: "Notifications",
-                        size: 20,
-                      )
-                    ],
-                  ),
                   IconButton(
-                      onPressed: () =>notificationController.notifications.isEmpty?showSnackBar("Oops", "There are no notification to clear", kOrange) :Get.dialog(AlertDialog(
-                            surfaceTintColor: kWhite,
-                            title: const CustomText(
-                              text: "Do you want to clear all notifications?",
-                              size: 16,
-                            ),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    notificationController
-                                        .deleteNotification();
-                                  },
-                                  child: CustomText(
-                                    text: "Yes",
-                                    size: 15,
-                                    color: kWarning,
-                                  )),
-                              TextButton(
-                                  onPressed: () => Get.back(),
-                                  child: CustomText(
-                                    text: "No",
-                                    size: 15,
-                                    color: kGreen,
-                                  )),
-                            ],
-                          )),
-                      icon: const Icon(Icons.clear_all_outlined))
+                    onPressed: () => Get.back(),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            kGreylight.withOpacity(0.4))),
+                    icon: const Icon(
+                      Icons.keyboard_arrow_left,
+                      size: 30,
+                    ),
+                  ),
+                  kWidthBox15,
+                  const CustomText(
+                    text: "Notifications",
+                    size: 20,
+                  )
                 ],
               ),
               kHeightBox20,

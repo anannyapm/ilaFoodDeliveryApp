@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/widgets/changeaddress.dart';
 import 'package:ila/app/view/pages/home/pages/notificationpage.dart';
 
@@ -32,35 +33,33 @@ class HeaderWidget extends StatelessWidget {
               weight: FontWeight.bold,
               size: 14,
             ),
-           SizedBox(
-                  
-                  width: MediaQuery.of(context).size.width*0.6,
-                  child:  Row(
+            kHeightBox10,
+           Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                GestureDetector(
+             onTap: () => showChangeAddressBottomSheet(),
+             child: const Icon(
+               Icons.edit_location_alt,
+               size: 18,
+             )),
+             kWidthBox10,
                 Obx(() => SizedBox(
-                  width: MediaQuery.of(context).size.width*0.4,
+           width: MediaQuery.of(context).size.width*0.6,
 
-                  child: CustomText(
-                          text: userController.userModel
-                              .address![homeController.primaryAddressIndex.value]!,
-                          weight: FontWeight.bold,
-                          size: 15,
-                          color: kBlueShade,
-                          overflow:TextOverflow.ellipsis,
-                        ),
+           child: CustomText(
+                   text: userController.userModel
+                       .address![homeController.primaryAddressIndex.value]!,
+                   weight: FontWeight.bold,
+                   size: 15,
+                   color: kBlueShade,
+                   overflow:TextOverflow.ellipsis,
+                 ),
                 ),
                 ),
-                Expanded(
-                  child: IconButton(
-                      onPressed: () => showChangeAddressBottomSheet(),
-                      icon: const Icon(
-                        Icons.edit_location_alt,
-                        size: 18,
-                      )),
-                )
+                
               ],
-            ))
+            )
           ],
         ),
         IconButton(

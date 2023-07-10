@@ -45,7 +45,7 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Obx(() => CustomText(
-                              text: userController.userModel.name!,
+                              text: userController.userModel.name??"User",
                               weight: FontWeight.bold,
                               size: 22,
                             )),

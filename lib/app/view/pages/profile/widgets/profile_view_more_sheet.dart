@@ -20,8 +20,8 @@ class ProfileViewMoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: GestureDetector(
+      padding: const EdgeInsets.only(top: 12, bottom: 12),
+      child: InkWell(
         onTap: function,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,12 +39,10 @@ class ProfileViewMoreWidget extends StatelessWidget {
                 )
               ],
             ),
-            IconButton(
-                onPressed: function,
-                icon: Icon(
-                  Icons.keyboard_arrow_right,
-                  color: kGreyDark,
-                )),
+            Icon(
+              Icons.keyboard_arrow_right,
+              color: kGreyDark,
+            ),
           ],
         ),
       ),

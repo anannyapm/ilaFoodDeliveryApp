@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/get_core.dart';
 
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/constants/constants.dart';
@@ -20,7 +22,7 @@ class FaqPage extends StatelessWidget {
               kHeightBox10,
               Row(
                         children: [
-                          const CloseWidget(),
+                           CloseWidget(actionfunction: ()=>Get.back()),
                           kWidthBox15,
                           const CustomText(
                             text: "FAQs",

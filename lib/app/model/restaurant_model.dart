@@ -13,7 +13,7 @@ class RestuarantModel {
   String? address;
   String? name;
   num? rating;
-  String? review;
+
 
   RestuarantModel({
     this.docId,
@@ -29,7 +29,7 @@ class RestuarantModel {
     required this.name,
     this.address,
     required this.rating,
-    required this.review,
+ 
   });
 
   RestuarantModel.fromSnapshot(DocumentSnapshot data) {
@@ -46,7 +46,7 @@ class RestuarantModel {
     address = data["address"];
     name = data["name"];
     rating = data["rating"];
-    review = data["review"];
+    
   }
   Map<String, dynamic> toSnapshot() {
     return {
@@ -62,7 +62,7 @@ class RestuarantModel {
       "location": location,
       "name": name,
       "rating": rating,
-      "review": review,
+    
     };
   }
 

@@ -140,7 +140,6 @@ class AuthController extends GetxController {
     if (cartController.cartList.isNotEmpty) {
       await cartController.setCurrentRestaurant();
     }
-    notificationController.getAllNotifications();
   }
 
   Future<void> verifyOTP() async {

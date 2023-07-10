@@ -126,17 +126,15 @@ class HeaderCard extends StatelessWidget {
                     onTap:()=> Get.to(()=>CartPage()) ,
                     child: Stack(
                       children: [
-                        IconButton(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll(kWhite)),
-                            onPressed: () {
-                              Get.to(()=>CartPage());
-                            },
-                            icon: const Icon(Icons.shopping_bag_outlined)),
+                        CircleAvatar(
+                            radius: 20,
+                                backgroundColor:kWhite
+                                    ,
+                           
+                            child: const Icon(Icons.shopping_bag_outlined)),
                         Positioned(
-                            bottom: 2,
-                            right: 0.5,
+                            bottom: -1,
+                            right: -1,
                             child: CircleAvatar(
                               radius: 12,
                               backgroundColor: kOrange,

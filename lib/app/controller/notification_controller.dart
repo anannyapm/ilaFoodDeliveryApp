@@ -22,6 +22,7 @@ class NotificationController extends GetxController {
   @override
   void onInit() {
     notificationCollectionRef = firebaseFirestore.collection("notifications");
+    getAllNotifications();
 
     super.onInit();
   }
@@ -36,8 +37,8 @@ class NotificationController extends GetxController {
       // Display Notification, pass null param for not displaying the notification
       event.complete(event.notification);
 
-      await addtoNotificationDB(event.notification.body ?? "",
-          event.notification.title ?? "", DateTime.now());
+      /* await addtoNotificationDB(event.notification.body ?? "",
+          event.notification.title ?? "", DateTime.now()); */
       getAllNotifications();
     });
 

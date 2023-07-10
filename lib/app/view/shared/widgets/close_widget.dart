@@ -1,12 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 
 import '../../../utils/constants/color_constants.dart';
 
 class CloseWidget extends StatelessWidget {
+  final VoidCallback actionfunction;
   const CloseWidget({
-    super.key,
+    super.key, required this.actionfunction,
   });
 
   @override
@@ -14,10 +15,11 @@ class CloseWidget extends StatelessWidget {
     return IconButton(
       iconSize: 28,
       padding: const EdgeInsets.all(0),
-      onPressed: () => Get.back(),
+      onPressed: actionfunction,
+      //Get.back(),
       style: ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(
-              kGreylight.withOpacity(0.4))),
+          backgroundColor:
+              MaterialStatePropertyAll(kGreylight.withOpacity(0.4))),
       icon: const Icon(
         Icons.keyboard_arrow_left,
         //size: 30,
