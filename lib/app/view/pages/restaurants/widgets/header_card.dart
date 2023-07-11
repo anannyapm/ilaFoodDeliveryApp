@@ -50,20 +50,31 @@ class HeaderCard extends StatelessWidget {
                     ? MediaQuery.of(context).size.height * 0.45
                     : MediaQuery.of(context).size.height * 0.4,
                 decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                    /* image: DecorationImage(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  /* image: DecorationImage(
                       image: NetworkImage(imageUrl),
                       fit: BoxFit.cover,
-                    ) */),
-                    child: ClipRRect(
-                          borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
-                          child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(imageUrl),
-                            fit: BoxFit.cover,), ),
+                    ) */
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  child: FadeInImage(
+                    fadeInDuration: const Duration(milliseconds: 300),
+                    placeholder:
+                        const AssetImage('assets/images/placeholder.jpg'),
+                    image: NetworkImage(imageUrl),
+                    imageErrorBuilder: (context, error, stackTrace) =>
+                        Image.asset(
+                      'assets/images/placeholder.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               Container(
                 height: isProduct
@@ -123,14 +134,12 @@ class HeaderCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: GestureDetector(
-                    onTap:()=> Get.to(()=>CartPage()) ,
+                    onTap: () => Get.to(() => CartPage()),
                     child: Stack(
                       children: [
                         CircleAvatar(
                             radius: 20,
-                                backgroundColor:kWhite
-                                    ,
-                           
+                            backgroundColor: kWhite,
                             child: const Icon(Icons.shopping_bag_outlined)),
                         Positioned(
                             bottom: -1,

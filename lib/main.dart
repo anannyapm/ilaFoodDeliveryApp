@@ -10,10 +10,12 @@ import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/controller/order_controller.dart';
 import 'package:ila/app/controller/notification_controller.dart';
 import 'package:ila/app/controller/user_controller.dart';
+import 'package:ila/app/utils/constants/app_detail.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/splash/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app/controller/auth_controller.dart';
 
@@ -27,8 +29,7 @@ void main() async {
 
 // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-    
-  log("Accepted permission: $accepted");
+    log("Accepted permission: $accepted");
   });
 
   //authcontroller will be avilable to our app from everywhere
@@ -45,6 +46,9 @@ void main() async {
   //Get.put(UserController());
   // await notificationController.initNotifications();
   await notificationController.initializeOneSignal();
+
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  AppDetails.appVersion = packageInfo.version;
 
   runApp(const MyApp());
 }

@@ -115,11 +115,20 @@ class CartController extends GetxController {
         (homeController.getrestaurant(activeRestaurantID)!).deliveryfee;
   }
 
-  void addProductToCart(ProductModel product, int quantity) async {
+  Future<bool> addProductToCart(ProductModel product, int quantity) async {
     try {
+      dynamic restaurant = homeController.getrestaurant(product.restaurantId!);
+      if (restaurant != null) {
+        if (!restaurant.isOpen) {
+          showSnackBar(
+              "OhOh", "Restaurant is closed now. Please try later", kWarning);
+          return false;
+        }
+      }
       if (isItemAlreadyAdded(product)) {
         showSnackBar(
             "Check your cart", "${product.name} is already added", kWarning);
+        return false;
       } else {
         //String itemId = const Uuid().v1().toString();
         if (cartList.isEmpty) {
@@ -131,7 +140,7 @@ class CartController extends GetxController {
           if (!(product.restaurantId == activeRestaurantID)) {
             showSnackBar("Oops!", "Please checkout items from last restuarant",
                 kWarning);
-            return;
+            return false;
           }
         }
 
@@ -152,13 +161,15 @@ class CartController extends GetxController {
         showSnackBar(
             "Item added", "${product.name} was added to your cart", kGreen);
       }
+      return true;
     } catch (e) {
       showSnackBar("Error", "Cannot add this item", kWarning);
       log(e.toString());
+      return false;
     }
   }
 
-  void removeCartItem(String prodId) {
+  bool removeCartItem(String prodId) {
     final cartitem = cartList.firstWhere((item) => item.productId == prodId);
     try {
       //final name = cartitem.name;
@@ -171,10 +182,12 @@ class CartController extends GetxController {
       });
       getCartList();
       getTotalPrice();
+      return true;
       //showSnackBar("Item Removed", "Removed $name from cart", kGreyDark);
     } catch (e) {
       showSnackBar("Error", "Cannot remove this item", kWarning);
       log(e.toString());
+      return false;
     }
   }
 

@@ -40,7 +40,10 @@ class SearchPage extends StatelessWidget {
               kHeightBox10,
               Row(
                 children: [
-                   CloseWidget(actionfunction:()=> Get.offAll(NavigationPage(),)),
+                  CloseWidget(
+                      actionfunction: () => Get.offAll(
+                            NavigationPage(),
+                          )),
                   kWidthBox15,
                   const CustomText(
                     text: "Search",
@@ -115,7 +118,6 @@ class SearchPage extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    
                                     if (searchresult.keys.first ==
                                         'Restaurant') {
                                       categoryName.isEmpty
@@ -160,6 +162,12 @@ class SearchPage extends StatelessWidget {
                                                 'assets/images/placeholder.jpg'),
                                             image: NetworkImage(searchresult
                                                 .values.first.image!),
+                                            imageErrorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Image.asset(
+                                              'assets/images/placeholder.jpg',
+                                              fit: BoxFit.cover,
+                                            ),
                                             fit: BoxFit.cover,
                                           ),
                                         ),

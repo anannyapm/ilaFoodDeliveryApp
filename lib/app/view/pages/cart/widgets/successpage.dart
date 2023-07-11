@@ -55,7 +55,7 @@ class SuccessPage extends StatelessWidget {
                   ),
                   function: () {
                     navigationController.setSelectedIndex(3);
-                    Get.to(() => NavigationPage());
+                    Get.offAll(() => NavigationPage());
                   },
                   color: kGreen),
             ),

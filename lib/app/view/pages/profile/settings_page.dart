@@ -44,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             kHeightBox10,
-            ListTile(
+           /*  ListTile(
               title: const CustomText(text: 'Account Deletion'),
               subtitle:
                   const CustomText(text: 'Request to delete your account'),
@@ -52,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 // Handle account deletion request
                 _showConfirmationDialog();
               },
-            ),
+            ), */
             ListTile(
               title: const CustomText(text: 'Notifications'),
               subtitle:
@@ -72,7 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void _showConfirmationDialog() {
+ /*  void _showConfirmationDialog() {
     Get.dialog(
       AlertDialog(
         surfaceTintColor: kWhite,
@@ -98,5 +98,5 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
     );
-  }
+  } */
 }

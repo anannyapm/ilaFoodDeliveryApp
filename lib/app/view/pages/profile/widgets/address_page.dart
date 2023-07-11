@@ -31,7 +31,9 @@ class AddressPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   kHeightBox20,
-                   CloseWidget(actionfunction: ()=>Get.back(),),
+                  CloseWidget(
+                    actionfunction: () => Get.back(),
+                  ),
                   kHeightBox20,
                   CustomText(
                     text: "My Addresses",
@@ -43,61 +45,103 @@ class AddressPage extends StatelessWidget {
                     () => userController.isLoading.value
                         ? const Center(
                             child: CircularProgressIndicator(),
-                          ):
-                        userController.addressList.isEmpty?const Center(child: CustomText(text: "No Addresses Found"),): ListView.builder(
-                            shrinkWrap: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: userController.addressList.length,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                      child: CustomText(
-                                    text: userController.addressList[index],
-                                    size: 16,
-                                    overflow: TextOverflow.ellipsis,
-                                    lines: 2,
-                                  )),
-                                  Row(
+                          )
+                        : userController.addressList.isEmpty
+                            ? const Center(
+                                child: CustomText(text: "No Addresses Found"),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: userController.addressList.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      IconButton(
-                                          iconSize: 20,
-                                          onPressed: () {
-                                            mapController.changeEditMode();
-                                            mapController.indexSelected = index;
+                                      Expanded(
+                                          child: CustomText(
+                                        text: userController.addressList[index],
+                                        size: 16,
+                                        overflow: TextOverflow.ellipsis,
+                                        lines: 2,
+                                      )),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                              iconSize: 20,
+                                              onPressed: () {
+                                                mapController.changeEditMode();
+                                                mapController.indexSelected =
+                                                    index;
 
-                                            log(mapController.isEditMode
-                                                .toString());
+                                                log(mapController.isEditMode
+                                                    .toString());
 
-                                            mapController.setField(
-                                                userController
-                                                    .latlongList[index]
-                                                    .latitude,
-                                                userController
-                                                    .latlongList[index]
-                                                    .longitude,
-                                                userController
-                                                    .addressList[index],
-                                                userController
-                                                    .completeAddrList[index]);
+                                                mapController.setField(
+                                                    userController
+                                                        .latlongList[index]
+                                                        .latitude,
+                                                    userController
+                                                        .latlongList[index]
+                                                        .longitude,
+                                                    userController
+                                                        .addressList[index],
+                                                    userController
+                                                            .completeAddrList[
+                                                        index]);
 
-                                            mapController.openMapPage(true);
-                                          },
-                                          icon: const Icon(Icons.edit)),
-                                      IconButton(
-                                          iconSize: 22,
-                                          onPressed: () {
-                                            mapController.removeAddress();
-                                          },
-                                          icon: const Icon(
-                                              Icons.delete_outlined)),
+                                                mapController.openMapPage(true);
+                                              },
+                                              icon: const Icon(Icons.edit)),
+                                          IconButton(
+                                              iconSize: 22,
+                                              onPressed: () {
+                                                Get.dialog(AlertDialog(
+                                                  surfaceTintColor: kWhite,
+                                                  title: const CustomText(
+                                                    text:
+                                                        "Do you want to remove this address?",
+                                                    size: 16,
+                                                    weight: FontWeight.bold,
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () async {
+                                                          mapController
+                                                                  .indexSelected =
+                                                              index;
+                                                          mapController
+                                                              .removeAddress();
+                                                          Get.back();
+                                                        },
+                                                        child: CustomText(
+                                                          text: "Yes",
+                                                          weight:
+                                                              FontWeight.bold,
+                                                          size: 15,
+                                                          color: kWarning,
+                                                        )),
+                                                    TextButton(
+                                                        onPressed: () =>
+                                                            Get.back(),
+                                                        child: CustomText(
+                                                          text: "No",
+                                                          weight:
+                                                              FontWeight.bold,
+                                                          size: 15,
+                                                          color: kBlueShade,
+                                                        ))
+                                                  ],
+                                                ));
+                                              },
+                                              icon: const Icon(
+                                                  Icons.delete_outlined)),
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              );
-                            }),
+                                  );
+                                }),
                   ),
                   kHeightBox20,
                   Center(

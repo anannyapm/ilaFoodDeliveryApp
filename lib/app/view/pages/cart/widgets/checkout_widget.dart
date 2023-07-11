@@ -47,7 +47,7 @@ class CheckoutDetailWidget extends StatelessWidget {
                 size: 16,
               ),
               CustomText(
-                text:"₹${cartController.applyDiscount.value}",
+                text:"-₹${cartController.applyDiscount.value}",
                 weight: FontWeight.w600,
                 color: kBlueShade,
                 size: 16,

@@ -41,7 +41,7 @@ class OrderController extends GetxController {
     isOrdersLoading.value = true;
     orders.clear();
     List<OrderModel> tempList = [];
-    final collectionData = await orderCollectionRef.get();
+    final collectionData = await orderCollectionRef.orderBy('createdAt',descending: true).get();
     tempList = collectionData.docs
         .map((querysnap) => OrderModel.fromSnapshot(querysnap))
         .toList();

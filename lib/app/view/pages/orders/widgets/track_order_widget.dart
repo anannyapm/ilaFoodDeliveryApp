@@ -27,24 +27,31 @@ class TrackOrderWidget extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: 80,
-                  height: 80,
-                  decoration: ShapeDecoration(
-                    /* image: DecorationImage(
+                    width: 80,
+                    height: 80,
+                    decoration: ShapeDecoration(
+                      /* image: DecorationImage(
                       image: NetworkImage(restaurant.image!),
                       fit: BoxFit.fill,
                     ), */
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                  child: ClipRRect(
-                          borderRadius:BorderRadius.circular(8),
-                          child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(restaurant.image!),
-                            fit: BoxFit.cover,), )
-                ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: FadeInImage(
+                        fadeInDuration: const Duration(milliseconds: 300),
+                        placeholder:
+                            const AssetImage('assets/images/placeholder.jpg'),
+                        image: NetworkImage(restaurant.image!),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          'assets/images/placeholder.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    )),
                 kWidthBox15,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

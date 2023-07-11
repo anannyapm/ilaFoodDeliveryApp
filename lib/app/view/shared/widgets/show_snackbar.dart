@@ -8,5 +8,6 @@ showSnackBar(String title,String subtitle,Color color){
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor:color,
         colorText: kWhite,
+        duration: const Duration(seconds: 2),
         isDismissible: true);
 }

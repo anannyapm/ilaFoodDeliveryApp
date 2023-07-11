@@ -118,7 +118,6 @@ class MapController extends GetxController {
     }
   }
 
-
   Future<void> updateAddress() async {
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
 
@@ -148,7 +147,6 @@ class MapController extends GetxController {
 
         transaction.update(
             userDocRef, {"completeAddress": userController.completeAddrList});
-     
       }
     });
   }
@@ -163,17 +161,23 @@ class MapController extends GetxController {
         List<dynamic> list =
             List<dynamic>.from(snapshot.get('deliveryAddress'));
         list.add(locationAddress);
+        userController.addressList.clear();
+        userController.addressList.addAll(list);
 
         transaction.update(userDocRef, {"deliveryAddress": list});
 
         List<dynamic> locList = List<dynamic>.from(snapshot.get('location'));
         locList.add(GeoPoint(lat, long));
+        userController.latlongList.clear();
+        userController.latlongList.addAll(locList);
 
         transaction.update(userDocRef, {"location": locList});
 
         List<dynamic> compAddress =
             List<dynamic>.from(snapshot.get('completeAddress'));
         compAddress.add(completeAddress);
+        userController.completeAddrList.clear();
+        userController.completeAddrList.addAll(completeAddrList);
 
         transaction.update(userDocRef, {"completeAddress": compAddress});
         userController.userModel.address!.add(locationAddress);
@@ -194,23 +198,30 @@ class MapController extends GetxController {
         List<dynamic> list =
             List<dynamic>.from(snapshot.get('deliveryAddress'));
         list.removeAt(indexSelected);
+         userController.addressList.clear();
+        userController.addressList.addAll(list);
 
         transaction.update(userDocRef, {"deliveryAddress": list});
 
         List<dynamic> locList = List<dynamic>.from(snapshot.get('location'));
         locList.removeAt(indexSelected);
+        userController.latlongList.clear();
+        userController.latlongList.addAll(locList);
 
         transaction.update(userDocRef, {"location": locList});
 
         List<dynamic> completeAddrList =
             List<dynamic>.from(snapshot.get('completeAddress'));
         completeAddrList.removeAt(indexSelected);
+        userController.completeAddrList.clear();
+        userController.completeAddrList.addAll(completeAddrList);
+
 
         transaction.update(userDocRef, {"completeAddress": completeAddrList});
         userController.userModel.address!.remove(locationAddress);
         userController.userModel.location!.remove(GeoPoint(lat, long));
         userController.userModel.completeAddress!.remove(completeAddress);
-        userController.getUserAddress();
+        //userController.getUserAddress();
       }
     });
   }

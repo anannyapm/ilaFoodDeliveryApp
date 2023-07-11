@@ -20,7 +20,7 @@ class ProfileViewMoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 12),
+      padding: const EdgeInsets.only(top: 8, bottom: 14),
       child: InkWell(
         onTap: function,
         child: Row(

@@ -22,10 +22,8 @@ class RestaurantCard extends StatelessWidget {
 
   const RestaurantCard({
     super.key,
-   
     required this.onTap,
     required this.restaurant,
-
   });
 
   @override
@@ -45,23 +43,30 @@ class RestaurantCard extends StatelessWidget {
             children: [
               Stack(children: [
                 Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+                    height: 150,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       /* image: DecorationImage(
                         image: NetworkImage(restaurant.image!),
                         fit: BoxFit.cover,
-                      ) */),
-                      child: ClipRRect(
-                          borderRadius:BorderRadius.circular(8),
-                          child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(restaurant.image!),
-                            fit: BoxFit.cover,
-                            ), )
-                ),
+                      ) */
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: FadeInImage(
+                        fadeInDuration: const Duration(milliseconds: 300),
+                        placeholder:
+                            const AssetImage('assets/images/placeholder.jpg'),
+                        image: NetworkImage(restaurant.image!),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          'assets/images/placeholder.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    )),
                 Container(
                   height: 150,
                   decoration: BoxDecoration(

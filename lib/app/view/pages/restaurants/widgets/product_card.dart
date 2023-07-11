@@ -23,9 +23,9 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-       height: 280,
-       //width: 120,
-        margin: const EdgeInsets.only( top: 10),
+        height: 280,
+        //width: 120,
+        margin: const EdgeInsets.only(top: 10),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -36,9 +36,9 @@ class ProductCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                 // height: 80,
-                  width: 140, 
-                  decoration: BoxDecoration(
+                    // height: 80,
+                    width: 140,
+                    decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
                           color: kGrey.withOpacity(0.7),
@@ -49,16 +49,23 @@ class ProductCard extends StatelessWidget {
                         ),
                       ],
                       borderRadius: BorderRadius.circular(20),
-                     ),
-                  margin: const EdgeInsets.fromLTRB(5, 12, 5, 10),
-                  child: ClipRRect(
-                          borderRadius:BorderRadius.circular(20),
-                          child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(product.image!),
-                            fit: BoxFit.cover,), )
-                ),
+                    ),
+                    margin: const EdgeInsets.fromLTRB(5, 12, 5, 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: FadeInImage(
+                        fadeInDuration: const Duration(milliseconds: 300),
+                        placeholder:
+                            const AssetImage('assets/images/placeholder.jpg'),
+                        image: NetworkImage(product.image!),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          'assets/images/placeholder.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 12.0, right: 12),

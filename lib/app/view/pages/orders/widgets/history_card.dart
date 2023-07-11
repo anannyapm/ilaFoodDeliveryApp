@@ -53,6 +53,8 @@ class HistoryCardWidget extends StatelessWidget {
       fadeInDuration: const Duration(milliseconds: 300),
                             placeholder: const AssetImage('assets/images/placeholder.jpg'),
                             image:NetworkImage(restaurant.image!),
+      imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
+
                             fit: BoxFit.cover,), )
               ),
               kWidthBox15,
@@ -127,7 +129,7 @@ class HistoryCardWidget extends StatelessWidget {
                   children: [
                   orderController.ratingStatus.value
                         ? CustomText(
-                            text: "Rating Added",
+                            text: "Overall Rating",
                             size: 14,
                             weight: FontWeight.bold,
                             color: kOrange,

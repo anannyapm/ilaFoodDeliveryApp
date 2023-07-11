@@ -89,6 +89,8 @@ class OrderDetailWidget extends StatelessWidget {
                             placeholder: const AssetImage(
                                 'assets/images/placeholder.jpg'),
                             image: NetworkImage(item.image!),
+      imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
+
                             fit: BoxFit.cover,
                           ),
                         ),

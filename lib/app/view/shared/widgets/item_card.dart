@@ -8,7 +8,8 @@ class ItemCard extends StatelessWidget {
   final String price;
   final VoidCallback onTap;
 
-  const ItemCard({super.key, 
+  const ItemCard({
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
@@ -31,31 +32,40 @@ class ItemCard extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 104,
-                width: 122,
-                decoration: BoxDecoration(
+                  height: 104,
+                  width: 122,
+                  decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: kGrey.withOpacity(0.7),
                         spreadRadius: 1,
                         blurRadius: 3,
-                        offset: const Offset(0, 3), // changes the shadow position
+                        offset:
+                            const Offset(0, 3), // changes the shadow position
                       ),
                     ],
                     borderRadius: BorderRadius.circular(20),
-                   /*  image: DecorationImage(
+                    /*  image: DecorationImage(
                       image: NetworkImage(imageUrl),
                       fit: BoxFit.cover,
-                    ) */),
-                margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
-                child: ClipRRect(
-                          borderRadius:BorderRadius.circular(20),
-                          child: FadeInImage(
-      fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(imageUrl),
-                            fit: BoxFit.cover,), )
-              ),
+                    ) */
+                  ),
+                  margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: FadeInImage(
+                      fadeInDuration: const Duration(milliseconds: 300),
+                      placeholder:
+                          const AssetImage('assets/images/placeholder.jpg'),
+                      image: NetworkImage(imageUrl),
+                      imageErrorBuilder: (context, error, stackTrace) =>
+                          Image.asset(
+                        'assets/images/placeholder.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  )),
               Padding(
                 padding: const EdgeInsets.only(left: 12.0, right: 12),
                 child: Column(

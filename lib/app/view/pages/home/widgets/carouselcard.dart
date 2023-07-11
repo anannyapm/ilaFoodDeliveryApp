@@ -46,7 +46,8 @@ class CarouselCard extends StatelessWidget {
     child:homeController.carousels.isEmpty? const Image(image: AssetImage('assets/images/ilabanner.png')) : FadeInImage(
       fadeInDuration: const Duration(milliseconds: 300),
       placeholder: const AssetImage('assets/images/placeholder.jpg'),
-      image:NetworkImage(homeController.carousels[index].imageUrl!),
+      image:NetworkImage(homeController.carousels[index].imageUrl!,),
+      imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
       fit: BoxFit.cover,
     ),
       ),

@@ -15,6 +15,8 @@ import '../../../shared/widgets/custom_button.dart';
 
 class UserEditSheet extends StatelessWidget {
   UserEditSheet({super.key});
+  final formKey4 = GlobalKey<FormState>();
+
   final LoginController loginController = Get.put(LoginController());
   final UserController userController = Get.put(UserController());
 
@@ -32,78 +34,86 @@ class UserEditSheet extends StatelessWidget {
         builder: (controller) {
           return Container(
             padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                kHeightBox10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CustomText(
-                      text: "My Profile",
-                      size: 20,
-                    ),
-                    IconButton(
-                        onPressed: () => Get.back(),
-                        icon: const Icon(Icons.close))
-                  ],
-                ),
-                kHeightBox20,
-                CustomTextFormField(
-                  textColor: kBlueShade,
-                  hint: "",
-                  label: "Name",
-                  textcontroller: nameController,
-                ),
-                CustomTextFormField(
-                    readonly: true,
+            child: Form(
+              key: formKey4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  kHeightBox10,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const CustomText(
+                        text: "My Profile",
+                        size: 20,
+                      ),
+                      IconButton(
+                          onPressed: () => Get.back(),
+                          icon: const Icon(Icons.close))
+                    ],
+                  ),
+                  kHeightBox20,
+                  CustomTextFormField(
                     textColor: kBlueShade,
                     hint: "",
-                    label: "Phone Number",
-                    textcontroller: phoneController,
-                    ontap: () {
-                      showSnackBar(
-                          "Pss!", "This field can't be edited", kWarning);
-                    }),
-                CustomTextFormField(
-                  textColor: kBlueShade,
-                  hint: "",
-                  label: "Email",
-                  textcontroller: emailController,
-                ),
-                kHeightBox20,
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(
-                      padding: 15,
-                      text: CustomText(
-                        text: "DONE",
-                        color: kWhite,
-                        size: 18,
-                        weight: FontWeight.bold,
-                      ),
-                      function: () async {
-                        bool output = await userController.updateUserData(
-                            nameController.text.trim(),
-                            emailController.text.trim());
-                        log(output.toString());
-                        if (output == true) {
-                          Get.back();
-                          nameController.clear();
-                          emailController.clear();
-                          return showSnackBar(
-                              "Done", "Profile Updated!", kGreen);
-                        } else {
-                          Get.back();
-
-                          return showSnackBar(
-                              "OOPS", "Something went wrong!", kWarning);
-                        }
-                      },
-                      color: kGreen),
-                ),
-                kHeightBox20
-              ],
+                    label: "Name",
+                    textcontroller: nameController,
+                    
+                  ),
+                  CustomTextFormField(
+                      readonly: true,
+                      textColor: kBlueShade,
+                      hint: "",
+                      label: "Phone Number",
+                      textcontroller: phoneController,
+                      ontap: () {
+                        showSnackBar(
+                            "Pss!", "This field can't be edited", kWarning);
+                      }),
+                  CustomTextFormField(
+                    textColor: kBlueShade,
+                    hint: "",
+                    label: "Email",
+                    textcontroller: emailController,
+                    type: TextInputType.emailAddress
+                  ),
+                  kHeightBox20,
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                        padding: 15,
+                        text: CustomText(
+                          text: "DONE",
+                          color: kWhite,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        function: () async {
+                          if(formKey4.currentState!.validate()){
+                             bool output = await userController.updateUserData(
+                              nameController.text.trim(),
+                              emailController.text.trim());
+                          log(output.toString());
+                          if (output == true) {
+                            Get.back();
+                            nameController.clear();
+                            emailController.clear();
+                            return showSnackBar(
+                                "Done", "Profile Updated!", kGreen);
+                          } else {
+                            Get.back();
+            
+                            return showSnackBar(
+                                "OOPS", "Something went wrong!", kWarning);
+                          }
+                          }
+                         
+                        },
+                        color: kGreen),
+                  ),
+                  kHeightBox20
+                ],
+              ),
             ),
           );
         },
