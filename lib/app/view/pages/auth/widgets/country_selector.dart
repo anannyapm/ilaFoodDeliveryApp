@@ -13,7 +13,7 @@ class CountryCodeWidget extends StatelessWidget {
       () => DropdownButton<String>(
        isExpanded: true,
        elevation: 3,
-       dropdownColor: kWhite,
+       dropdownColor:Get.isDarkMode?kBlueShade: kWhite,
        autofocus: true,
         focusColor: kGreylight,
         value:loginController.selectedCode,

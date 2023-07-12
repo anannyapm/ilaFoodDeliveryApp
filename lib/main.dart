@@ -62,6 +62,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Ila App',
       debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark().copyWith(
+        primaryColor: kGreen,
+        scaffoldBackgroundColor: kBlack,
+        tabBarTheme: TabBarTheme(dividerColor: kOrange)
+      ),
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         fontFamily: GoogleFonts.sen().fontFamily,
         scaffoldBackgroundColor: kWhite,

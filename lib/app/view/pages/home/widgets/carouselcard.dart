@@ -25,15 +25,10 @@ class CarouselCard extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          /* image: DecorationImage(
-            image: NetworkImage(
-              homeController.carousels[index].imageUrl!,
-            ),
-            fit: BoxFit.cover,
-          ), */
+         
           boxShadow: [
             BoxShadow(
-              color: kGrey.withOpacity(0.7),
+              color:Get.isDarkMode?kWhite.withOpacity(0.1): kGrey.withOpacity(0.7),
               spreadRadius: 1,
               blurRadius: 3,
               offset: const Offset(0, 3), // changes the shadow position

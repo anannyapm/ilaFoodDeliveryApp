@@ -39,10 +39,10 @@ void showOrderSummarySheet() {
               children: [
                 CustomText(
                   text: "DELIVERY ADDRESS",
-                  color: kGreyDark,
+                  color:Get.isDarkMode?kWhite: kGreyDark,
                 ),
                 CustomText(
-                    color: kGreyDark,
+                    color:Get.isDarkMode?kWhite: kGreyDark,
                     text: userController.userModel
                         .address![homeController.primaryAddressIndex.value]),
               ],
@@ -53,10 +53,10 @@ void showOrderSummarySheet() {
               children: [
                 CustomText(
                   text: "PHONE",
-                  color: kGreyDark,
+                  color:Get.isDarkMode?kWhite: kGreyDark,
                 ),
                 CustomText(
-                    color: kGreyDark,
+                    color:Get.isDarkMode?kWhite: kGreyDark,
                     text: userController.userModel.phoneNumber!),
               ],
             ),
@@ -65,7 +65,7 @@ void showOrderSummarySheet() {
               children: [
                 CustomText(
                   text: "TOTAL: ",
-                  color: kGreyDark,
+                  color:Get.isDarkMode?kWhite: kGreyDark,
                   size: 18,
                 ),
                 CustomText(
@@ -98,6 +98,6 @@ void showOrderSummarySheet() {
         ),
       ),
     ),
-    backgroundColor: kWhite,
+    backgroundColor:Get.isDarkMode?kGreyDark: kWhite,
   );
 }

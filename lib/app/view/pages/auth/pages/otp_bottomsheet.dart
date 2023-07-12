@@ -50,7 +50,7 @@ class OtpBottomSheet extends StatelessWidget {
                   ),
                   CustomText(
                     text: "Please enter the 6 digit code here",
-                    color: kGreyDark,
+                    color:Get.isDarkMode?kWhite: kGreyDark,
                     size: 15,
                     weight: FontWeight.w400,
                     align: TextAlign.left,

@@ -33,8 +33,8 @@ class RestaurantCard extends StatelessWidget {
       height: 260,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        surfaceTintColor: kWhite,
-        color: kWhite,
+        surfaceTintColor:Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
+        color:Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
         elevation: 4,
         child: GestureDetector(
           onTap: onTap,
@@ -47,10 +47,7 @@ class RestaurantCard extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      /* image: DecorationImage(
-                        image: NetworkImage(restaurant.image!),
-                        fit: BoxFit.cover,
-                      ) */
+                      
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -95,7 +92,7 @@ class RestaurantCard extends StatelessWidget {
                                               .contains(restaurant.docId) ==
                                           true
                                       ? kGreen
-                                      : kGreyDark,
+                                      :Get.isDarkMode?kWhite: kGreyDark,
                                 )));
                       },
                     ),
@@ -125,6 +122,7 @@ class RestaurantCard extends StatelessWidget {
                                 text: restaurant.rating.toString(),
                                 weight: FontWeight.bold,
                                 size: 16,
+                                color:kBlueShade,
                               )
                             ],
                           ),
@@ -147,7 +145,7 @@ class RestaurantCard extends StatelessWidget {
                     CustomText(
                       text: restaurant.tagline!,
                       size: 14,
-                      color: kBlueShade,
+                      color:Get.isDarkMode?kWhite: kBlueShade,
                     ),
                     kHeightBox10,
                     Row(

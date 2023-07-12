@@ -39,7 +39,9 @@ class AuthService {
       },
       codeSent: (String verificationId, int? resendToken) {
         Get.bottomSheet(
-            backgroundColor: kWhite, elevation: 0, OtpBottomSheet());
+            backgroundColor: Get.isDarkMode ? kBlueShade : kWhite,
+            elevation: 0,
+            OtpBottomSheet());
         loginController.isOtpSent.value = true;
         _verificationId = verificationId;
         _resendToken = resendToken;

@@ -14,7 +14,7 @@ class UserModel {
   List<dynamic>? completeAddress;
   num? discounts;
   String? deviceKey;
-  
+  bool? receiveNotification;
 
   UserModel(
       {this.userId,
@@ -28,7 +28,8 @@ class UserModel {
       this.location,
       this.completeAddress,
       this.discounts,
-      this.deviceKey});
+      this.deviceKey,
+      this.receiveNotification});
 
   UserModel.fromSnapshot(DocumentSnapshot data) {
     userId = data.id;
@@ -43,6 +44,7 @@ class UserModel {
     completeAddress = data["completeAddress"];
     discounts = data["discounts"];
     deviceKey = data["deviceKey"];
+    receiveNotification = data["receiveNotification"];
   }
 
   List<CartItemModel> _convertCartItems(List cartFomDb) {
@@ -69,7 +71,8 @@ class UserModel {
       "userCart": cartItemsToJson(),
       "favoriteList": favoriteList,
       "discounts": discounts,
-      "deviceKey":deviceKey
+      "deviceKey": deviceKey,
+      "receiveNotification":receiveNotification
     };
   }
 }

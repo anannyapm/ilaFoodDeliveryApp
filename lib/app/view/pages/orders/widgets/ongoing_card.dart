@@ -41,10 +41,7 @@ class OngoingCardWidget extends StatelessWidget {
                     width: 80,
                     height: 80,
                     decoration: ShapeDecoration(
-                      /* image: DecorationImage(
-                        image: NetworkImage(restaurant.image!),
-                        fit: BoxFit.fill,
-                      ), */
+                     
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),
@@ -80,7 +77,7 @@ class OngoingCardWidget extends StatelessWidget {
                         children: [
                           CustomText(
                             text: '₹${order.total!.toInt()}',
-                            color: kBlueShade,
+                            color:Get.isDarkMode?kWhite: kBlueShade,
                             size: 15,
                             weight: FontWeight.w700,
                           ),
@@ -88,12 +85,12 @@ class OngoingCardWidget extends StatelessWidget {
                           CustomText(
                             text: "|",
                             size: 22,
-                            color: kGrey,
+                            color:Get.isDarkMode?kWhite: kGrey,
                           ),
                           kWidthBox15,
                           CustomText(
                             text: '${order.products!.length} Items',
-                            color: kGreyDark,
+                            color: Get.isDarkMode?kWhite:kGreyDark,
                             size: 15,
                             weight: FontWeight.w400,
                           ),
@@ -129,7 +126,7 @@ class OngoingCardWidget extends StatelessWidget {
                           restaurant: restaurant,
                           order: order,
                         ),
-                        backgroundColor: kWhite,
+                        backgroundColor:Get.isDarkMode?kBlueShade: kWhite,
                         isScrollControlled: true),
                     color: kGreen),
               ),
@@ -146,7 +143,7 @@ class OngoingCardWidget extends StatelessWidget {
                     color: kOrange,
                     function: () {
                       Get.dialog(AlertDialog(
-                        surfaceTintColor: kWhite,
+                        surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
                         title: const CustomText(
                           text: "Are you sure you want to Cancel this order?",
                           size: 16,
@@ -170,7 +167,7 @@ class OngoingCardWidget extends StatelessWidget {
                                 text: "No",
                                 weight: FontWeight.bold,
                                 size: 15,
-                                color: kBlueShade,
+                                color:Get.isDarkMode?kWhite: kBlueShade,
                               ))
                         ],
                       ));

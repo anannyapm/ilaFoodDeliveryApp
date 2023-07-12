@@ -52,7 +52,7 @@ class HeaderWidget extends StatelessWidget {
                        .address![homeController.primaryAddressIndex.value]!,
                    weight: FontWeight.bold,
                    size: 15,
-                   color: kBlueShade,
+                   color:Get.isDarkMode?kWhite: kBlueShade,
                    overflow:TextOverflow.ellipsis,
                  ),
                 ),

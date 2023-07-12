@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ila/app/model/restaurant_model.dart';
 import 'package:ila/app/utils/constants/controllers.dart';
 import 'package:ila/app/view/pages/orders/widgets/track_widget.dart';
@@ -30,10 +31,7 @@ class TrackOrderWidget extends StatelessWidget {
                     width: 80,
                     height: 80,
                     decoration: ShapeDecoration(
-                      /* image: DecorationImage(
-                      image: NetworkImage(restaurant.image!),
-                      fit: BoxFit.fill,
-                    ), */
+                     
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),
@@ -64,7 +62,7 @@ class TrackOrderWidget extends StatelessWidget {
                     CustomText(
                       text:
                           "Ordered At ${DateFormat('dd  MMM,hh:mm a ').format(order.createdAt!)}",
-                      color: kGrey,
+                      color:Get.isDarkMode?kWhite: kGrey,
                       size: 16,
                     ),
                     Row(
@@ -74,7 +72,7 @@ class TrackOrderWidget extends StatelessWidget {
                       children: [
                         CustomText(
                           text: '₹${order.total!.toInt()}',
-                          color: kBlueShade,
+                          color:Get.isDarkMode?kWhite: kBlueShade,
                           size: 15,
                           weight: FontWeight.w700,
                         ),
@@ -82,12 +80,12 @@ class TrackOrderWidget extends StatelessWidget {
                         CustomText(
                           text: "|",
                           size: 22,
-                          color: kGrey,
+                          color:Get.isDarkMode?kWhite: kGrey,
                         ),
                         kWidthBox15,
                         CustomText(
                           text: '${order.products!.length} Items',
-                          color: kGreyDark,
+                          color:Get.isDarkMode?kWhite: kGreyDark,
                           size: 15,
                           weight: FontWeight.w400,
                         ),
@@ -134,7 +132,7 @@ class TrackOrderWidget extends StatelessWidget {
                               children: [
                                 CustomText(
                                   text: order.deliveryPersonName!,
-                                  color: kBlueShade,
+                                  color:Get.isDarkMode?kWhite: kBlueShade,
                                   size: 20,
                                   weight: FontWeight.bold,
                                 ),
@@ -157,10 +155,10 @@ class TrackOrderWidget extends StatelessWidget {
                             width: 45,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                color: kBlueShade),
+                                color:Get.isDarkMode?kWhite: kBlueShade),
                             child: Icon(
                               Icons.call_outlined,
-                              color: kWhite,
+                              color:Get.isDarkMode?kBlack: kWhite,
                             ),
                           ),
                         )
@@ -174,7 +172,7 @@ class TrackOrderWidget extends StatelessWidget {
                         text: "Deliciousness in the making !",
                         weight: FontWeight.bold,
                         size: 18,
-                        color: kBlueShade,
+                        color:Get.isDarkMode?kWhite: kBlueShade,
                       ),
                       Lottie.asset('assets/animations/loadfood.json',
                           height: 150),

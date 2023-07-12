@@ -25,13 +25,13 @@ class CheckoutDetailWidget extends StatelessWidget {
             children: [
               CustomText(
                 text: "Price",
-                color: kGreyDark,
+                color:Get.isDarkMode?kWhite: kGreyDark,
                 weight: FontWeight.w600,
                 size: 16,
               ),
               Obx(() => CustomText(
                     text:"₹${cartController.totalItemPrice.value.toInt()}",
-                    color: kBlueShade,
+                    color:Get.isDarkMode?kWhite: kBlueShade,
                     weight: FontWeight.w600,
                     size: 16,
                   )),
@@ -42,14 +42,14 @@ class CheckoutDetailWidget extends StatelessWidget {
             children: [
               CustomText(
                 text: "Discount",
-                color: kGreyDark,
+                color:Get.isDarkMode?kWhite: kGreyDark,
                 weight: FontWeight.w600,
                 size: 16,
               ),
               CustomText(
                 text:"-₹${cartController.applyDiscount.value}",
                 weight: FontWeight.w600,
-                color: kBlueShade,
+                color:Get.isDarkMode?kWhite: kBlueShade,
                 size: 16,
               ),
             ],
@@ -60,13 +60,13 @@ class CheckoutDetailWidget extends StatelessWidget {
               CustomText(
                 text: "Delivery Charges",
                 weight: FontWeight.w600,
-                color: kGreyDark,
+                color:Get.isDarkMode?kWhite: kGreyDark,
                 size: 16,
               ),
               CustomText(
                 text:"₹${cartController.deliveryCharge}",
                 weight: FontWeight.w600,
-                color: kBlueShade,
+                color:Get.isDarkMode?kWhite: kBlueShade,
                 size: 16,
               ),
             ],
@@ -77,7 +77,7 @@ class CheckoutDetailWidget extends StatelessWidget {
             children: [
               CustomText(
                 text: "Total: ",
-                color: kGreyDark,
+                color:Get.isDarkMode?kWhite: kGreyDark,
                 weight: FontWeight.w600,
                 size: 18,
               ),

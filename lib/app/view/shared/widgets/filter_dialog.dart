@@ -15,7 +15,7 @@ getFilterdialog() {
 
   Get.dialog(AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    surfaceTintColor: kWhite,
+    surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

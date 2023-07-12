@@ -14,7 +14,7 @@ class ScratchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      surfaceTintColor: kWhite,
+      surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
       title: cartController.isCouponApplied.value
           ? const Padding(
               padding: EdgeInsets.all(8.0),

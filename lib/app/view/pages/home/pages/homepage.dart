@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        color: kOrange,
+        color:Get.isDarkMode?kWhite: kOrange,
         onRefresh: authController.fetchAllData,
         child: SafeArea(
           child: SingleChildScrollView(
@@ -44,6 +44,7 @@ class HomePage extends StatelessWidget {
                   kHeightBox20,
                   SectionTitleWidget(
                     title: "Categories",
+                    
                     function: () => Get.to(() => const CategoryPage()),
                   ),
                   SizedBox(

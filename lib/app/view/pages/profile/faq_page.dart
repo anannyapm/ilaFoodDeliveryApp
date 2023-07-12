@@ -94,8 +94,8 @@ class FAQItemState extends State<FAQItem> {
       child: ExpansionTile(
         shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(12) ) ,
         collapsedShape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(12) ),
-        backgroundColor: kOffBlue,
-        collapsedBackgroundColor: kOffBlue,
+        backgroundColor:Get.isDarkMode ? kGrey.withOpacity(0.5): kOffBlue,
+        collapsedBackgroundColor:Get.isDarkMode ? kGrey.withOpacity(0.4): kOffBlue,
         title: CustomText(text: widget.question,weight: FontWeight.bold,),
         onExpansionChanged: (expanded) {
           setState(() {

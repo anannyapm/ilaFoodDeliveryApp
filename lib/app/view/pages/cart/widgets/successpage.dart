@@ -38,7 +38,7 @@ class SuccessPage extends StatelessWidget {
                   text:
                       "Keep Your Plates Ready!\nYour order shall be delivered soon.",
                   size: 18,
-                  color: kGreyDark,
+                  color:Get.isDarkMode?kGreylight: kGreyDark,
                   align: TextAlign.center,
                 ),
               ],

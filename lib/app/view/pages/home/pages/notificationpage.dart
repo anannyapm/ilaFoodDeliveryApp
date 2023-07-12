@@ -50,9 +50,9 @@ class NotificationPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Ionicons.notifications_outline,size: 80,color:kGreyDark,),
+                          Icon(Ionicons.notifications_outline,size: 80,color:Get.isDarkMode?kWhite:kGreyDark,),
                           kHeightBox20,
-                          CustomText(text: "No Notifications here",size: 18,weight: FontWeight.w200,color: kGreyDark,)
+                          CustomText(text: "No Notifications here",size: 18,weight: FontWeight.w200,color: Get.isDarkMode?kWhite:kGreyDark,)
                         ],
                       )
                     ): Padding(
@@ -85,7 +85,7 @@ class NotificationPage extends StatelessWidget {
                                 children: [
                                   CustomText(
                                     text: item.title!,
-                                    color: kGreyDark,
+                                    color:Get.isDarkMode?kWhite: kGreyDark,
                                     size: 16,
                                     weight: FontWeight.bold,
                                   ),
@@ -94,7 +94,7 @@ class NotificationPage extends StatelessWidget {
                                         ? "Today"
                                         : DateFormat("dd/mm/yy")
                                             .format(item.startTime!),
-                                    color: kBlueShade.withOpacity(0.7),
+                                    color:Get.isDarkMode?kGrey: kBlueShade.withOpacity(0.7),
                                     size: 13,
                                   ),
                                 ],
@@ -110,14 +110,14 @@ class NotificationPage extends StatelessWidget {
                                       text: item.body!,
                                       lines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      color: kGreyDark,
+                                      color:Get.isDarkMode?kWhite: kGreyDark,
                                       size: 15,
                                     ),
                                   ),
                                   CustomText(
                                     text: DateFormat("h:mm a")
                                         .format(item.startTime!),
-                                    color: kBlueShade.withOpacity(0.7),
+                                    color:Get.isDarkMode?kGrey: kBlueShade.withOpacity(0.7),
                                     size: 13,
                                   ),
                                 ],

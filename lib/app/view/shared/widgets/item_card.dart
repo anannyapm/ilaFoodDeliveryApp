@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
@@ -24,8 +25,8 @@ class ItemCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 5, top: 10),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        surfaceTintColor: kWhite,
-        color: kWhite,
+        surfaceTintColor:Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
+        color: Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
         elevation: 4,
         child: GestureDetector(
           onTap: onTap,
@@ -37,7 +38,7 @@ class ItemCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: kGrey.withOpacity(0.7),
+                        color:Get.isDarkMode?kWhite.withOpacity(0.1): kGrey.withOpacity(0.7),
                         spreadRadius: 1,
                         blurRadius: 3,
                         offset:
@@ -76,6 +77,7 @@ class ItemCard extends StatelessWidget {
                       text: title,
                       size: 15,
                       weight: FontWeight.bold,
+                      
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,12 +85,12 @@ class ItemCard extends StatelessWidget {
                         CustomText(
                           text: "Starting At",
                           size: 12,
-                          color: kGreyDark,
+                          color:Get.isDarkMode?kWhite: kGreyDark,
                         ),
                         CustomText(
                           text: "₹$price",
                           size: 12,
-                          color: kBlueShade,
+                          color:Get.isDarkMode?kWhite: kBlueShade,
                         ),
                       ],
                     ),

@@ -5,13 +5,15 @@ import 'package:ila/app/model/product_model.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
+import '../pages/product_page.dart';
+
 class ProductCard extends StatelessWidget {
   final ProductModel product;
-  final VoidCallback onTap;
+//  final VoidCallback onTap;
 
   ProductCard({
     super.key,
-    required this.onTap,
+   // required this.onTap,
     required this.product,
   });
 
@@ -21,7 +23,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => Get.to(() => ProductPage(product: product)),
       child: Container(
         height: 280,
         //width: 120,
@@ -29,8 +31,8 @@ class ProductCard extends StatelessWidget {
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          surfaceTintColor: kWhite,
-          color: kWhite,
+          surfaceTintColor: Get.isDarkMode ? kGrey.withOpacity(0.6) : kWhite,
+          color: Get.isDarkMode ? kGrey.withOpacity(0.6) : kWhite,
           elevation: 4,
           child: Column(
             children: [
@@ -41,7 +43,9 @@ class ProductCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: kGrey.withOpacity(0.7),
+                          color: Get.isDarkMode
+                              ? kWhite.withOpacity(0.1)
+                              : kGrey.withOpacity(0.7),
                           spreadRadius: 1,
                           blurRadius: 3,
                           offset:
@@ -84,7 +88,7 @@ class ProductCard extends StatelessWidget {
                         CustomText(
                           text: "₹${product.price}",
                           size: 14,
-                          color: kBlueShade,
+                          color: Get.isDarkMode ? kWhite : kBlueShade,
                         ),
                         Obx(() => IconButton(
                             style: ButtonStyle(

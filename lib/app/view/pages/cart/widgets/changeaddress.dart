@@ -54,7 +54,7 @@ void showChangeAddressBottomSheet() {
         ],
       ),
     ),
-    backgroundColor: kWhite,
+    backgroundColor:Get.isDarkMode?kGreyDark.withOpacity(0.8): kWhite,
     isScrollControlled: true
   );
 }

@@ -53,7 +53,7 @@ class ProductPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: kBlueShade)),
+                          border: Border.all(color:Get.isDarkMode ? kGrey: kBlueShade)),
                       child: CustomText(
                         text: rName,
                         size: 16,
@@ -67,12 +67,10 @@ class ProductPage extends StatelessWidget {
                       weight: FontWeight.bold,
                     ),
                     kHeightBox10,
-                    Expanded(
-                      child: CustomText(
-                          text: product.description!,
-                          size: 15,
-                          color: kBlueShade),
-                    ),
+                    CustomText(
+                        text: product.description!,
+                        size: 15,
+                        color:Get.isDarkMode ? kWhite: kBlueShade),
                     kHeightBox20,
                     Expanded(
                       child: Padding(
@@ -97,7 +95,7 @@ class ProductPage extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: kBlack),
+                                        color:Get.isDarkMode ?kWhite: kBlack),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -110,7 +108,7 @@ class ProductPage extends StatelessWidget {
                                                       kGreylight)),
                                           icon: Icon(
                                             Icons.remove,
-                                            color: kWhite,
+                                            color:Get.isDarkMode ? kBlack: kWhite,
                                           ),
                                           onPressed: () {
                                             if (cartController.itemCount.value >
@@ -128,7 +126,7 @@ class ProductPage extends StatelessWidget {
                                                   .itemCount.value
                                                   .toString(),
                                               size: 18,
-                                              color: kWhite,
+                                              color:Get.isDarkMode ? kBlack: kWhite,
                                             ),
                                           ),
                                         ),
@@ -140,7 +138,7 @@ class ProductPage extends StatelessWidget {
                                                       kGreylight)),
                                           icon: Icon(
                                             Icons.add,
-                                            color: kWhite,
+                                            color:Get.isDarkMode ? kBlack: kWhite,
                                           ),
                                           onPressed: () {
                                             cartController.itemCount.value++;

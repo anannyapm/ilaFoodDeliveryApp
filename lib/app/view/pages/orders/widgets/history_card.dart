@@ -88,14 +88,14 @@ class HistoryCardWidget extends StatelessWidget {
                       children: [
                         CustomText(
                           text: '₹${order.total!.toInt()}\t',
-                          color: kBlueShade,
+                          color:Get.isDarkMode?kWhite: kBlueShade,
                           size: 15,
                           weight: FontWeight.w700,
                         ),
                         CustomText(
                           text: "|",
                           size: 22,
-                          color: kGrey,
+                          color:Get.isDarkMode?kWhite: kGrey,
                         ),
                         CustomText(
                             text: DateFormat('\tdd  MMM,hh:mm a ')
@@ -104,13 +104,13 @@ class HistoryCardWidget extends StatelessWidget {
                           width: 6,
                           height: 6,
                           decoration: ShapeDecoration(
-                            color: kGrey,
+                            color:Get.isDarkMode?kWhite: kGrey,
                             shape: const OvalBorder(),
                           ),
                         ),
                         CustomText(
                           text: ' ${order.products!.length} Items',
-                          color: kGreyDark,
+                          color:Get.isDarkMode?kWhite: kGreyDark,
                           size: 15,
                           weight: FontWeight.w400,
                         ),
@@ -163,20 +163,20 @@ class HistoryCardWidget extends StatelessWidget {
                                 ),
                                 empty: Icon(
                                   Icons.star_outline,
-                                  color: kBlack,
+                                  color:Get.isDarkMode?kWhite: kBlack,
                                 )),
                             onRatingUpdate: (value) {
                               //
                               //orderController.setRating(value);
 
                               Get.dialog(AlertDialog(
-                                surfaceTintColor: kWhite,
+                                surfaceTintColor:Get.isDarkMode?kGrey: kWhite,
                                 elevation: 0,
                                 title: CustomText(
                                   text: "Would you like to submit rating?",
                                   size: 16,
                                   weight: FontWeight.bold,
-                                  color: kBlueShade,
+                                  color:Get.isDarkMode?kWhite: kBlueShade,
                                 ),
                                 actions: [
                                   TextButton(

@@ -44,10 +44,9 @@ class LocationPage extends StatelessWidget {
                         int status = await mapController.getCurrentLocation();
                         if (status == 1) {
                           Get.dialog(
-                            //Obx(() => 
-                          /* authController.isUserAdding.value?const Center(child: CircularProgressIndicator()):  */AlertDialog(
+                           AlertDialog(
                                 alignment: Alignment.center,
-                                surfaceTintColor: kWhite,
+                                surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
                                 title: const Text(
                                   'Location Accessed',
                                   textAlign: TextAlign.center,

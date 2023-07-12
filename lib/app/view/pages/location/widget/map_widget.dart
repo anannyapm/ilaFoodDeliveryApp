@@ -224,7 +224,7 @@ class MapPage extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: kWhite,
+      backgroundColor:Get.isDarkMode?kBlueShade: kWhite,
     );
   }
 }

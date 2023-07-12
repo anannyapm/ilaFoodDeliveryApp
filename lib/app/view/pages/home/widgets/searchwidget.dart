@@ -22,7 +22,7 @@ class SearchWidget extends StatelessWidget {
           color: kGreylight,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        tileColor: kGreylight.withOpacity(0.2),
+        tileColor:Get.isDarkMode?kGreylight.withOpacity(0.6): kGreylight.withOpacity(0.2),
       ),
     );
   }

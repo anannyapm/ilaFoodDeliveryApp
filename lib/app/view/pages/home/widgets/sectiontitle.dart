@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 import '../../../shared/widgets/custom_text.dart';
@@ -16,7 +17,7 @@ class SectionTitleWidget extends StatelessWidget {
         CustomText(
           text: title,
           size: 20,
-          color: kBlueShade,
+          color:Get.isDarkMode?kWhite: kBlueShade,
         ),
         GestureDetector(
           onTap: function,

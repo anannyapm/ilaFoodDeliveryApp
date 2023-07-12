@@ -113,7 +113,7 @@ class ViewRestaurantPage extends StatelessWidget {
                     Obx(
                       () => Switch(
                         activeTrackColor: kGreen.withOpacity(0.8),
-                        trackOutlineColor: MaterialStatePropertyAll(kWhite),
+                        trackOutlineColor: MaterialStatePropertyAll(Get.isDarkMode?kGrey.withOpacity(0.4):kWhite),
                         value: homeController.isRecommended.value,
                         onChanged: (value) {
                           log(value.toString());
@@ -145,8 +145,8 @@ class ViewRestaurantPage extends StatelessWidget {
                             final item = productList[index];
                             return ProductCard(
                                 product:item,
-                                onTap: () =>
-                                    Get.to(() => ProductPage(product: item)));
+                                /* onTap: () =>
+                                    Get.to(() => ProductPage(product: item)) */);
                           },
                         );
                 }),

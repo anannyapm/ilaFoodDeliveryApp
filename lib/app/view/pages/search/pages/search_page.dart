@@ -146,11 +146,7 @@ class SearchPage extends StatelessWidget {
                                         decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
-                                          /* image: DecorationImage(
-                                              image: NetworkImage(searchresult
-                                                  .values.first.image),
-                                              fit: BoxFit.cover,
-                                            ) */
+                                         
                                         ),
                                         child: ClipRRect(
                                           borderRadius:
@@ -186,7 +182,7 @@ class SearchPage extends StatelessWidget {
                                           CustomText(
                                             text: searchresult.keys.first,
                                             weight: FontWeight.w500,
-                                            color: kGreyDark,
+                                            color:Get.isDarkMode ? kWhite.withOpacity(0.7): kGreyDark,
                                           ),
                                         ],
                                       ),

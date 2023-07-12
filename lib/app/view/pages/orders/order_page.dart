@@ -29,7 +29,9 @@ class OrdersPage extends StatelessWidget {
                 ),
               ),
               kHeightBox10,
-              const TabBar(indicatorSize: TabBarIndicatorSize.tab, tabs: [
+              const TabBar(
+                
+                indicatorSize: TabBarIndicatorSize.tab, tabs: [
                 Tab(
                   text: "Ongoing",
                 ),

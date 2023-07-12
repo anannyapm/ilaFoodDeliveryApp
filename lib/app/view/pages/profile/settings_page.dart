@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/settings_controller.dart';
@@ -44,25 +46,34 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             kHeightBox10,
-           /*  ListTile(
-              title: const CustomText(text: 'Account Deletion'),
-              subtitle:
-                  const CustomText(text: 'Request to delete your account'),
-              onTap: () {
-                // Handle account deletion request
-                _showConfirmationDialog();
-              },
-            ), */
             ListTile(
               title: const CustomText(text: 'Notifications'),
               subtitle:
                   const CustomText(text: 'Enable or disable notifications'),
               trailing: Obx(() => Switch(
                     activeTrackColor: kGreen.withOpacity(0.8),
-                        trackOutlineColor: MaterialStatePropertyAll(kWhite),
+                    trackOutlineColor: MaterialStatePropertyAll(
+                        Get.isDarkMode ? kGrey : kWhite),
                     value: settingsController.isNotificationEnabled,
                     onChanged: (value) {
-                      settingsController.setNotificationEnabled(value);
+                      settingsController.updateNotificationStatus(value);
+                    },
+                  )),
+            ),
+            ListTile(
+              title: const CustomText(text: 'Theme'),
+              subtitle: const CustomText(text: 'Change Dark/Light Theme'),
+              trailing: Obx(() => Switch(
+                    activeTrackColor: kGreen.withOpacity(0.8),
+                    trackOutlineColor: MaterialStatePropertyAll(
+                        Get.isDarkMode ? kGrey : kWhite),
+                    value: settingsController.isDarkMode.value,
+                    onChanged: (value) {
+                      Get.changeTheme(
+                          Get.isDarkMode ? ThemeData.light() : ThemeData());
+                      settingsController.toggleTheme();
+                      log(Get.isDarkMode.toString() +
+                          settingsController.isDarkMode.value.toString());
                     },
                   )),
             ),
@@ -71,32 +82,4 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
-
- /*  void _showConfirmationDialog() {
-    Get.dialog(
-      AlertDialog(
-        surfaceTintColor: kWhite,
-        elevation: 0,
-        title:  CustomText(text: 'Account Deletion',weight: FontWeight.bold,color: kWarning,),
-        content: const CustomText(
-            text: 'Are you sure you want to delete your account?',weight: FontWeight.bold,),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Perform account deletion
-          
-              
-            },
-            child:  CustomText(text: 'Delete',color: kWarning,weight: FontWeight.bold,),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const CustomText(text: 'Cancel',weight: FontWeight.bold,),
-          ),
-        ],
-      ),
-    );
-  } */
 }

@@ -73,7 +73,7 @@ class AddressDetailWidget extends StatelessWidget {
           children: [
             CustomText(
               text: "DELIVERY ADDRESS",
-              color: kGrey,
+              color:Get.isDarkMode ? kOffBlue: kGrey,
               size: 15,
             ),
             Obx(() => SizedBox(
@@ -81,7 +81,7 @@ class AddressDetailWidget extends StatelessWidget {
               child: CustomText(
                     text: userController.userModel
                         .address![homeController.primaryAddressIndex.value],
-                    color: kGreyDark,
+                    color:Get.isDarkMode ? kOffBlue: kGreyDark,
                     size: 16,
                     overflow: TextOverflow.ellipsis,
                   ),

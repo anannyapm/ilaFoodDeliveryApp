@@ -31,16 +31,16 @@ class NavigationPage extends StatelessWidget {
         } else {
           return await(Get.dialog(
             AlertDialog(
-              surfaceTintColor: kWhite,
+              surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
               elevation: 0,
             title: CustomText(
               text: "Are you sure you want to Exit app?",
               size: 18,
-              color: kBlueShade,
+              color:Get.isDarkMode?kWhite: kBlueShade,
               weight: FontWeight.bold,
             ),
             actions: [
-              TextButton(onPressed:()=> Get.back(result: false), child: CustomText(text: "No",color: kBlueShade,size: 14,weight: FontWeight.bold,)),
+              TextButton(onPressed:()=> Get.back(result: false), child: CustomText(text: "No",color:Get.isDarkMode?kWhite: kBlueShade,size: 14,weight: FontWeight.bold,)),
               TextButton(onPressed:()=> Get.back(result: true), child: CustomText(text: "Yes",color: kWarning,size: 14,weight: FontWeight.bold,))
             ],
           )));

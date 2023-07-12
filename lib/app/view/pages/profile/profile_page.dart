@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () => Get.bottomSheet(UserEditSheet(),
-                          backgroundColor: kWhite),
+                          backgroundColor:Get.isDarkMode?kBlueShade: kWhite),
                       child: CustomText(
                         text: "Edit",
                         color: kOrange,
@@ -135,12 +135,12 @@ class ProfilePage extends StatelessWidget {
                   icon: Ionicons.log_out_outline,
                   function: () {
                     Get.dialog(AlertDialog(
-                      surfaceTintColor: kWhite,
+                      surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       titleTextStyle: TextStyle(
                           fontSize: 18,
-                          color: kBlueShade,
+                          color:Get.isDarkMode?kWhite: kBlueShade,
                           fontWeight: FontWeight.bold),
                       title: const CustomText(
                         text: "Are you sure you want to Sign Out?",

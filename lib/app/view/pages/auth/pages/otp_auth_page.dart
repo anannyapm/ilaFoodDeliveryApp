@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -55,21 +53,26 @@ class OtpAuthPage extends StatelessWidget {
                     kHeightBox20,
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-
                       child: Obx(() => CustomButton(
-                        padding: 15,
-                        text: authController.isVerifying.value?const Center(child: CircularProgressIndicator(),): CustomText(text: "GET OTP",color: kWhite,size: 18,weight: FontWeight.bold,),
-                         function: () async {
+                          padding: 15,
+                          text: authController.isVerifying.value
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : CustomText(
+                                  text: "GET OTP",
+                                  color: kWhite,
+                                  size: 18,
+                                  weight: FontWeight.bold,
+                                ),
+                          function: () async {
                             loginController.isLogButtonEnabled.value
                                 ? await authController.verifyPhoneNumber()
                                 : log("Not verified");
-                          }, 
-                      color:  loginController.isLogButtonEnabled.value
-                                      ? kGreen
-                                      : kGreen.withOpacity(0.4))
-                      
-                     
-                          ),
+                          },
+                          color: loginController.isLogButtonEnabled.value
+                              ? kGreen
+                              : kGreen.withOpacity(0.4))),
                     )
                   ],
                 ),

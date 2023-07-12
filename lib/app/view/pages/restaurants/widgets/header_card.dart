@@ -7,6 +7,7 @@ import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/cart_page.dart';
+import 'package:ila/app/view/shared/widgets/close_widget.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class HeaderCard extends StatelessWidget {
@@ -37,8 +38,8 @@ class HeaderCard extends StatelessWidget {
       width: double.infinity,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        surfaceTintColor: kWhite,
-        color: kWhite,
+        surfaceTintColor: Get.isDarkMode?kGrey.withOpacity(0.6):kWhite,
+        color:Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
         elevation: 4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +85,7 @@ class HeaderCard extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
-                    color: kBlack.withOpacity(0.2)),
+                    color:Get.isDarkMode?kGrey.withOpacity(0): kBlack.withOpacity(0.2)),
               ),
               !isProduct
                   ? Positioned(
@@ -107,7 +108,7 @@ class HeaderCard extends StatelessWidget {
                                       Icons.favorite,
                                       color: controller.favList.contains(itemid)
                                           ? kGreen
-                                          : kGreyDark,
+                                          :Get.isDarkMode?kWhite: kGreyDark,
                                     )));
                           },
                         ),
@@ -119,13 +120,13 @@ class HeaderCard extends StatelessWidget {
                 left: 16,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: IconButton(
+                  child:CloseWidget(actionfunction:()=> Get.back()) /* IconButton(
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(kWhite)),
                       onPressed: () => Get.back(),
                       icon: const Icon(
                         Icons.keyboard_arrow_left,
-                      )),
+                      )), */
                 ),
               ),
               Positioned(
@@ -186,6 +187,7 @@ class HeaderCard extends StatelessWidget {
                                     text: rate.toString(),
                                     weight: FontWeight.bold,
                                     size: 16,
+                                    color: kBlack,
                                   )
                                 ],
                               ),

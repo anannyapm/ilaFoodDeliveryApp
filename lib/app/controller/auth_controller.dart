@@ -229,6 +229,7 @@ class AuthController extends GetxController {
       favoriteList: List.empty(),
       discounts: cartController.selectedDiscount.value,
       deviceKey: deviceKey,
+      receiveNotification: true
     ));
 
     await userCollectionRef
@@ -243,6 +244,8 @@ class AuthController extends GetxController {
     //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
+   
+    prefs.setBool('DARK_THEME', false);
     mapController.clearfields();
   }
 

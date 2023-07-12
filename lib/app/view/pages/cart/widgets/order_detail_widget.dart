@@ -35,7 +35,7 @@ class OrderDetailWidget extends StatelessWidget {
                 kHeightBox20,
                 const Image(
                   image: AssetImage(
-                    "assets/images/emptycart.jpg",
+                    "assets/images/emptycart.png",
                   ),
                   width: 250,
                 ),
@@ -76,9 +76,7 @@ class OrderDetailWidget extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          /* image: DecorationImage(
-                                image: NetworkImage(item.image!),
-                                fit: BoxFit.cover) */
+                         
                         ),
                         width: 70,
                         height: 70,
@@ -114,13 +112,7 @@ class OrderDetailWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        /* CustomText(
-                                          text:
-                                              "Item ID#${item.itemId!.substring(0, 6)}",
-                                          color: kGreylight,
-                                          weight: FontWeight.bold,
-                                          size: 15,
-                                        ), */
+                                     
                                         CustomText(
                                           text: item.name!.toUpperCase(),
                                           size: 16,
@@ -138,7 +130,7 @@ class OrderDetailWidget extends StatelessWidget {
                                         },
                                         child: Icon(
                                           Icons.close,
-                                          color: kGreylight,
+                                          color:Get.isDarkMode?kWhite: kGreylight,
                                           size: 22,
                                         ))
                                   ],
@@ -166,11 +158,11 @@ class OrderDetailWidget extends StatelessWidget {
                                       },
                                       child: CircleAvatar(
                                         radius: 12,
-                                        backgroundColor: kGrey.withOpacity(0.3),
+                                        backgroundColor:Get.isDarkMode?kWhite: kGrey.withOpacity(0.3),
                                         child: Icon(
                                           Icons.remove,
                                           size: 15,
-                                          color: kBlack,
+                                          color:kBlack,
                                         ),
                                       ),
                                     ),
@@ -182,7 +174,7 @@ class OrderDetailWidget extends StatelessWidget {
                                           CustomText(
                                         text: item.quantity.toString(),
                                         size: 18,
-                                        color: kBlack,
+                                        color:Get.isDarkMode?kWhite: kBlack,
                                         weight: FontWeight.bold,
                                       ),
                                     ),
@@ -194,7 +186,7 @@ class OrderDetailWidget extends StatelessWidget {
                                       },
                                       child: CircleAvatar(
                                         radius: 12,
-                                        backgroundColor: kGrey.withOpacity(0.3),
+                                        backgroundColor:Get.isDarkMode?kWhite: kGrey.withOpacity(0.3),
                                         child: Icon(
                                           Icons.add,
                                           size: 15,
