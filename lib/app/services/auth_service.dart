@@ -17,6 +17,7 @@ class AuthService {
   int? _resendToken;
 
   Future<void> verifyPhone(String phoneNumber) async {
+    loginController.isVerifying.value = true;
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -25,8 +26,17 @@ class AuthService {
         log(loginController.otpCode.text);
       },
       verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-numer') {
+        loginController.isVerifying.value = false;
+
+        log(e.toString());
+        if (e.code == 'invalid-phone-number') {
           Get.snackbar("Error", "The mobile number is not valid",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: kWarning,
+              colorText: kWhite);
+        } else if (e.code == 'too-many-requests') {
+          Get.snackbar(
+              "Error", "Too many requests from this Device. Try Again Later",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: kWarning,
               colorText: kWhite);
@@ -38,6 +48,8 @@ class AuthService {
         }
       },
       codeSent: (String verificationId, int? resendToken) {
+        loginController.isVerifying.value = false;
+
         Get.bottomSheet(
             backgroundColor: Get.isDarkMode ? kBlueShade : kWhite,
             elevation: 0,
@@ -60,6 +72,7 @@ class AuthService {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
+        log(e.toString());
         showSnackBar("Error", "Something Went Wrong", kWarning);
       },
       codeSent: (String verificationId, int? resendToken) {

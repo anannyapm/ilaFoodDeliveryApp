@@ -67,8 +67,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kBlack,
         tabBarTheme: TabBarTheme(dividerColor: kOrange)
       ),
-      themeMode: ThemeMode.light,
+    
+      
       theme: ThemeData(
+       
         fontFamily: GoogleFonts.sen().fontFamily,
         scaffoldBackgroundColor: kWhite,
         colorScheme: ColorScheme.fromSeed(seedColor: kGreen),

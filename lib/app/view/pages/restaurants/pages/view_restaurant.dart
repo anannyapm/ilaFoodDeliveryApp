@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/model/restaurant_model.dart';
 import 'package:ila/app/utils/constants/constants.dart';
-import 'package:ila/app/view/pages/restaurants/pages/product_page.dart';
 import 'package:ila/app/view/pages/restaurants/widgets/header_card.dart';
 import 'package:ila/app/view/pages/restaurants/widgets/product_card.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
@@ -39,6 +38,7 @@ class ViewRestaurantPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15,5,15,5),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                   children: [
@@ -99,6 +99,7 @@ class ViewRestaurantPage extends StatelessWidget {
                 ),
                 kHeightBox10,
                 CustomText(
+                  align: TextAlign.start,
                     text: restaurant.description!, size: 15, color: kGrey),
                 kHeightBox20,
                 Row(

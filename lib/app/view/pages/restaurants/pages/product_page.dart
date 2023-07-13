@@ -47,6 +47,7 @@ class ProductPage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       padding: const EdgeInsets.all(8),
@@ -67,10 +68,17 @@ class ProductPage extends StatelessWidget {
                       weight: FontWeight.bold,
                     ),
                     kHeightBox10,
-                    CustomText(
-                        text: product.description!,
-                        size: 15,
-                        color:Get.isDarkMode ? kWhite: kBlueShade),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.14,
+                      child: SingleChildScrollView(
+                        
+                        child: CustomText(
+                            text: product.description!,
+                            size: 15,
+                            
+                            color:Get.isDarkMode ? kWhite: kBlueShade),
+                      ),
+                    ),
                     kHeightBox20,
                     Expanded(
                       child: Padding(
@@ -91,7 +99,7 @@ class ProductPage extends StatelessWidget {
                                     weight: FontWeight.bold,
                                   )
                                 : Container(
-                                    width: 135,
+                                    width: 150,
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),

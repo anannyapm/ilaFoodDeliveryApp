@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/constants/constants.dart';
@@ -30,7 +31,7 @@ class OnboardingContent extends StatelessWidget {
         Text(
           subtitle,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: kGreyDark),
+          style: TextStyle(fontSize: 16, color:Get.isDarkMode?kWhite:  kGreyDark),
         )
       ],
     );

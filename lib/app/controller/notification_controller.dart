@@ -77,10 +77,7 @@ class NotificationController extends GetxController {
 
   Future<void> addtoNotificationDB(
       String body, String title, DateTime startTime) async {
-    /* String body = message.notification?.body ?? '';
-    String title = message.notification?.title ?? '';
-    DateTime startTime = message.sentTime ?? DateTime.now();
- */
+    
     NotificationModel notificationModel = NotificationModel(
       body: body,
       title: title,

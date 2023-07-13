@@ -71,7 +71,7 @@ class OtpBottomSheet extends StatelessWidget {
                             text: loginController.resendOTP.value
                                 ? "Resend Code"
                                 : "${loginController.resendAfter} seconds",
-                            color: kBlueShade,
+                            color:Get.isDarkMode?kWhite:  kBlueShade,
                             weight: FontWeight.bold,
                           )))
                     ],

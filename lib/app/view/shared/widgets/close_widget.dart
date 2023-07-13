@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 
 import '../../../utils/constants/color_constants.dart';
 

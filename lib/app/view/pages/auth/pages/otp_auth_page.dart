@@ -55,9 +55,9 @@ class OtpAuthPage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child: Obx(() => CustomButton(
                           padding: 15,
-                          text: authController.isVerifying.value
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
+                          text: loginController.isVerifying.value
+                              ?  Center(
+                                  child: CircularProgressIndicator(color: kWhite,),
                                 )
                               : CustomText(
                                   text: "GET OTP",

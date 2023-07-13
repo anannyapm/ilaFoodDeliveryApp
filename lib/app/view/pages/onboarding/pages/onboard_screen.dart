@@ -33,7 +33,7 @@ class OnBoardingScreenOne extends StatelessWidget {
                             child: Text(
                               "Skip",
                               style: TextStyle(
-                                  color: kGreyDark,
+                                  color:Get.isDarkMode?kWhite:  kGreyDark,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),

@@ -7,7 +7,6 @@ import 'package:ila/app/controller/home_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/cart_page.dart';
-import 'package:ila/app/view/shared/widgets/close_widget.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class HeaderCard extends StatelessWidget {
@@ -120,13 +119,13 @@ class HeaderCard extends StatelessWidget {
                 left: 16,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child:CloseWidget(actionfunction:()=> Get.back()) /* IconButton(
+                  child: IconButton(
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(kWhite)),
                       onPressed: () => Get.back(),
                       icon: const Icon(
                         Icons.keyboard_arrow_left,
-                      )), */
+                      )), 
                 ),
               ),
               Positioned(

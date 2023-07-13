@@ -28,7 +28,7 @@ class ItemCard extends StatelessWidget {
         surfaceTintColor:Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
         color: Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
         elevation: 4,
-        child: GestureDetector(
+        child: InkWell(
           onTap: onTap,
           child: Column(
             children: [

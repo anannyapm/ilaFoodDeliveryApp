@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController with GetSingleTickerProviderStateMixin {
+class LoginController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -22,9 +23,10 @@ class LoginController extends GetxController with GetSingleTickerProviderStateMi
   RxBool resendOTP = false.obs;
   Timer? timer;
 
+  RxBool isVerifying = false.obs;
+
   GeoPoint location = const GeoPoint(0, 0);
   String address = "";
-
 
   String get name => nameController.text.trim();
   String get email => emailController.text.trim();
@@ -37,7 +39,7 @@ class LoginController extends GetxController with GetSingleTickerProviderStateMi
     nameController.addListener(checkRegField);
   }
 
-   startResendOtpTimer() {
+  startResendOtpTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (resendAfter.value != 0) {
         resendAfter.value--;

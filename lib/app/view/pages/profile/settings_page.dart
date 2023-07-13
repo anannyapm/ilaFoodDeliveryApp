@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               title: const CustomText(text: 'Notifications'),
               subtitle:
-                  const CustomText(text: 'Enable or disable notifications'),
+                  const CustomText(text: 'Enable/Disable notifications'),
               trailing: Obx(() => Switch(
                     activeTrackColor: kGreen.withOpacity(0.8),
                     trackOutlineColor: MaterialStatePropertyAll(
@@ -60,10 +59,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   )),
             ),
-            ListTile(
-              title: const CustomText(text: 'Theme'),
-              subtitle: const CustomText(text: 'Change Dark/Light Theme'),
+            /* ListTile(
+              title: const CustomText(text: 'Dark Theme'),
+              subtitle: const CustomText(text: 'Enable/Disble Dark Theme'),
               trailing: Obx(() => Switch(
+                thumbIcon: settingsController.isDarkMode.value?const MaterialStatePropertyAll(Icon(Icons.dark_mode)):const MaterialStatePropertyAll(Icon(Icons.light_mode)),
                     activeTrackColor: kGreen.withOpacity(0.8),
                     trackOutlineColor: MaterialStatePropertyAll(
                         Get.isDarkMode ? kGrey : kWhite),
@@ -76,7 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           settingsController.isDarkMode.value.toString());
                     },
                   )),
-            ),
+            ), */
           ],
         ),
       ),

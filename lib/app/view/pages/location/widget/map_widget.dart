@@ -162,8 +162,7 @@ class MapPage extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
-                          mapController.addressController.text =
-                              mapController.locationAddress;
+                         
                           Get.back();
                         },
                         icon: const Icon(Icons.close))

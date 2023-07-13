@@ -5,17 +5,18 @@ import '../utils/constants/controllers.dart';
 
 class SettingsController extends GetxController {
   final RxBool _isNotificationEnabled = false.obs;
-  RxBool isDarkMode = false.obs;
-
+ // RxBool isDarkMode = false.obs;
+ // Rx<ThemeMode> currentTheme = ThemeMode.light.obs;
 
   @override
   void onInit() {
-    _isNotificationEnabled.value = userController.userModel.receiveNotification!;
-    isDarkMode.value = Get.isDarkMode;
+    _isNotificationEnabled.value =
+        userController.userModel.receiveNotification!;
+    /* isDarkMode.value = Get.isDarkMode;
+    currentTheme.value = isDarkMode.value ? ThemeMode.dark : ThemeMode.light; */
 
     super.onInit();
   }
-
 
   bool get isNotificationEnabled => _isNotificationEnabled.value;
 
@@ -26,7 +27,9 @@ class SettingsController extends GetxController {
     userController.userModel.receiveNotification = value;
   }
 
-  void toggleTheme() {
+  /* void toggleTheme() {
     isDarkMode.value = !isDarkMode.value;
-  }
+    currentTheme.value = isDarkMode.value ? ThemeMode.dark : ThemeMode.light;
+
+  } */
 }
