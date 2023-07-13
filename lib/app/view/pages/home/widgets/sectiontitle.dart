@@ -19,7 +19,7 @@ class SectionTitleWidget extends StatelessWidget {
           size: 20,
           color:Get.isDarkMode?kWhite: kBlueShade,
         ),
-        GestureDetector(
+        InkWell(
           onTap: function,
           child: const Row(
             children: [

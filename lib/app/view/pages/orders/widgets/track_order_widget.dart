@@ -145,7 +145,7 @@ class TrackOrderWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             orderController
                                 .makePhoneCall(order.deliveryPersonPhone!);

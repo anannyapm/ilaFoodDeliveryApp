@@ -16,7 +16,7 @@ class CarouselCard extends StatelessWidget {
     
     int index=math.Random().nextInt(homeController.carousels.length);
 
-    return GestureDetector(
+    return InkWell(
       onTap: () {
        homeController.carousels.isNotEmpty? Get.dialog(ScratchCard(carousel:homeController.carousels[index] ,)):null;
       },

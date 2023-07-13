@@ -33,73 +33,73 @@ class SearchPage extends StatelessWidget {
 
     return Scaffold(
         body: SafeArea(
-      child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              kHeightBox10,
-              Row(
-                children: [
-                  CloseWidget(
-                      actionfunction: () => Get.offAll(
-                            NavigationPage(),
-                          )),
-                  kWidthBox15,
-                  const CustomText(
-                    text: "Search",
-                    size: 20,
-                  )
-                ],
-              ),
-              kHeightBox20,
-              SearchBar(
-                controller: searchController.controller,
-                focusNode: searchController.myfocusNode,
-                onTap: () {
-                  searchController.myfocusNode.requestFocus();
-                },
-                hintText: "Search dishes,restaurants",
-                trailing: [
-                  IconButton(
-                      onPressed: () {
-                        searchController.clearSearch();
-                      },
-                      icon: const Icon(Icons.close))
-                ],
-                padding: const MaterialStatePropertyAll(
-                    EdgeInsets.only(left: 15, right: 15)),
-                leading: Icon(
-                  Icons.search_outlined,
-                  color: kGreylight,
-                ),
-                shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18))),
-                backgroundColor:
-                    MaterialStatePropertyAll(kGreylight.withOpacity(0.2)),
-                elevation: const MaterialStatePropertyAll(0),
-              ),
-              kHeightBox10,
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: SingleChildScrollView(
+        child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                kHeightBox10,
+                Row(
                   children: [
-                    Obx(() => CustomText(
-                        size: 18,
-                        weight: FontWeight.bold,
-                        text: searchController.isSearchActive.value == false
-                            ? "Popular Searches"
-                            : "Search Results")),
-                    IconButton(
-                        onPressed: () {
-                          getFilterdialog();
-                        },
-                        icon: const Icon(Icons.tune)),
+                    CloseWidget(
+                        actionfunction: () => Get.offAll(
+                              NavigationPage(),
+                            )),
+                    kWidthBox15,
+                    const CustomText(
+                      text: "Search",
+                      size: 20,
+                    )
                   ],
                 ),
-              ),
-              Expanded(
-                child: Obx(
+                kHeightBox20,
+                SearchBar(
+                  controller: searchController.controller,
+                  focusNode: searchController.myfocusNode,
+                  onTap: () {
+                    searchController.myfocusNode.requestFocus();
+                  },
+                  hintText: "Search dishes,restaurants",
+                  trailing: [
+                    IconButton(
+                        onPressed: () {
+                          searchController.clearSearch();
+                        },
+                        icon: const Icon(Icons.close))
+                  ],
+                  padding: const MaterialStatePropertyAll(
+                      EdgeInsets.only(left: 15, right: 15)),
+                  leading: Icon(
+                    Icons.search_outlined,
+                    color: kGreylight,
+                  ),
+                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18))),
+                  backgroundColor:
+                      MaterialStatePropertyAll(kGreylight.withOpacity(0.2)),
+                  elevation: const MaterialStatePropertyAll(0),
+                ),
+                kHeightBox10,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Obx(() => CustomText(
+                          size: 18,
+                          weight: FontWeight.bold,
+                          text: searchController.isSearchActive.value == false
+                              ? "Popular Searches"
+                              : "Search Results")),
+                      IconButton(
+                          onPressed: () {
+                            getFilterdialog();
+                          },
+                          icon: const Icon(Icons.tune)),
+                    ],
+                  ),
+                ),
+                Obx(
                   () {
                     final RxList<Map<String, dynamic>> activeList =
                         searchController.filterEnabled.value
@@ -110,13 +110,15 @@ class SearchPage extends StatelessWidget {
                             child: CustomText(text: "No Results Found"),
                           )
                         : ListView.separated(
+                          shrinkWrap: true,
+                         physics: const NeverScrollableScrollPhysics(),
                             itemCount: activeList.length,
                             itemBuilder: (context, index) {
                               final Map searchresult = activeList[index];
                               log(searchresult.toString());
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
+                                child: InkWell(
                                   onTap: () {
                                     if (searchresult.keys.first ==
                                         'Restaurant') {
@@ -196,9 +198,9 @@ class SearchPage extends StatelessWidget {
                           );
                   },
                 ),
-              ),
-            ],
-          )),
+              ],
+            )),
+      ),
     ));
   }
 }

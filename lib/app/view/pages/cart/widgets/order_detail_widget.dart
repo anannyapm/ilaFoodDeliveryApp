@@ -121,7 +121,7 @@ class OrderDetailWidget extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    GestureDetector(
+                                    InkWell(
                                         //padding: EdgeInsets.zero,
                                         onTap: () {
                                           cartController
@@ -150,7 +150,7 @@ class OrderDetailWidget extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    GestureDetector(
+                                    InkWell(
                                       onTap: () {
                                         cartController
                                             .decreaseQuantity(item.productId!);
@@ -178,7 +178,7 @@ class OrderDetailWidget extends StatelessWidget {
                                       ),
                                     ),
                                     //),
-                                    GestureDetector(
+                                    InkWell(
                                       onTap: () {
                                         cartController
                                             .increaseQuantity(item.productId!);

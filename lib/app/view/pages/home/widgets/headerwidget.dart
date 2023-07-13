@@ -37,7 +37,7 @@ class HeaderWidget extends StatelessWidget {
            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                GestureDetector(
+                InkWell(
              onTap: () => showChangeAddressBottomSheet(),
              child: const Icon(
                Icons.edit_location_alt,

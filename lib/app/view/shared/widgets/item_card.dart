@@ -31,39 +31,42 @@ class ItemCard extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  height: 104,
-                  width: 122,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color:Get.isDarkMode?kWhite.withOpacity(0.1): kGrey.withOpacity(0.7),
-                        spreadRadius: 1,
-                        blurRadius: 3,
-                        offset:
-                            const Offset(0, 3), // changes the shadow position
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                  
-                  ),
-                  margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: FadeInImage(
-                      fadeInDuration: const Duration(milliseconds: 300),
-                      placeholder:
-                          const AssetImage('assets/images/placeholder.jpg'),
-                      image: NetworkImage(imageUrl),
-                      imageErrorBuilder: (context, error, stackTrace) =>
-                          Image.asset(
-                        'assets/images/placeholder.jpg',
+              Center(
+                child: Container(
+                    height: 104,
+                    width: 122,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color:Get.isDarkMode?kWhite.withOpacity(0.1): kGrey.withOpacity(0.7),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 3), // changes the shadow position
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(20),
+                    
+                    ),
+                    margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: FadeInImage(
+                        fadeInDuration: const Duration(milliseconds: 300),
+                        placeholder:
+                            const AssetImage('assets/images/placeholder.jpg'),
+                        image: NetworkImage(imageUrl),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          'assets/images/placeholder.jpg',
+                          fit: BoxFit.cover,
+                        ),
                         fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                    )),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 12.0, right: 12),
                 child: Column(
@@ -80,7 +83,7 @@ class ItemCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          text: "Starting At",
+                          text: "Starting At ",
                           size: 12,
                           color:Get.isDarkMode?kWhite: kGreyDark,
                         ),

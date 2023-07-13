@@ -30,7 +30,7 @@ class RestaurantCard extends StatelessWidget {
         surfaceTintColor: Get.isDarkMode ? kGrey.withOpacity(0.6) : kWhite,
         color: Get.isDarkMode ? kGrey.withOpacity(0.6) : kWhite,
         elevation: 4,
-        child: GestureDetector(
+        child: InkWell(
           onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,6 +107,8 @@ class RestaurantCard extends StatelessWidget {
                           padding: const EdgeInsets.all(5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            
                             children: [
                               Icon(
                                 Icons.star_rounded,

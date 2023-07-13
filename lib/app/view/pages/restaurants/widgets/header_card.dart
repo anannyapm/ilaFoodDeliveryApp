@@ -130,7 +130,7 @@ class HeaderCard extends StatelessWidget {
                 right: 16,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () => Get.to(() => CartPage()),
                     child: Stack(
                       children: [

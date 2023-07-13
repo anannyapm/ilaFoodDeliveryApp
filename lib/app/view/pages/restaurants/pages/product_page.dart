@@ -31,11 +31,11 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
-          child: Stack(
-            children: [
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -50,7 +50,7 @@ class ProductPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.8,
+                          //height: MediaQuery.of(context).size.height,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -89,12 +89,7 @@ class ProductPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 75,
-                child: Padding(
+                Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,46 +163,44 @@ class ProductPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              kHeightBox10,
-              Positioned(
-                bottom: 2,
-                left: 0,
-                right: 0,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 8, left: 15, right: 15),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Obx(() => CustomButton(
-                        padding: 15,
-                        text: CustomText(
-                          text: isAdded.value
-                              ? "REMOVE FROM CART"
-                              : "ADD TO CART",
-                          color: kWhite,
-                          size: 18,
-                          weight: FontWeight.bold,
-                        ),
-                        function: () async {
-                          log(isAdded.toString());
-                          bool output = false;
-                          if (isAdded.value) {
-                            output =
-                                cartController.removeCartItem(product.docId!);
-                          } else {
-                            output = await cartController.addProductToCart(
-                                product, cartController.itemCount.value);
-                          }
-                          if (output) {
-                            isAdded.value = !isAdded.value;
-                          }
-                        },
-                        color: isAdded.value ? kWarning : kGreen)),
+                kHeightBox10,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: 8, left: 15, right: 15),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Obx(() => CustomButton(
+                          padding: 15,
+                          text: CustomText(
+                            text: isAdded.value
+                                ? "REMOVE FROM CART"
+                                : "ADD TO CART",
+                            color: kWhite,
+                            size: 18,
+                            weight: FontWeight.bold,
+                          ),
+                          function: () async {
+                            log(isAdded.toString());
+                            bool output = false;
+                            if (isAdded.value) {
+                              output =
+                                  cartController.removeCartItem(product.docId!);
+                            } else {
+                              output = await cartController.addProductToCart(
+                                  product, cartController.itemCount.value);
+                            }
+                            if (output) {
+                              isAdded.value = !isAdded.value;
+                            }
+                          },
+                          color: isAdded.value ? kWarning : kGreen)),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

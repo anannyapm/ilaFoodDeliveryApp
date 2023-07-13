@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => Get.to(() => ProductPage(product: product)),
       child: Container(
         height: 280,
