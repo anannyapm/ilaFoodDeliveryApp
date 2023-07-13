@@ -23,7 +23,7 @@ import '../services/firebase_services.dart';
 class AuthController extends GetxController {
   LoginController loginController = Get.put(LoginController());
   MapController mapController = Get.put(MapController());
-  //UserController userController = Get.put(UserController());
+
 
   AuthService authService = AuthService();
 
@@ -47,21 +47,10 @@ class AuthController extends GetxController {
   void onReady() {
     super.onReady();
     initialScreen();
-/* 
-    By using Rx<User?>, any changes to the current user's authentication state
-    will be automatically propagated through the firebaseUser stream, 
-    allowing you to reactively handle user authentication changes in your
-     application. */
 
     firebaseUser = Rx<User?>(auth.currentUser);
-
-    //bindstream ==> to make firebaseuser like an observer. It will be now
-    //notified when there will be change in user information
-    //binding userchange to firebaseuser and firebaseuser will be notified
     firebaseUser.bindStream(auth.userChanges());
 
-    //ever is called everytime firebaseuser changes
-    //ever(firebaseUser, initialScreen);
   }
 
   String? deviceKey = "";
@@ -74,7 +63,7 @@ class AuthController extends GetxController {
       final tokenId = status?.userId;
       log(tokenId.toString());
       deviceKey = tokenId ?? "";
-      //await FirebaseMessaging.instance.getToken();
+    
     } catch (e) {
       log("could not get the key");
     }
@@ -130,10 +119,10 @@ class AuthController extends GetxController {
 
     homeController.getAllProducts();
     await userController.getUserAddress();
-    log(userController.userModel.toString());
+   
     cartController.getCartList();
     cartController.getTotalPrice();
-    log("cart");
+    
     await orderController.getAllOrders();
     orderController.getOngoingOrders();
     orderController.getOrderHistory();
@@ -225,8 +214,8 @@ class AuthController extends GetxController {
       completeAddress: [mapController.completeAddress],
       name: loginController.name,
       email: loginController.email,
-      userCart: List.empty(),
-      favoriteList: List.empty(),
+      userCart: List.empty(growable: true),
+      favoriteList: List.empty(growable: true),
       discounts: cartController.selectedDiscount.value,
       deviceKey: deviceKey,
       receiveNotification: true
@@ -241,7 +230,7 @@ class AuthController extends GetxController {
     log(userController.userModel.userId!);
 
     await fetchAllData();
-    //log("${userModel.name} ${userModel.phoneNumber} ${userModel.location}");
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
    

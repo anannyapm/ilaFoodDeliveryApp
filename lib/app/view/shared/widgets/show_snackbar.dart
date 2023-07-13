@@ -9,5 +9,7 @@ showSnackBar(String title,String subtitle,Color color){
         backgroundColor:color,
         colorText: kWhite,
         duration: const Duration(seconds: 2),
-        isDismissible: true);
+        isDismissible: true,
+        
+        );
 }

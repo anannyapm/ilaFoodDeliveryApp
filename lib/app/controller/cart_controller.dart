@@ -69,7 +69,6 @@ class CartController extends GetxController {
       applyDiscount.value = discount;
     } else {
       applyDiscount.value = 50;
-      /* userDocRef.update({"discounts": discount - applyDiscount}); */ // DO IT AFTER SUBMISSION
     }
   }
 
@@ -83,7 +82,7 @@ class CartController extends GetxController {
         totalItemPrice.value - applyDiscount.value + deliveryCharge;
   }
 
-  getCartList() async {
+  Future<void> getCartList() async {
     totalItemPrice.value = 0.0;
     cartList.clear();
     if (userController.userModel.userCart!.isNotEmpty) {
@@ -94,6 +93,7 @@ class CartController extends GetxController {
 
       cartList.addAll(tempList);
     }
+    log("cart$cartList");
   }
 
   bool isItemAlreadyAdded(ProductModel product) =>
@@ -175,15 +175,16 @@ class CartController extends GetxController {
       //final name = cartitem.name;
       cartList.removeWhere((element) => element.productId == prodId);
       final userDocRef = userCollectionRef.doc(userController.userModel.userId);
+      log(userController.userModel.userCart!.toString());
       userController.userModel.userCart!.remove(cartitem);
 
       userDocRef.update({
         "userCart": FieldValue.arrayRemove([cartitem.toJson()])
       });
       getCartList();
+      showSnackBar("Item Removed", "Removed from cart", kGreyDark);
       getTotalPrice();
       return true;
-      //showSnackBar("Item Removed", "Removed $name from cart", kGreyDark);
     } catch (e) {
       showSnackBar("Error", "Cannot remove this item", kWarning);
       log(e.toString());

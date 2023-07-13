@@ -10,11 +10,8 @@ import '../../../../utils/constants/controllers.dart';
 import '../../../shared/widgets/restaurant_card.dart';
 
 class RestaurantPage extends StatelessWidget {
-  
+  const RestaurantPage({super.key});
 
-   const RestaurantPage({super.key});
- // final HomeController homeController=Get.put(HomeController());
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,28 +42,29 @@ class RestaurantPage extends StatelessWidget {
               ),
               kHeightBox20,
               Expanded(
-                child: Obx(() 
-                {
+                child: Obx(
+                  () {
                     return homeController.isResLoading.value
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        :homeController.restaurants.isEmpty?const EmptyWidget()
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: homeController.restaurants.length,
-                            itemBuilder: (context, index) {
-                              final resItem = homeController.restaurants[index];
-                              return RestaurantCard(
-                                restaurant: resItem,
-                                
-                                  onTap: () =>Get.to(()=>ViewRestaurantPage(restaurant: resItem)),
-                                  
+                        : homeController.restaurants.isEmpty
+                            ? const EmptyWidget()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: homeController.restaurants.length,
+                                itemBuilder: (context, index) {
+                                  final resItem =
+                                      homeController.restaurants[index];
+                                  return RestaurantCard(
+                                    restaurant: resItem,
+                                    onTap: () => Get.to(() =>
+                                        ViewRestaurantPage(
+                                            restaurant: resItem)),
                                   );
-                            },
-                            
-                          );
+                                },
+                              );
                   },
                 ),
               ),

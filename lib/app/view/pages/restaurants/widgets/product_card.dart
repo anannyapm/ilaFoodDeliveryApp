@@ -9,16 +9,13 @@ import '../pages/product_page.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
-//  final VoidCallback onTap;
 
   ProductCard({
     super.key,
-   // required this.onTap,
     required this.product,
   });
 
   final CartController cartController = Get.find();
-  //final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +94,6 @@ class ProductCard extends StatelessWidget {
                             onPressed: () {
                               bool isAdded =
                                   cartController.isItemAlreadyAdded(product);
-                              //cartController.cartList.where((cartitem) => cartitem.productId==product.docId);
 
                               if (isAdded) {
                                 cartController.removeCartItem(product.docId!);

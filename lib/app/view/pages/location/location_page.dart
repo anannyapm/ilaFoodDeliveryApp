@@ -156,13 +156,7 @@ class LocationPage extends StatelessWidget {
                   align: TextAlign.center,
                   color: kGreyDark,
                 )
-                /*  const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    mapController.openMapPage();
-                  },
-                  child: const Text('Open Map'),
-                ), */
+               
               ],
             ),
           ),

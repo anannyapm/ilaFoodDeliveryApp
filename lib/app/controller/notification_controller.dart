@@ -37,8 +37,6 @@ class NotificationController extends GetxController {
       // Display Notification, pass null param for not displaying the notification
       event.complete(event.notification);
 
-      /* await addtoNotificationDB(event.notification.body ?? "",
-          event.notification.title ?? "", DateTime.now()); */
       getAllNotifications();
     });
 
@@ -67,17 +65,8 @@ class NotificationController extends GetxController {
     });
   }
 
-  /* final _androidChannel = const AndroidNotificationChannel(
-      'ila_notification_channel', 'ila_notifications',
-      description: 'This channel is used for important notifications from ila',
-      importance: Importance.defaultImportance);
-
-  final FlutterLocalNotificationsPlugin _localNotifications =
-      FlutterLocalNotificationsPlugin(); */
-
   Future<void> addtoNotificationDB(
       String body, String title, DateTime startTime) async {
-    
     NotificationModel notificationModel = NotificationModel(
       body: body,
       title: title,
@@ -90,76 +79,6 @@ class NotificationController extends GetxController {
         .catchError((error) => log('Failed to add notification: $error'));
   }
 
-  /* void handleMessage(RemoteMessage? message) {
-    log("here");
-    if (message == null) {
-      return;
-    } else {
-      // addtoNotificationDB(message);
-      getAllNotifications();
-      // message = null;
-      Get.to(() => const NotificationPage());
-    }
-  }
-
-  Future<void> initLocalNotifications() async {
-    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const settings = InitializationSettings(android: android);
-    await _localNotifications.initialize(settings,
-        onDidReceiveNotificationResponse: (response) {
-      String payload = response.payload!;
-      final message = RemoteMessage.fromMap(jsonDecode(payload));
-      handleMessage(message);
-    });
-
-    final platform = _localNotifications.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
-    await platform?.createNotificationChannel(_androidChannel);
-  }
-
-  Future initPushNotifications() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-            alert: true, badge: true, sound: true);
-    FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
-    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-    FirebaseMessaging.onMessage.listen((message) {
-      final notification = message.notification;
-      if (notification == null) {
-        return;
-      } else {
-        _localNotifications.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-                android: AndroidNotificationDetails(
-                    _androidChannel.id, _androidChannel.name,
-                    channelDescription: _androidChannel.description,
-                    icon: '@mipmap/ic_launcher')),
-            payload: jsonEncode(message.toMap()));
-      }
-    });
-  }
-
-  Future<void> initNotifications() async {
-    NotificationSettings settings = await firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    log('User granted permission: ${settings.authorizationStatus}'); //return value indicating if permisiion given oor not
-
-    initPushNotifications();
-    initLocalNotifications();
-  }
- */
   Future<void> getAllNotifications() async {
     isLoading.value = true;
     QuerySnapshot querySnapshot = await notificationCollectionRef
@@ -179,13 +98,12 @@ class NotificationController extends GetxController {
       batch.delete(doc.reference);
     }
 
-    
-
     await batch.commit();
   }
+
   void deleteNotification() async {
-      await _deleteAllNotification();
-      await getAllNotifications();
-      Get.back();
-    }
+    await _deleteAllNotification();
+    await getAllNotifications();
+    Get.back();
+  }
 }

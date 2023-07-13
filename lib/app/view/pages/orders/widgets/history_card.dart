@@ -40,10 +40,7 @@ class HistoryCardWidget extends StatelessWidget {
                 width: 80,
                 height: 80,
                 decoration: ShapeDecoration(
-                  /* image: DecorationImage(
-                    image: NetworkImage(restaurant.image!),
-                    fit: BoxFit.fill,
-                  ), */
+              
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),

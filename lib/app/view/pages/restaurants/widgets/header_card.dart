@@ -11,10 +11,8 @@ import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class HeaderCard extends StatelessWidget {
   final String imageUrl;
-
   final num? rate;
   final bool isFav;
-
   final bool isProduct;
   final String itemid;
 
@@ -29,7 +27,6 @@ class HeaderCard extends StatelessWidget {
 
   final HomeController homeController = Get.put(HomeController());
   final CartController cartController = Get.find();
-  //final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +34,8 @@ class HeaderCard extends StatelessWidget {
       width: double.infinity,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        surfaceTintColor: Get.isDarkMode?kGrey.withOpacity(0.6):kWhite,
-        color:Get.isDarkMode?kGrey.withOpacity(0.6): kWhite,
+        surfaceTintColor: Get.isDarkMode ? kGrey.withOpacity(0.6) : kWhite,
+        color: Get.isDarkMode ? kGrey.withOpacity(0.6) : kWhite,
         elevation: 4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,10 +50,6 @@ class HeaderCard extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10)),
-                  /* image: DecorationImage(
-                      image: NetworkImage(imageUrl),
-                      fit: BoxFit.cover,
-                    ) */
                 ),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
@@ -84,7 +77,9 @@ class HeaderCard extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
-                    color:Get.isDarkMode?kGrey.withOpacity(0): kBlack.withOpacity(0.2)),
+                    color: Get.isDarkMode
+                        ? kGrey.withOpacity(0)
+                        : kBlack.withOpacity(0.2)),
               ),
               !isProduct
                   ? Positioned(
@@ -107,7 +102,9 @@ class HeaderCard extends StatelessWidget {
                                       Icons.favorite,
                                       color: controller.favList.contains(itemid)
                                           ? kGreen
-                                          :Get.isDarkMode?kWhite: kGreyDark,
+                                          : Get.isDarkMode
+                                              ? kWhite
+                                              : kGreyDark,
                                     )));
                           },
                         ),
@@ -125,7 +122,7 @@ class HeaderCard extends StatelessWidget {
                       onPressed: () => Get.back(),
                       icon: const Icon(
                         Icons.keyboard_arrow_left,
-                      )), 
+                      )),
                 ),
               ),
               Positioned(

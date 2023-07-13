@@ -19,7 +19,7 @@ class OrderController extends GetxController {
   }
 
   final RxMap _tempReview = {}.obs;
-  //final RxMap _ratingstatusdummy = {}.obs;
+
 
   RxBool isOrdersLoading = false.obs;
 

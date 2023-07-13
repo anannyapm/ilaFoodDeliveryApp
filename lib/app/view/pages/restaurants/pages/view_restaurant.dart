@@ -16,8 +16,6 @@ import '../../../../utils/constants/controllers.dart';
 class ViewRestaurantPage extends StatelessWidget {
   final RestuarantModel restaurant;
 
-  //final HomeController homeController = Get.put(HomeController());
-
   const ViewRestaurantPage({super.key, required this.restaurant});
   @override
   Widget build(BuildContext context) {
@@ -36,121 +34,127 @@ class ViewRestaurantPage extends StatelessWidget {
               ),
               kHeightBox20,
               Padding(
-                padding: const EdgeInsets.fromLTRB(15,5,15,5),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                  children: [
-                    Row(
                       children: [
-                        Icon(
-                          Icons.delivery_dining,
-                          color: kGreen,
-                          size: 25,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.delivery_dining,
+                              color: kGreen,
+                              size: 25,
+                            ),
+                            kWidthBox15,
+                            CustomText(
+                              text: restaurant.deliveryfee == 0
+                                  ? "Free Delivery"
+                                  : "Charge - ₹${restaurant.deliveryfee}",
+                              size: 16,
+                            ),
+                          ],
                         ),
-                        kWidthBox15,
-                        CustomText(
-                          text: restaurant.deliveryfee == 0
-                              ? "Free Delivery"
-                              : "Charge - ₹${restaurant.deliveryfee}",
-                          size: 16,
+                        kWidthBox20,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              color: kGreen,
+                              size: 22,
+                            ),
+                            kWidthBox15,
+                            CustomText(
+                              text: restaurant.deliverytime!,
+                              size: 16,
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    kWidthBox20,
+                    kHeightBox10,
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.access_time,
-                          color: kGreen,
-                          size: 22,
-                        ),
-                        kWidthBox15,
-                        CustomText(
-                          text: restaurant.deliverytime!,
-                          size: 16,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                kHeightBox10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: CustomText(
-                        lines: 2,
-                        text: restaurant.name!,
-                        size: 24,
-                        weight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    CustomText(
-                      text: restaurant.isOpen! ? "Open Today" : "Closed Today",
-                      size: 16,
-                      weight: FontWeight.bold,
-                      color: kOrange,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                ),
-                kHeightBox10,
-                CustomText(
-                  align: TextAlign.start,
-                    text: restaurant.description!, size: 15, color: kGrey),
-                kHeightBox20,
-                Row(
-                  children: [
-                    Obx(() => CustomText(
-                          text: homeController.isRecommended.value
-                              ? "Recommended"
-                              : "All Items",
-                          size: 18,
-                        )),
-                    kWidthBox15,
-                    Obx(
-                      () => Switch(
-                        activeTrackColor: kGreen.withOpacity(0.8),
-                        trackOutlineColor: MaterialStatePropertyAll(Get.isDarkMode?kGrey.withOpacity(0.4):kWhite),
-                        value: homeController.isRecommended.value,
-                        onChanged: (value) {
-                          log(value.toString());
-                          homeController.toggleRecommended(value);
-                          homeController
-                              .getProductFromRestaurant(restaurant.docId);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                kHeightBox10,
-                Obx(() {
-                  homeController.getProductFromRestaurant(restaurant.docId);
-                  RxList<ProductModel> productList =
-                      homeController.restaurantBasedProducts;
-              
-                  return productList.isEmpty
-                      ? const EmptyWidget()
-                      : GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: productList.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                        Expanded(
+                          child: CustomText(
+                            lines: 2,
+                            text: restaurant.name!,
+                            size: 24,
+                            weight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = productList[index];
-                            return ProductCard(
-                                product:item,
-                                /* onTap: () =>
-                                    Get.to(() => ProductPage(product: item)) */);
-                          },
-                        );
-                }),
+                        ),
+                        CustomText(
+                          text: restaurant.isOpen!
+                              ? "Open Today"
+                              : "Closed Today",
+                          size: 16,
+                          weight: FontWeight.bold,
+                          color: kOrange,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ],
+                    ),
+                    kHeightBox10,
+                    CustomText(
+                        align: TextAlign.start,
+                        text: restaurant.description!,
+                        size: 15,
+                        color: kGrey),
+                    kHeightBox20,
+                    Row(
+                      children: [
+                        Obx(() => CustomText(
+                              text: homeController.isRecommended.value
+                                  ? "Recommended"
+                                  : "All Items",
+                              size: 18,
+                            )),
+                        kWidthBox15,
+                        Obx(
+                          () => Switch(
+                            activeTrackColor: kGreen.withOpacity(0.8),
+                            trackOutlineColor: MaterialStatePropertyAll(
+                                Get.isDarkMode
+                                    ? kGrey.withOpacity(0.4)
+                                    : kWhite),
+                            value: homeController.isRecommended.value,
+                            onChanged: (value) {
+                              log(value.toString());
+                              homeController.toggleRecommended(value);
+                              homeController
+                                  .getProductFromRestaurant(restaurant.docId);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    kHeightBox10,
+                    Obx(() {
+                      homeController.getProductFromRestaurant(restaurant.docId);
+                      RxList<ProductModel> productList =
+                          homeController.restaurantBasedProducts;
+
+                      return productList.isEmpty
+                          ? const EmptyWidget()
+                          : GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: productList.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                final item = productList[index];
+                                return ProductCard(
+                                  product: item,
+                                );
+                              },
+                            );
+                    }),
                   ],
                 ),
               )

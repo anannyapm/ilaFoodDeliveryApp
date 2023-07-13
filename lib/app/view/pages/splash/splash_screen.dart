@@ -23,6 +23,8 @@ class SplashScreen extends StatelessWidget {
             ),
           ),
           Positioned(
+            left:0,
+            right:0,
             bottom: size.height * 0.01,
             child: Lottie.asset('assets/animations/delivery.json', height: 250),
           ),

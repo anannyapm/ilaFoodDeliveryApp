@@ -58,7 +58,6 @@ class UserEditSheet extends StatelessWidget {
                     hint: "",
                     label: "Name",
                     textcontroller: nameController,
-                    
                   ),
                   CustomTextFormField(
                       readonly: true,
@@ -71,12 +70,11 @@ class UserEditSheet extends StatelessWidget {
                             "Pss!", "This field can't be edited", kWarning);
                       }),
                   CustomTextFormField(
-                    textColor: kBlueShade,
-                    hint: "",
-                    label: "Email",
-                    textcontroller: emailController,
-                    type: TextInputType.emailAddress
-                  ),
+                      textColor: kBlueShade,
+                      hint: "",
+                      label: "Email",
+                      textcontroller: emailController,
+                      type: TextInputType.emailAddress),
                   kHeightBox20,
                   SizedBox(
                     width: double.infinity,
@@ -89,25 +87,24 @@ class UserEditSheet extends StatelessWidget {
                           weight: FontWeight.bold,
                         ),
                         function: () async {
-                          if(formKey4.currentState!.validate()){
-                             bool output = await userController.updateUserData(
-                              nameController.text.trim(),
-                              emailController.text.trim());
-                          log(output.toString());
-                          if (output == true) {
-                            Get.back();
-                            nameController.clear();
-                            emailController.clear();
-                            return showSnackBar(
-                                "Done", "Profile Updated!", kGreen);
-                          } else {
-                            Get.back();
-            
-                            return showSnackBar(
-                                "OOPS", "Something went wrong!", kWarning);
+                          if (formKey4.currentState!.validate()) {
+                            bool output = await userController.updateUserData(
+                                nameController.text.trim(),
+                                emailController.text.trim());
+                            log(output.toString());
+                            if (output == true) {
+                              Get.back();
+                              nameController.clear();
+                              emailController.clear();
+                              return showSnackBar(
+                                  "Done", "Profile Updated!", kGreen);
+                            } else {
+                              Get.back();
+
+                              return showSnackBar(
+                                  "OOPS", "Something went wrong!", kWarning);
+                            }
                           }
-                          }
-                         
                         },
                         color: kGreen),
                   ),

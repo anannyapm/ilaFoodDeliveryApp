@@ -66,7 +66,7 @@ class SearchFilterController extends GetxController {
     controller.clear();
     isSearchActive.value = false;
     searchResults.clear();
-      searchResults.addAll(popularResult);
+    searchResults.addAll(popularResult);
 
     myfocusNode.unfocus();
   }

@@ -15,7 +15,7 @@ import '../services/firebase_services.dart';
 import '../view/pages/location/widget/map_widget.dart';
 
 class MapController extends GetxController {
-  // UserController userController = Get.put(UserController());
+
   TextEditingController addressController = TextEditingController();
   final formKey3 = GlobalKey<FormState>();
 

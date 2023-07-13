@@ -60,10 +60,11 @@ class OrderDetailWidget extends StatelessWidget {
           )
         : ListView.separated(
             shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             itemCount: cartController.totalCount,
             itemBuilder: (context, index) {
               CartItemModel item = cartController.cartList[index];
-
+        
               return Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
@@ -85,8 +86,8 @@ class OrderDetailWidget extends StatelessWidget {
                             placeholder: const AssetImage(
                                 'assets/images/placeholder.jpg'),
                             image: NetworkImage(item.image!),
-      imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
-
+            imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
+        
                             fit: BoxFit.cover,
                           ),
                         ),

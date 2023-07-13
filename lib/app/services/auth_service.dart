@@ -41,7 +41,7 @@ class AuthService {
               backgroundColor: kWarning,
               colorText: kWhite);
         } else {
-          Get.snackbar("Error", "Something Went Wrong",
+          Get.snackbar("Error:${e.code} -", "Please try again",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: kWarning,
               colorText: kWhite);

@@ -98,7 +98,10 @@ class AddressPage extends StatelessWidget {
                                               iconSize: 22,
                                               onPressed: () {
                                                 Get.dialog(AlertDialog(
-                                                  surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
+                                                  surfaceTintColor:
+                                                      Get.isDarkMode
+                                                          ? kBlueShade
+                                                          : kWhite,
                                                   title: const CustomText(
                                                     text:
                                                         "Do you want to remove this address?",
@@ -130,7 +133,9 @@ class AddressPage extends StatelessWidget {
                                                           weight:
                                                               FontWeight.bold,
                                                           size: 15,
-                                                          color:Get.isDarkMode?kWhite: kBlueShade,
+                                                          color: Get.isDarkMode
+                                                              ? kWhite
+                                                              : kBlueShade,
                                                         ))
                                                   ],
                                                 ));
@@ -148,14 +153,12 @@ class AddressPage extends StatelessWidget {
                     child: BorderedButton(
                       text: CustomText(
                         text: "ADD NEW ADDRESS",
-                        color:Get.isDarkMode ? kWhite: kBlueShade,
+                        color: Get.isDarkMode ? kWhite : kBlueShade,
                         size: 14,
                         weight: FontWeight.bold,
                       ),
                       color: kGreen,
                       function: _getCurrentLoc,
-
-                      //should open page for selecting map location
                     ),
                   ),
                   kHeightBox20

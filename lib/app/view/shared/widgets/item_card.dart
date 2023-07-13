@@ -46,10 +46,7 @@ class ItemCard extends StatelessWidget {
                       ),
                     ],
                     borderRadius: BorderRadius.circular(20),
-                    /*  image: DecorationImage(
-                      image: NetworkImage(imageUrl),
-                      fit: BoxFit.cover,
-                    ) */
+                  
                   ),
                   margin: const EdgeInsets.fromLTRB(12, 12, 12, 5),
                   child: ClipRRect(

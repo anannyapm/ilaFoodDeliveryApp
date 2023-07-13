@@ -27,25 +27,30 @@ class CartPage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              kHeightBox10,
-              const CustomText(
-                text: "My Cart Items",
-                size: 24,
+          child: SizedBox(
+          
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  kHeightBox10,
+                  const CustomText(
+                    text: "My Cart Items",
+                    size: 24,
+                  ),
+                  kHeightBox20,
+                  AddressDetailWidget(
+                      userController: userController,
+                      homeController: homeController),
+                  kHeightBox20,
+                  Obx(() => cartController.totalCount == 0
+                      ? Container()
+                      : const CheckoutDetailWidget()),
+                  kHeightBox20,
+                  OrderDetailWidget(),
+                ],
               ),
-              kHeightBox20,
-              AddressDetailWidget(
-                  userController: userController,
-                  homeController: homeController),
-              kHeightBox20,
-              Obx(() => cartController.totalCount == 0
-                  ? Container()
-                  : const CheckoutDetailWidget()),
-              kHeightBox20,
-              Expanded(child: OrderDetailWidget()),
-            ],
+            ),
           ),
         ),
       ),

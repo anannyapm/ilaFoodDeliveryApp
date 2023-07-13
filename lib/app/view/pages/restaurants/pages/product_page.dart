@@ -30,171 +30,185 @@ class ProductPage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HeaderCard(
-                itemid: product.docId!,
-                isProduct: true,
-                imageUrl: product.image!,
-                rate: null,
-                isFav: product.isRecommended!),
-            kHeightBox20,
-            kHeightBox10,
-            Expanded(
-              flex:1,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color:Get.isDarkMode ? kGrey: kBlueShade)),
-                      child: CustomText(
-                        text: rName,
-                        size: 16,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    kHeightBox20,
-                    CustomText(
-                      text: product.name!,
-                      size: 24,
-                      weight: FontWeight.bold,
-                    ),
-                    kHeightBox10,
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height*0.14,
-                      child: SingleChildScrollView(
-                        
-                        child: CustomText(
-                            text: product.description!,
-                            size: 15,
-                            
-                            color:Get.isDarkMode ? kWhite: kBlueShade),
-                      ),
-                    ),
-                    kHeightBox20,
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: "₹${product.price.toString()}/Item",
-                              size: 28,
-                            ),
-                            Obx(() => cartController.isItemAlreadyAdded(product)
-                                ? CustomText(
-                                    text:
-                                        "Quantity : ${cartController.cartList.firstWhere((element) => element.productId == product.docId).quantity}",
-                                    size: 18,
-                                    weight: FontWeight.bold,
-                                  )
-                                : Container(
-                                    width: 150,
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color:Get.isDarkMode ?kWhite: kBlack),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          iconSize: 14,
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStatePropertyAll(
-                                                      kGreylight)),
-                                          icon: Icon(
-                                            Icons.remove,
-                                            color:Get.isDarkMode ? kBlack: kWhite,
-                                          ),
-                                          onPressed: () {
-                                            if (cartController.itemCount.value >
-                                                1) {
-                                              cartController.itemCount.value--;
-                                            }
-                                          },
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8, right: 8),
-                                          child: Obx(
-                                            () => CustomText(
-                                              text: cartController
-                                                  .itemCount.value
-                                                  .toString(),
-                                              size: 18,
-                                              color:Get.isDarkMode ? kBlack: kWhite,
-                                            ),
-                                          ),
-                                        ),
-                                        IconButton(
-                                          iconSize: 14,
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStatePropertyAll(
-                                                      kGreylight)),
-                                          icon: Icon(
-                                            Icons.add,
-                                            color:Get.isDarkMode ? kBlack: kWhite,
-                                          ),
-                                          onPressed: () {
-                                            cartController.itemCount.value++;
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ))
-                          ],
+        child: SizedBox(
+          child: Stack(
+            children: [
+              SizedBox(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      HeaderCard(
+                          itemid: product.docId!,
+                          isProduct: true,
+                          imageUrl: product.image!,
+                          rate: null,
+                          isFav: product.isRecommended!),
+                      kHeightBox20,
+                      kHeightBox10,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                        color: Get.isDarkMode
+                                            ? kGrey
+                                            : kBlueShade)),
+                                child: CustomText(
+                                  text: rName,
+                                  size: 16,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              kHeightBox20,
+                              CustomText(
+                                text: product.name!,
+                                size: 24,
+                                weight: FontWeight.bold,
+                              ),
+                              kHeightBox10,
+                              CustomText(
+                                  text: product.description!,
+                                  size: 15,
+                                  color: Get.isDarkMode ? kWhite : kBlueShade),
+                              kHeightBox10,
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Obx(() => CustomButton(
-                            padding: 15,
-                            text: CustomText(
-                              text: isAdded.value
-                                  ? "REMOVE FROM CART"
-                                  : "ADD TO CART",
-                              color: kWhite,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            function: () async {
-                              log(isAdded.toString());
-                              bool output = false;
-                              if (isAdded.value) {
-                                output=cartController.removeCartItem(product.docId!);
-                              } else {
-                                output=await cartController.addProductToCart(
-                                    product, cartController.itemCount.value);
-                              }
-                              if (output) {
-                                isAdded.value = !isAdded.value;
-                              }
-                              
-                            },
-                            color: isAdded.value ? kWarning : kGreen)),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-            )
-          ],
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 75,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomText(
+                        text: "₹${product.price.toString()}/Item",
+                        size: 28,
+                      ),
+                      Obx(() => cartController.isItemAlreadyAdded(product)
+                          ? CustomText(
+                              text:
+                                  "Quantity : ${cartController.cartList.firstWhere((element) => element.productId == product.docId).quantity}",
+                              size: 18,
+                              weight: FontWeight.bold,
+                            )
+                          : Container(
+                              width: 150,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Get.isDarkMode ? kWhite : kBlack),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    iconSize: 14,
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                kGreylight)),
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: Get.isDarkMode ? kBlack : kWhite,
+                                    ),
+                                    onPressed: () {
+                                      if (cartController.itemCount.value > 1) {
+                                        cartController.itemCount.value--;
+                                      }
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    child: Obx(
+                                      () => CustomText(
+                                        text: cartController.itemCount.value
+                                            .toString(),
+                                        size: 18,
+                                        color: Get.isDarkMode ? kBlack : kWhite,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    iconSize: 14,
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                kGreylight)),
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Get.isDarkMode ? kBlack : kWhite,
+                                    ),
+                                    onPressed: () {
+                                      cartController.itemCount.value++;
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ))
+                    ],
+                  ),
+                ),
+              ),
+              kHeightBox10,
+              Positioned(
+                bottom: 2,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 8, left: 15, right: 15),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Obx(() => CustomButton(
+                        padding: 15,
+                        text: CustomText(
+                          text: isAdded.value
+                              ? "REMOVE FROM CART"
+                              : "ADD TO CART",
+                          color: kWhite,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        function: () async {
+                          log(isAdded.toString());
+                          bool output = false;
+                          if (isAdded.value) {
+                            output =
+                                cartController.removeCartItem(product.docId!);
+                          } else {
+                            output = await cartController.addProductToCart(
+                                product, cartController.itemCount.value);
+                          }
+                          if (output) {
+                            isAdded.value = !isAdded.value;
+                          }
+                        },
+                        color: isAdded.value ? kWarning : kGreen)),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

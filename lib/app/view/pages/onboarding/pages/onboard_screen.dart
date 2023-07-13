@@ -97,30 +97,7 @@ class OnBoardingScreenOne extends StatelessWidget {
                       }
                     },
                             color: kGreen)
-                /* ElevatedButton(
-                    onPressed: () {
-                      if (onboardingController.pageIndex == 3) {
-                        Get.offAll(() => const OtpAuthPage());
-                      } else {
-                        onboardingController.updatePageController();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        surfaceTintColor: kGreen,
-                        backgroundColor: kGreen,
-                        padding: const EdgeInsets.all(15),
-                        elevation: 0),
-                    child: Text(
-                      onboardingController.pageIndex == 3
-                          ? "GET STARTED"
-                          : "NEXT",
-                      style: TextStyle(
-                          color: kWhite,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    )) */),
+               ),
               ),
             )
           ],

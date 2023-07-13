@@ -13,7 +13,7 @@ class CarouselCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    //final HomeController homeController = Get.put(HomeController());
+    
     int index=math.Random().nextInt(homeController.carousels.length);
 
     return GestureDetector(

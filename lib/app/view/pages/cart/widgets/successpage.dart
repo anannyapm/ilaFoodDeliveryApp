@@ -18,49 +18,51 @@ class SuccessPage extends StatelessWidget {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/success.png"))),
-                ),
-                const CustomText(
-                  text: "Order Placed !",
-                  size: 25,
-                  weight: FontWeight.bold,
-                ),
-                CustomText(
-                  text:
-                      "Keep Your Plates Ready!\nYour order shall be delivered soon.",
-                  size: 18,
-                  color:Get.isDarkMode?kGreylight: kGreyDark,
-                  align: TextAlign.center,
-                ),
-              ],
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: CustomButton(
-                  padding: 15,
-                  text: CustomText(
-                    text: "DONE",
-                    color: kWhite,
-                    size: 18,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/success.png"))),
+                  ),
+                  const CustomText(
+                    text: "Order Placed !",
+                    size: 25,
                     weight: FontWeight.bold,
                   ),
-                  function: () {
-                    navigationController.setSelectedIndex(3);
-                    Get.offAll(() => NavigationPage());
-                  },
-                  color: kGreen),
-            ),
-            kHeightBox10
-          ],
+                  CustomText(
+                    text:
+                        "Keep Your Plates Ready!\nYour order shall be delivered soon.",
+                    size: 18,
+                    color:Get.isDarkMode?kGreylight: kGreyDark,
+                    align: TextAlign.center,
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                    padding: 15,
+                    text: CustomText(
+                      text: "DONE",
+                      color: kWhite,
+                      size: 18,
+                      weight: FontWeight.bold,
+                    ),
+                    function: () {
+                      navigationController.setSelectedIndex(3);
+                      Get.offAll(() => NavigationPage());
+                    },
+                    color: kGreen),
+              ),
+              kHeightBox10
+            ],
+          ),
         ),
       )),
     );

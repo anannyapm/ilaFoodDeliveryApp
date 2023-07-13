@@ -15,7 +15,7 @@ class HomeController extends GetxController {
   static HomeController instance = Get.find();
 
   UserController userController = Get.put(UserController());
-  //LoginController loginController = Get.put(LoginController());
+
 
   RxList<RestuarantModel> restaurants = RxList<RestuarantModel>([]);
   RxList<RestuarantModel> favRestaurants = RxList<RestuarantModel>([]);
@@ -56,13 +56,6 @@ class HomeController extends GetxController {
     restaurantCollectionRef = firebaseFirestore.collection("restaurant");
     productCollectionRef = firebaseFirestore.collection("products");
     carouselCollectionRef = firebaseFirestore.collection("carousel");
-    /* getAllCarousel();
-
-    getAllCategory();
-
-    initializeRestaurants();
-
-    getAllProducts(); */
   }
 
   @override
@@ -107,8 +100,7 @@ class HomeController extends GetxController {
               .userModel.location![primaryAddressIndex.value].latitude,
           userController
               .userModel.location![primaryAddressIndex.value].longitude);
-      log((distance / 1000).toString());
-      log((distance < 10).toString());
+    
       return distance / 1000 < 10;
     }).toList();
     nearbyRestaurants.addAll(nearlist);

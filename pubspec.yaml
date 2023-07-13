@@ -61,6 +61,8 @@ dependencies:
   onesignal_flutter: ^3.5.1
   package_info_plus: ^4.0.2
   rename: ^2.1.1
+  share_plus: ^7.0.2
+  in_app_review: ^2.0.6
 
 dev_dependencies:
   flutter_test:
