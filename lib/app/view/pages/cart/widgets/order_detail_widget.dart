@@ -60,7 +60,7 @@ class OrderDetailWidget extends StatelessWidget {
           )
         : ListView.separated(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: cartController.totalCount,
             itemBuilder: (context, index) {
               CartItemModel item = cartController.cartList[index];

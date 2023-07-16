@@ -14,7 +14,7 @@ class ScratchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      surfaceTintColor:Get.isDarkMode?kBlueShade: kWhite,
+      surfaceTintColor: Get.isDarkMode ? kBlueShade : kWhite,
       title: cartController.isCouponApplied.value
           ? const Padding(
               padding: EdgeInsets.all(8.0),
@@ -53,11 +53,12 @@ class ScratchCard extends StatelessWidget {
                 accuracy: ScratchAccuracy.low,
                 threshold: 30,
                 brushSize: 40,
-                onThreshold: () {
+                onThreshold: () async{
                   cartController.scratchCardOpacity.value = 1;
-                  cartController.fetchAndSelectRandomDiscount(carousel);
-                  cartController
+                  await cartController.fetchAndSelectRandomDiscount(carousel);
+                  await cartController
                       .addDiscountToUser(cartController.selectedDiscount.value);
+                  await cartController.calculateDiscount();
                 },
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 100),

@@ -20,18 +20,40 @@ class CheckoutDetailWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Obx(() => cartController.discountValue.value == 0
+              ? Container()
+              : Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                      onTap: () {
+                        cartController.applyDiscount.value == 0
+                            ? cartController.applyDiscountValue()
+                            : cartController.removeDiscountValue();
+                        cartController.getTotalPrice();
+                      },
+                      child: Obx(() => CustomText(
+                            text: cartController.applyDiscount.value == 0
+                                ? "Apply Discount"
+                                : "Remove Discount",
+                            color: cartController.applyDiscount.value == 0
+                                ? kGreen
+                                : kWarning,
+                            weight: FontWeight.bold,
+                          ))),
+                )),
+          kHeightBox10,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
                 text: "Price",
-                color:Get.isDarkMode?kWhite: kGreyDark,
+                color: Get.isDarkMode ? kWhite : kGreyDark,
                 weight: FontWeight.w600,
                 size: 16,
               ),
               Obx(() => CustomText(
-                    text:"₹${cartController.totalItemPrice.value.toInt()}",
-                    color:Get.isDarkMode?kWhite: kBlueShade,
+                    text: "₹${cartController.totalItemPrice.value.toInt()}",
+                    color: Get.isDarkMode ? kWhite : kBlueShade,
                     weight: FontWeight.w600,
                     size: 16,
                   )),
@@ -42,16 +64,16 @@ class CheckoutDetailWidget extends StatelessWidget {
             children: [
               CustomText(
                 text: "Discount",
-                color:Get.isDarkMode?kWhite: kGreyDark,
+                color: Get.isDarkMode ? kWhite : kGreyDark,
                 weight: FontWeight.w600,
                 size: 16,
               ),
-              CustomText(
-                text:"-₹${cartController.applyDiscount.value}",
-                weight: FontWeight.w600,
-                color:Get.isDarkMode?kWhite: kBlueShade,
-                size: 16,
-              ),
+              Obx(() => CustomText(
+                    text: "-₹${cartController.applyDiscount.value}",
+                    weight: FontWeight.w600,
+                    color: Get.isDarkMode ? kWhite : kBlueShade,
+                    size: 16,
+                  )),
             ],
           ),
           Row(
@@ -60,13 +82,13 @@ class CheckoutDetailWidget extends StatelessWidget {
               CustomText(
                 text: "Delivery Charges",
                 weight: FontWeight.w600,
-                color:Get.isDarkMode?kWhite: kGreyDark,
+                color: Get.isDarkMode ? kWhite : kGreyDark,
                 size: 16,
               ),
               CustomText(
-                text:"₹${cartController.deliveryCharge}",
+                text: "₹${cartController.deliveryCharge}",
                 weight: FontWeight.w600,
-                color:Get.isDarkMode?kWhite: kBlueShade,
+                color: Get.isDarkMode ? kWhite : kBlueShade,
                 size: 16,
               ),
             ],
@@ -77,12 +99,12 @@ class CheckoutDetailWidget extends StatelessWidget {
             children: [
               CustomText(
                 text: "Total: ",
-                color:Get.isDarkMode?kWhite: kGreyDark,
+                color: Get.isDarkMode ? kWhite : kGreyDark,
                 weight: FontWeight.w600,
                 size: 18,
               ),
               Obx(() => CustomText(
-                    text:"₹${cartController.totalCartPrice.value.toInt()}",
+                    text: "₹${cartController.totalCartPrice.value.toInt()}",
                     size: 22,
                     weight: FontWeight.bold,
                   ))

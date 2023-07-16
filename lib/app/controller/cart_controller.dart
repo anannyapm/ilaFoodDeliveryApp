@@ -20,7 +20,7 @@ class CartController extends GetxController {
 
   String activeRestaurantID = "";
   int deliveryCharge = 0;
-  double discountValue = 0;
+  RxDouble discountValue = 0.0.obs;
 
   RxDouble scratchCardOpacity = 0.0.obs;
 
@@ -52,6 +52,7 @@ class CartController extends GetxController {
   @override
   void onReady() {
     ever(userController.usermodel, (callback) => getCartList);
+    ever(userController.usermodel, (callback) => calculateDiscount);
 
     super.onReady();
   }
@@ -60,24 +61,45 @@ class CartController extends GetxController {
     selectedOption.value = option;
   }
 
-  calculateDiscount() async {
+  Future<void> calculateDiscount() async {
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);
     final userSnap = await userDocRef.get();
-    final discount = userSnap.get('discounts');
+    num discount = userSnap.get('discounts');
+    discountValue.value = discount.toDouble();
+    log("discount ${discountValue.value}");
 
-    if (discount <= 50) {
+    /*  if (discount > totalItemPrice.value) {
+      applyDiscount.value = totalItemPrice.value;
+    }
+
+    else if (discount <= 50) {
       applyDiscount.value = discount;
     } else {
       applyDiscount.value = 50;
+    } */
+  }
+
+  applyDiscountValue() async {
+    if (discountValue.value > totalItemPrice.value) {
+      applyDiscount.value = totalItemPrice.value;
+    } else if (discountValue <= 0.50 * totalItemPrice.value) {
+      applyDiscount.value = discountValue.value;
+    } else {
+      applyDiscount.value = 0.50 * totalItemPrice.value;
     }
   }
 
+  removeDiscountValue() {
+    applyDiscount.value = 0;
+  }
+
   getTotalPrice() async {
+    totalItemPrice.value = 0;
     for (var cartitem in cartList) {
       totalItemPrice.value += cartitem.price! * cartitem.quantity!;
     }
-    await calculateDiscount();
-
+    //await calculateDiscount();
+    log("$totalItemPrice ${applyDiscount.value} $deliveryCharge");
     totalCartPrice.value =
         totalItemPrice.value - applyDiscount.value + deliveryCharge;
   }
@@ -183,6 +205,11 @@ class CartController extends GetxController {
       });
       getCartList();
       showSnackBar("Item Removed", "Removed from cart", kGreyDark);
+      if (cartList.isEmpty) {
+        activeRestaurantID = "";
+        deliveryCharge = 0;
+        applyDiscount.value = 0;
+      }
       getTotalPrice();
       return true;
     } catch (e) {
@@ -205,7 +232,7 @@ class CartController extends GetxController {
       prefs.setString('ACTIVE_RESTAURANT', "");
       activeRestaurantID = "";
       deliveryCharge = 0;
-      discountValue = 0;
+      applyDiscount.value = 0;
       totalCartPrice.value = 0;
       totalItemPrice.value = 0;
     } catch (e) {
@@ -239,9 +266,6 @@ class CartController extends GetxController {
   }
 
   void increaseQuantity(String prodId) async {
-    /*  CartItemModel item =
-        cartList.firstWhere((item) => item.productId == prodId);
- */
     CartItemModel itemFromModel = userController.userModel.userCart!
         .firstWhere((element) => element.productId == prodId);
     final userDocRef = userCollectionRef.doc(userController.userModel.userId);

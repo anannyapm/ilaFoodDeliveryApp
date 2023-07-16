@@ -18,8 +18,7 @@ class CartPage extends StatelessWidget {
   final UserController userController = Get.put(UserController());
   final HomeController homeController = Get.put(HomeController());
   final CartController cartController = Get.find();
-  //final CartController cartController = Get.put(CartController());
-
+  
   @override
   Widget build(BuildContext context) {
     log("Active${cartController.activeRestaurantID}");

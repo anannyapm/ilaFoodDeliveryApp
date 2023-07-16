@@ -24,7 +24,6 @@ class AuthController extends GetxController {
   LoginController loginController = Get.put(LoginController());
   MapController mapController = Get.put(MapController());
 
-
   AuthService authService = AuthService();
 
   //generates an instance
@@ -50,20 +49,18 @@ class AuthController extends GetxController {
 
     firebaseUser = Rx<User?>(auth.currentUser);
     firebaseUser.bindStream(auth.userChanges());
-
   }
 
   String? deviceKey = "";
   var serverKey =
       "AAAAkdAjUMs:APA91bHF0G4nK69zeXiwOCNrC1-YBdHRl-Y-F_DMGgJ4MAljq_Iwt5fhAZT_4zQPvNpwGFyiZQhogxpsS8bPs0m3dHKQZS1jTbbISOPaUqm9ASqwZ-n3IeNlgHXKRye2SFxPb1VUWHye";
 
-  getDeviceKey() async {
+  Future<void> getDeviceKey() async {
     try {
       final status = await OneSignal.shared.getDeviceState();
       final tokenId = status?.userId;
       log(tokenId.toString());
       deviceKey = tokenId ?? "";
-    
     } catch (e) {
       log("could not get the key");
     }
@@ -74,7 +71,7 @@ class AuthController extends GetxController {
 
   Future initialScreen() async {
     await Future.delayed(const Duration(seconds: 5));
-    getDeviceKey();
+    await getDeviceKey();
     if (firebaseUser.value == null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (prefs.getBool('USER_LOGGED') == true) {
@@ -119,16 +116,18 @@ class AuthController extends GetxController {
 
     homeController.getAllProducts();
     await userController.getUserAddress();
-   
-    cartController.getCartList();
-    cartController.getTotalPrice();
-    
+
+    await cartController.getCartList();
+    await cartController.calculateDiscount();
+
     await orderController.getAllOrders();
     orderController.getOngoingOrders();
     orderController.getOrderHistory();
     if (cartController.cartList.isNotEmpty) {
       await cartController.setCurrentRestaurant();
     }
+    cartController.getTotalPrice();
+
   }
 
   Future<void> verifyOTP() async {
@@ -208,18 +207,17 @@ class AuthController extends GetxController {
     isUserAdding.value = true;
     String phoneNumber = firebaseUser.value!.phoneNumber!;
     await userController.setUser(UserModel(
-      phoneNumber: phoneNumber,
-      location: [GeoPoint(mapController.lat, mapController.long)],
-      address: [mapController.locationAddress],
-      completeAddress: [mapController.completeAddress],
-      name: loginController.name,
-      email: loginController.email,
-      userCart: List.empty(growable: true),
-      favoriteList: List.empty(growable: true),
-      discounts: cartController.selectedDiscount.value,
-      deviceKey: deviceKey,
-      receiveNotification: true
-    ));
+        phoneNumber: phoneNumber,
+        location: [GeoPoint(mapController.lat, mapController.long)],
+        address: [mapController.locationAddress],
+        completeAddress: [mapController.completeAddress],
+        name: loginController.name,
+        email: loginController.email,
+        userCart: List.empty(growable: true),
+        favoriteList: List.empty(growable: true),
+        discounts: cartController.selectedDiscount.value,
+        deviceKey: deviceKey,
+        receiveNotification: true));
 
     await userCollectionRef
         .doc(firebaseUser.value!.uid)
@@ -230,10 +228,10 @@ class AuthController extends GetxController {
     log(userController.userModel.userId!);
 
     await fetchAllData();
-    
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('USER_LOGGED', true);
-   
+
     prefs.setBool('DARK_THEME', false);
     mapController.clearfields();
   }
