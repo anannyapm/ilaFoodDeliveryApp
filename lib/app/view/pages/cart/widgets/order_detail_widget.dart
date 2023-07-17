@@ -47,12 +47,7 @@ class OrderDetailWidget extends StatelessWidget {
                           size: 16,
                           weight: FontWeight.bold,
                         ),
-                        function: () =>Get.off(
-                          ()=>SearchPage()
-                          
-                                  /*  GetPageRoute(page: ()=>SearchPage()),
-                                  predicate: (route) => route == MaterialPageRoute(builder: (ctx)=>NavigationPage()) */
-                                    ),
+                        function: () => Get.off(() => SearchPage()),
                         color: kOrange,
                         padding: 0))
               ],
@@ -64,7 +59,8 @@ class OrderDetailWidget extends StatelessWidget {
             itemCount: cartController.totalCount,
             itemBuilder: (context, index) {
               CartItemModel item = cartController.cartList[index];
-        
+              bool isProdAvailable =
+                  homeController.checkIfProductExist(item.productId!);
               return Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
@@ -75,7 +71,6 @@ class OrderDetailWidget extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                         
                         ),
                         width: 70,
                         height: 70,
@@ -86,8 +81,11 @@ class OrderDetailWidget extends StatelessWidget {
                             placeholder: const AssetImage(
                                 'assets/images/placeholder.jpg'),
                             image: NetworkImage(item.image!),
-            imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
-        
+                            imageErrorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                              'assets/images/placeholder.jpg',
+                              fit: BoxFit.cover,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -111,7 +109,6 @@ class OrderDetailWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                     
                                         CustomText(
                                           text: item.name!.toUpperCase(),
                                           size: 16,
@@ -129,7 +126,9 @@ class OrderDetailWidget extends StatelessWidget {
                                         },
                                         child: Icon(
                                           Icons.close,
-                                          color:Get.isDarkMode?kWhite: kGreylight,
+                                          color: Get.isDarkMode
+                                              ? kWhite
+                                              : kGreylight,
                                           size: 22,
                                         ))
                                   ],
@@ -157,11 +156,13 @@ class OrderDetailWidget extends StatelessWidget {
                                       },
                                       child: CircleAvatar(
                                         radius: 12,
-                                        backgroundColor:Get.isDarkMode?kWhite: kGrey.withOpacity(0.3),
+                                        backgroundColor: Get.isDarkMode
+                                            ? kWhite
+                                            : kGrey.withOpacity(0.3),
                                         child: Icon(
                                           Icons.remove,
                                           size: 15,
-                                          color:kBlack,
+                                          color: kBlack,
                                         ),
                                       ),
                                     ),
@@ -173,7 +174,7 @@ class OrderDetailWidget extends StatelessWidget {
                                           CustomText(
                                         text: item.quantity.toString(),
                                         size: 18,
-                                        color:Get.isDarkMode?kWhite: kBlack,
+                                        color: Get.isDarkMode ? kWhite : kBlack,
                                         weight: FontWeight.bold,
                                       ),
                                     ),
@@ -185,7 +186,9 @@ class OrderDetailWidget extends StatelessWidget {
                                       },
                                       child: CircleAvatar(
                                         radius: 12,
-                                        backgroundColor:Get.isDarkMode?kWhite: kGrey.withOpacity(0.3),
+                                        backgroundColor: Get.isDarkMode
+                                            ? kWhite
+                                            : kGrey.withOpacity(0.3),
                                         child: Icon(
                                           Icons.add,
                                           size: 15,
@@ -196,7 +199,15 @@ class OrderDetailWidget extends StatelessWidget {
                                   ],
                                 )
                               ],
-                            )
+                            ),
+                            !isProdAvailable
+                                ?  Center(
+                                  child: CustomText(
+                                    align: TextAlign.center,
+                                      text:
+                                          "Item Not Available.Please Remove from Cart",size: 12,color: kWarning,weight: FontWeight.bold,),
+                                )
+                                : Container(),
                           ],
                         ),
                       ),

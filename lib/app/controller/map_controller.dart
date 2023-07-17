@@ -112,7 +112,7 @@ class MapController extends GetxController {
         showSnackBar("Done", "Added", kGreen);
       }
 
-      //Get.off(ProfilePage());
+      
     } else {
       return null;
     }
@@ -183,7 +183,7 @@ class MapController extends GetxController {
         userController.userModel.address!.add(locationAddress);
         userController.userModel.location!.add(GeoPoint(lat, long));
         userController.userModel.completeAddress!.add(completeAddress);
-        // userController.getUserAddress();
+       
       }
     });
   }

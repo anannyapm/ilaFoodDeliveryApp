@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ila/app/controller/cart_controller.dart';
 import 'package:ila/app/controller/home_controller.dart';
+import 'package:ila/app/controller/navigation_controller.dart';
 import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/pages/cart/cart_page.dart';
+import 'package:ila/app/view/pages/home/pages/navigationpage.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
 
 class HeaderCard extends StatelessWidget {
@@ -27,6 +29,8 @@ class HeaderCard extends StatelessWidget {
 
   final HomeController homeController = Get.put(HomeController());
   final CartController cartController = Get.find();
+  final NavigationController navigationController =
+      Get.put(NavigationController());
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +135,11 @@ class HeaderCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: InkWell(
-                    onTap: () => Get.to(() => CartPage()),
+                    onTap: () {
+                      navigationController.setSelectedIndex(4);
+
+                      Get.to(() => NavigationPage());
+                    },
                     child: Stack(
                       children: [
                         CircleAvatar(

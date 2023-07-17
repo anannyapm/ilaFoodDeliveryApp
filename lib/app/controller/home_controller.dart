@@ -16,7 +16,6 @@ class HomeController extends GetxController {
 
   UserController userController = Get.put(UserController());
 
-
   RxList<RestuarantModel> restaurants = RxList<RestuarantModel>([]);
   RxList<RestuarantModel> favRestaurants = RxList<RestuarantModel>([]);
   RxList<RestuarantModel> topRestaurants = RxList<RestuarantModel>([]);
@@ -61,6 +60,7 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     ever(userController.usermodel, (callback) => initializeRestaurants);
+
     super.onReady();
   }
 
@@ -74,19 +74,25 @@ class HomeController extends GetxController {
 
   Future<void> getAllCarousel() async {
     isCarouselLoading.value = true;
-    final collectionData = await carouselCollectionRef.get();
-    carousels.value = collectionData.docs
-        .map((querysnap) => CarouselModel.fromSnapshot(querysnap))
-        .toList();
+    //final collectionData = await
+    carouselCollectionRef.snapshots().listen((event) {
+      carousels.value = event.docs
+          .map((querysnap) => CarouselModel.fromSnapshot(querysnap))
+          .toList();
+    });
+
     isCarouselLoading.value = false;
   }
 
   Future<void> getAllCategory() async {
     isCategLoading.value = true;
-    final collectionData = await categoryCollectionRef.get();
-    categories.value = collectionData.docs
-        .map((querysnap) => CategoryModel.fromSnapshot(querysnap))
-        .toList();
+
+    categoryCollectionRef.snapshots().listen((snapshot) {
+      categories.value = snapshot.docs
+          .map((querysnap) => CategoryModel.fromSnapshot(querysnap))
+          .toList();
+    });
+
     isCategLoading.value = false;
   }
 
@@ -100,7 +106,7 @@ class HomeController extends GetxController {
               .userModel.location![primaryAddressIndex.value].latitude,
           userController
               .userModel.location![primaryAddressIndex.value].longitude);
-    
+
       return distance / 1000 < 10;
     }).toList();
     nearbyRestaurants.addAll(nearlist);
@@ -115,6 +121,15 @@ class HomeController extends GetxController {
 
     favList = fav.map((element) => element).toList().obs;
     log("favlist:$favList");
+  }
+
+  bool checkIfProductExist(String prodId) {
+    for (ProductModel product in products) {
+      if (product.docId == prodId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void getTopRestaurants() {
@@ -190,15 +205,27 @@ class HomeController extends GetxController {
     restaurants.value = collectionData.docs
         .map((querysnap) => RestuarantModel.fromSnapshot(querysnap))
         .toList();
+
     isResLoading.value = false;
+
+    restaurantCollectionRef.orderBy('name').snapshots().listen((snapshot) {
+      isResLoading.value = true;
+      restaurants.value = snapshot.docs
+          .map((querysnap) => RestuarantModel.fromSnapshot(querysnap))
+          .toList();
+    isResLoading.value = false;
+
+    });
   }
 
   Future<void> getAllProducts() async {
     isProdLoading.value = true;
-    final collectionData = await productCollectionRef.get();
-    products.value = collectionData.docs
-        .map((querysnap) => ProductModel.fromSnapshot(querysnap))
-        .toList();
+    productCollectionRef.snapshots().listen((snapshot) {
+      products.value = snapshot.docs
+          .map((querysnap) => ProductModel.fromSnapshot(querysnap))
+          .toList();
+    });
+
     isProdLoading.value = false;
   }
 

@@ -8,6 +8,7 @@ import 'package:ila/app/utils/constants/color_constants.dart';
 import 'package:ila/app/utils/constants/constants.dart';
 import 'package:ila/app/view/shared/widgets/close_widget.dart';
 import 'package:ila/app/view/shared/widgets/custom_text.dart';
+import 'package:ila/app/view/shared/widgets/show_snackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../controller/user_controller.dart';
 import '../../../shared/widgets/bordered_box.dart';
@@ -97,7 +98,17 @@ class AddressPage extends StatelessWidget {
                                           IconButton(
                                               iconSize: 22,
                                               onPressed: () {
-                                                Get.dialog(AlertDialog(
+                                                if (userController
+                                                        .addressList.length ==
+                                                    1) {
+                                                  showSnackBar(
+                                                      "Oops",
+                                                      "Atleast one address is mandatory",
+                                                      kWarning);
+                                                  
+                                                }
+                                                else{
+                                                  Get.dialog(AlertDialog(
                                                   surfaceTintColor:
                                                       Get.isDarkMode
                                                           ? kBlueShade
@@ -139,6 +150,8 @@ class AddressPage extends StatelessWidget {
                                                         ))
                                                   ],
                                                 ));
+                                                }
+                                                
                                               },
                                               icon: const Icon(
                                                   Icons.delete_outlined)),

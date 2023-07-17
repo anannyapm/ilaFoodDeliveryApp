@@ -80,8 +80,13 @@ class NotificationController extends GetxController {
   }
 
   Future<void> getAllNotifications() async {
+    DateTime currentDate = DateTime.now();
+
+  // Set the start and end timestamps for today
+  DateTime startOfToday = DateTime(currentDate.year, currentDate.month, currentDate.day-1);
+  Timestamp startTimestamp = Timestamp.fromDate(startOfToday);
     isLoading.value = true;
-    QuerySnapshot querySnapshot = await notificationCollectionRef
+    QuerySnapshot querySnapshot = await notificationCollectionRef.where('startTime',isGreaterThanOrEqualTo:startTimestamp )
         .orderBy('startTime', descending: true)
         .get();
     notifications.value = querySnapshot.docs
@@ -90,20 +95,5 @@ class NotificationController extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> _deleteAllNotification() async {
-    final notificationSnapshot = await notificationCollectionRef.get();
-    final batch = firebaseFirestore.batch();
-
-    for (var doc in notificationSnapshot.docs) {
-      batch.delete(doc.reference);
-    }
-
-    await batch.commit();
-  }
-
-  void deleteNotification() async {
-    await _deleteAllNotification();
-    await getAllNotifications();
-    Get.back();
-  }
+ 
 }

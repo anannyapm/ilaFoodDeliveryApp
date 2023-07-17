@@ -68,15 +68,6 @@ class CartController extends GetxController {
     discountValue.value = discount.toDouble();
     log("discount ${discountValue.value}");
 
-    /*  if (discount > totalItemPrice.value) {
-      applyDiscount.value = totalItemPrice.value;
-    }
-
-    else if (discount <= 50) {
-      applyDiscount.value = discount;
-    } else {
-      applyDiscount.value = 50;
-    } */
   }
 
   applyDiscountValue() async {
@@ -190,6 +181,7 @@ class CartController extends GetxController {
       return false;
     }
   }
+
 
   bool removeCartItem(String prodId) {
     final cartitem = cartList.firstWhere((item) => item.productId == prodId);
