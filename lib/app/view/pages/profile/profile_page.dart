@@ -32,12 +32,13 @@ class ProfilePage extends StatelessWidget {
         child: Container(
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(15),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     kHeightBox20,
                     const CustomText(
@@ -177,16 +178,18 @@ class ProfilePage extends StatelessWidget {
                           ));
                         },
                         color: kWarning),
+                       // kHeightBox60
                   ],
                 ),
-                Center(
-                  child: CustomText(
-                    text: "App Version ${AppDetails.appVersion}",
-                    size: 16,
-                  ),
-                )
-              ],
-            ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomText(
+                  text: "App Version ${AppDetails.appVersion}",
+                  size: 16,
+                ),
+              )
+            ],
           ),
         ),
       ),

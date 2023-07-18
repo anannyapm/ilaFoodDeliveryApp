@@ -22,7 +22,7 @@ class HistoryCardWidget extends StatelessWidget {
   });
 
   final int index;
-  final RestuarantModel restaurant;
+  final RestuarantModel? restaurant;
   final OrderModel order;
   final OrderController orderController;
 
@@ -46,10 +46,10 @@ class HistoryCardWidget extends StatelessWidget {
                 ),
                 child: ClipRRect(
                           borderRadius:BorderRadius.circular(8),
-                          child: FadeInImage(
+                          child:restaurant==null?Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,): FadeInImage(
       fadeInDuration: const Duration(milliseconds: 300),
-                            placeholder: const AssetImage('assets/images/placeholder.jpg'),
-                            image:NetworkImage(restaurant.image!),
+                            placeholder: const AssetImage('assets/images/placeholder.jpg',),
+                            image: NetworkImage(restaurant!.image!),
       imageErrorBuilder: (context, error, stackTrace) => Image.asset('assets/images/placeholder.jpg',fit: BoxFit.cover,) ,
 
                             fit: BoxFit.cover,), )
@@ -74,7 +74,7 @@ class HistoryCardWidget extends StatelessWidget {
                       ],
                     ),
                     CustomText(
-                      text: restaurant.name!,
+                      text:restaurant==null?"Unknown Restaurant": restaurant!.name!,
                       size: 16,
                       weight: FontWeight.bold,
                     ),
@@ -119,6 +119,7 @@ class HistoryCardWidget extends StatelessWidget {
             ],
           ),
           kHeightBox20,
+          restaurant==null?Container():
           order.orderStatus=="delivered"
               ?
               Row(
@@ -140,7 +141,7 @@ class HistoryCardWidget extends StatelessWidget {
                     kWidthBox15,
                     orderController.ratingStatus.value
                         ? RatingBarIndicator(
-                            rating: restaurant.rating!.toDouble(),
+                            rating: restaurant!.rating!.toDouble(),
                             itemBuilder: (context, _) => Icon(
                               Icons.star,
                               color: kGreen,
@@ -163,8 +164,7 @@ class HistoryCardWidget extends StatelessWidget {
                                   color:Get.isDarkMode?kWhite: kBlack,
                                 )),
                             onRatingUpdate: (value) {
-                              //
-                              //orderController.setRating(value);
+                                                           
 
                               Get.dialog(AlertDialog(
                                 surfaceTintColor:Get.isDarkMode?kGrey: kWhite,

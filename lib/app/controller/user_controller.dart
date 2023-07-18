@@ -20,7 +20,7 @@ class UserController extends GetxController {
   }
 
   Future<void> getUserAddress() async {
-    //FIX THE BUG!!!!!!
+  
     isLoading.value = true;
     DocumentReference userDocRef = userCollectionRef.doc(userModel.userId);
 
@@ -76,5 +76,13 @@ class UserController extends GetxController {
     } catch (e) {
       return false;
     }
+  }
+
+  Future<void> reloadUserData() async{
+      final userDocRef = userCollectionRef.doc(userModel.userId);
+
+    await setUser(UserModel.fromSnapshot(
+            await userDocRef
+                .get()));
   }
 }

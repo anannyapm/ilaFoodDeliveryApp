@@ -20,7 +20,6 @@ class OrderController extends GetxController {
 
   final RxMap _tempReview = {}.obs;
 
-
   RxBool isOrdersLoading = false.obs;
 
   RxList<OrderModel> orders = RxList<OrderModel>([]);
@@ -41,9 +40,9 @@ class OrderController extends GetxController {
     isOrdersLoading.value = true;
     orders.clear();
     List<OrderModel> tempList = [];
-    //final collectionData = await 
-    orderCollectionRef.orderBy('createdAt',descending: true).snapshots().listen((snapshot) {
-      tempList = snapshot.docs
+    final collectionData =
+        await orderCollectionRef.orderBy('createdAt', descending: true).get();
+    tempList = collectionData.docs
         .map((querysnap) => OrderModel.fromSnapshot(querysnap))
         .toList();
     orders.value = tempList
@@ -51,9 +50,23 @@ class OrderController extends GetxController {
             (element) => element.customerId == userController.userModel.userId)
         .toList();
 
-    });
-    
     isOrdersLoading.value = false;
+
+    orderCollectionRef
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .listen((snapshot) {
+      isOrdersLoading.value = true;
+
+      tempList = snapshot.docs
+          .map((querysnap) => OrderModel.fromSnapshot(querysnap))
+          .toList();
+      orders.value = tempList
+          .where((element) =>
+              element.customerId == userController.userModel.userId)
+          .toList();
+      isOrdersLoading.value = false;
+    });
   }
 
   getOngoingOrders() {

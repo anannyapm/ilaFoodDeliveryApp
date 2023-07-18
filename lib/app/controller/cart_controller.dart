@@ -67,7 +67,6 @@ class CartController extends GetxController {
     num discount = userSnap.get('discounts');
     discountValue.value = discount.toDouble();
     log("discount ${discountValue.value}");
-
   }
 
   applyDiscountValue() async {
@@ -96,17 +95,21 @@ class CartController extends GetxController {
   }
 
   Future<void> getCartList() async {
-    totalItemPrice.value = 0.0;
-    cartList.clear();
-    if (userController.userModel.userCart!.isNotEmpty) {
-      List<CartItemModel> tempList = [];
-      for (var cartitem in userController.userModel.userCart!) {
-        tempList.add(cartitem);
-      }
+    try {
+    
+      cartList.clear();
+      if (userController.userModel.userCart!.isNotEmpty) {
+        List<CartItemModel> tempList = [];
+        for (var cartitem in userController.userModel.userCart!) {
+          tempList.add(cartitem);
+        }
 
-      cartList.addAll(tempList);
+        cartList.addAll(tempList);
+      }
+      log("cart$cartList");
+    } catch (e) {
+      log("cartfecth error $e");
     }
-    log("cart$cartList");
   }
 
   bool isItemAlreadyAdded(ProductModel product) =>
@@ -182,8 +185,7 @@ class CartController extends GetxController {
     }
   }
 
-
-  bool removeCartItem(String prodId) {
+  Future<bool> removeCartItem(String prodId) async {
     final cartitem = cartList.firstWhere((item) => item.productId == prodId);
     try {
       //final name = cartitem.name;
@@ -192,10 +194,10 @@ class CartController extends GetxController {
       log(userController.userModel.userCart!.toString());
       userController.userModel.userCart!.remove(cartitem);
 
-      userDocRef.update({
+      await userDocRef.update({
         "userCart": FieldValue.arrayRemove([cartitem.toJson()])
       });
-      getCartList();
+      await getCartList();
       showSnackBar("Item Removed", "Removed from cart", kGreyDark);
       if (cartList.isEmpty) {
         activeRestaurantID = "";

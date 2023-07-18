@@ -108,6 +108,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> fetchAllData() async {
+    await userController.reloadUserData();
     homeController.getAllCarousel();
 
     homeController.getAllCategory();
@@ -127,7 +128,6 @@ class AuthController extends GetxController {
       await cartController.setCurrentRestaurant();
     }
     cartController.getTotalPrice();
-
   }
 
   Future<void> verifyOTP() async {

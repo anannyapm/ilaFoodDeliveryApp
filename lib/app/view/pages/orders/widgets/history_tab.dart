@@ -38,7 +38,7 @@ class HistoryTab extends StatelessWidget {
                             itemBuilder: (context, index) {
                               OrderModel order =
                                   orderController.oldOrders[index];
-                              RestuarantModel restaurant = homeController
+                              RestuarantModel? restaurant = homeController
                                   .getrestaurant(order.restaurantId!);
                               return HistoryCardWidget(restaurant: restaurant, order: order, orderController: orderController,index:index);
                             },

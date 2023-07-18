@@ -186,7 +186,7 @@ class ProductPage extends StatelessWidget {
                             bool output = false;
                             if (isAdded.value) {
                               output =
-                                  cartController.removeCartItem(product.docId!);
+                                  await cartController.removeCartItem(product.docId!);
                             } else {
                               output = await cartController.addProductToCart(
                                   product, cartController.itemCount.value);
