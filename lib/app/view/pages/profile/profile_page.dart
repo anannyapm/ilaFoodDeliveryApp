@@ -138,7 +138,7 @@ class ProfilePage extends StatelessWidget {
                         icon: Ionicons.share_social,
                         function: () {
                           Share.share(
-                              'Craving something delicious?\nILA Food Delivery has you covered!\nDiscover a world of flavors, place orders effortlessly, and enjoy speedy deliveries. Download the app now!');
+                              'Craving something delicious?\nILA Food Delivery has you covered!\nDiscover a world of flavors, place orders effortlessly, and enjoy speedy deliveries. Download the app now! ');
                         },
                         color: kGreen),
                     ProfileViewMoreWidget(
